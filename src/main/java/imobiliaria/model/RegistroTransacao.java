@@ -1,3 +1,5 @@
+package main.java.imobiliaria.model;
+
 import java.time.LocalDate;
 
 public class RegistroTransacao {

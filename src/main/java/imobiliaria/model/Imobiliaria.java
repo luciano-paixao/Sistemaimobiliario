@@ -1,3 +1,5 @@
+package main.java.imobiliaria.model;
+
 import java.util.List;
 
 public class Imobiliaria {

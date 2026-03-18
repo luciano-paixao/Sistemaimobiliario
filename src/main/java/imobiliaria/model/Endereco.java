@@ -1,4 +1,4 @@
-package imobiliaria.model;
+package main.java.imobiliaria.model;
 
 public class Endereco {
 

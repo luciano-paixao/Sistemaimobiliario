@@ -1,3 +1,7 @@
+package main.java.imobiliaria.model;
+
+import main.java.imobiliaria.model.enums.TipoDisponibilidade;
+
 import java.time.LocalDate;
 import java.util.List;
 

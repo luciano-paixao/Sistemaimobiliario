@@ -1,4 +1,4 @@
-package imobiliaria.model;
+package main.java.imobiliaria.model;
 
 import java.time.LocalDate;
 import java.util.List;
