@@ -15,6 +15,8 @@ public class Funcionario extends Pessoa {
 
     private String senha;
 
+    private Double comissoes;
+
     public Funcionario(String cpf, String nome, Endereco endereco, List<String> telefones, LocalDate dataIngresso,
                        String cargo, Double salarioBase, String usuario, String senha) {
         super(cpf, nome, endereco, telefones);
@@ -23,11 +25,12 @@ public class Funcionario extends Pessoa {
         this.salarioBase = salarioBase;
         this.usuario = usuario;
         this.senha = senha;
+        this.comissoes = 0.0;
     }
 
-//    public Double calcularSalario() {
-//        return salario;
-//    }
+    public Double calcularSalario() {
+        return salarioBase + comissoes;
+    }
 
     public LocalDate getDataIngresso() {
         return dataIngresso;
@@ -67,6 +70,14 @@ public class Funcionario extends Pessoa {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Double getComissoes() {
+        return comissoes;
+    }
+
+    public void setComissoes(Double comissoes) {
+        this.comissoes = comissoes;
     }
 
     @Override
