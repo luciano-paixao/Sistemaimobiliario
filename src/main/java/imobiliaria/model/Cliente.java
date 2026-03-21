@@ -16,6 +16,14 @@ public class Cliente extends Pessoa {
         super(cpf, nome, endereco, telefones);
     }
 
+    public Cliente(String cpf, String nome, Endereco endereco, List<String> telefones, String email, String profissao, Sexo sexo, EstadoCivil estadoCivil) {
+        super(cpf, nome, endereco, telefones);
+        this.email = email;
+        this.profissao = profissao;
+        this.sexo = sexo;
+        this.estadoCivil = estadoCivil;
+    }
+
     public String getEmail() {
         return email;
     }
