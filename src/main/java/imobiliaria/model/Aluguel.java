@@ -1,11 +1,14 @@
 package main.java.imobiliaria.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Aluguel extends RegistroTransacao {
 
-    List<Pessoa> fiadores;
-    List<Pessoa> indicadores;
+    private List<Pessoa> fiadores;
+    private List<Pessoa> indicadores;
+    private LocalDate inicioContrato;
+    private LocalDate fimContrato;
 
     public Aluguel(List<Pessoa> fiadores, List<Pessoa> indicadores) {
         this.fiadores = fiadores;
