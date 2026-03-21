@@ -10,11 +10,27 @@ public class RegistroTransacao {
     private String formaPagamento;
     private Imovel imovel;
     private Funcionario funcionario;
-    // clienteUsuario usuario;
-    // Cliente cliente;
+    ClienteUsuario usuario;
+    ClienteProprietario clienteProprietario;
     private Double valorSugerido;
     private Double valorReal;
     private double margemImobiliaria;
+
+    public RegistroTransacao(ClienteProprietario clienteProprietario, LocalDate dataTransacao,
+                             String formaPagamento, Funcionario funcionario, Imovel imovel,
+                             double margemImobiliaria, Integer numContrato, ClienteUsuario usuario,
+                             Double valorReal, Double valorSugerido) {
+        this.clienteProprietario = clienteProprietario;
+        this.dataTransacao = dataTransacao;
+        this.formaPagamento = formaPagamento;
+        this.funcionario = funcionario;
+        this.imovel = imovel;
+        this.margemImobiliaria = margemImobiliaria;
+        this.numContrato = numContrato;
+        this.usuario = usuario;
+        this.valorReal = valorReal;
+        this.valorSugerido = valorSugerido;
+    }
 
     public void lucroImobiliaria(){
         if(this.imovel instanceof Casa){
@@ -34,16 +50,16 @@ public class RegistroTransacao {
 
     public void ComissaoFuncionario(){
         if(this.imovel instanceof Casa){
-            // Funcionario.comissao + valorReal * 0.05;
+            this.funcionario.comissoes += valorReal * 0.05;
             valorReal -= valorReal * 0.05;
         }if(this.imovel instanceof Terreno){
-            // Funcionario.comissao + valorReal * 0.01;
+            this.funcionario.comissoes += valorReal * 0.01;
             valorReal -= valorReal * 0.01;
         }if(this.imovel instanceof Apartamento){
-            // Funcionario.comissao + valorReal * 0.02;
+            this.funcionario.comissoes += valorReal * 0.02;;
             valorReal -= valorReal * 0.02;
         }if(this.imovel instanceof SalaComercial){
-            // Funcionario.comissao + valorReal * 0.04;
+            this.funcionario.comissoes += valorReal * 0.04;
             valorReal -= valorReal * 0.04;
         }
     }

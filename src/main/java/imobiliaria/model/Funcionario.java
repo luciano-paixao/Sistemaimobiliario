@@ -15,7 +15,7 @@ public class Funcionario extends Pessoa {
 
     private String senha;
 
-    private Double comissoes;
+    protected Double comissoes;
 
     public Funcionario(String cpf, String nome, Endereco endereco, List<String> telefones,
                        String cargo, Double salarioBase, String usuario, String senha) {

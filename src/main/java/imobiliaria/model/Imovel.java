@@ -8,25 +8,42 @@ import java.util.List;
 public abstract class Imovel {
 
     private TipoDisponibilidade tipoDisponibilidade;
-
-    private Boolean disponbilidade;
-
+    private Boolean disponibilidade;
     private LocalDate dataConstrucao;
-
     private List<ClienteProprietario> proprietarios;
-
+    private LocalDate inicioOferta;
+    private static LocalDate finalOferta;
     private Endereco endereco;
 
-    private LocalDate inicioOferta;
+    public Imovel(TipoDisponibilidade tipoDisponibilidade,
+                  LocalDate dataConstrucao,
+                  Endereco endereco,
+                  List<ClienteProprietario> proprietarios,
+                  LocalDate inicioOferta,
+                  LocalDate finalOferta) {
 
-    private LocalDate finalOferta;
-
-    public Imovel(TipoDisponibilidade tipoDisponibilidade, LocalDate dataConstrucao, List<ClienteProprietario> proprietarios, Endereco endereco) {
         this.tipoDisponibilidade = tipoDisponibilidade;
-        this.disponbilidade = true;
+        this.disponibilidade = true;
+
+
+        if (dataConstrucao.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Data de construção inválida.");
+        }
         this.dataConstrucao = dataConstrucao;
-        this.proprietarios = proprietarios;
+
         this.endereco = endereco;
-        this.inicioOferta = LocalDate.now();
+        this.proprietarios = proprietarios;
+
+
+        if (inicioOferta.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("Data de início da oferta inválida.");
+        }
+        this.inicioOferta = inicioOferta;
+
+
+        if (finalOferta.isBefore(inicioOferta)) {
+            throw new IllegalArgumentException("Data final da oferta não pode ser antes do início.");
+        }
+        this.finalOferta = finalOferta;
     }
 }
