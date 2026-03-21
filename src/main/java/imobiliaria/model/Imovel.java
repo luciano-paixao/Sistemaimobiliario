@@ -11,14 +11,22 @@ public abstract class Imovel {
 
     private Boolean disponbilidade;
 
-    private LocalDate DataConstrucao;
+    private LocalDate dataConstrucao;
 
-   // private Cliente Proprietario
-
-    private LocalDate inicioOferta;
-
-    private static LocalDate finalOfetar;
+    private List<ClienteProprietario> proprietarios;
 
     private Endereco endereco;
 
+    private LocalDate inicioOferta;
+
+    private LocalDate finalOferta;
+
+    public Imovel(TipoDisponibilidade tipoDisponibilidade, LocalDate dataConstrucao, List<ClienteProprietario> proprietarios, Endereco endereco) {
+        this.tipoDisponibilidade = tipoDisponibilidade;
+        this.disponbilidade = true;
+        this.dataConstrucao = dataConstrucao;
+        this.proprietarios = proprietarios;
+        this.endereco = endereco;
+        this.inicioOferta = LocalDate.now();
+    }
 }

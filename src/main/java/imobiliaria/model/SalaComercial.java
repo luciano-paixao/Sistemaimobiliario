@@ -1,5 +1,10 @@
 package main.java.imobiliaria.model;
 
+import main.java.imobiliaria.model.enums.TipoDisponibilidade;
+
+import java.time.LocalDate;
+import java.util.List;
+
 public class SalaComercial extends Imovel {
 
     private Double area;
@@ -7,6 +12,13 @@ public class SalaComercial extends Imovel {
     private Integer quantidadeBanheiros;
 
     private Integer quantidadeComodos;
+
+    public SalaComercial(TipoDisponibilidade tipoDisponibilidade, LocalDate dataConstrucao, List<ClienteProprietario> proprietarios, Endereco endereco, Double area, Integer quantidadeBanheiros, Integer quantidadeComodos) {
+        super(tipoDisponibilidade, dataConstrucao, proprietarios, endereco);
+        this.area = area;
+        this.quantidadeBanheiros = quantidadeBanheiros;
+        this.quantidadeComodos = quantidadeComodos;
+    }
 
     public Double getArea() {
         return area;

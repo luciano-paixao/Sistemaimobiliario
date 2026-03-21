@@ -1,16 +1,30 @@
 package main.java.imobiliaria.model;
 
-public class Terreno extends Imovel {
+import main.java.imobiliaria.model.enums.TipoDisponibilidade;
 
-    private Double area;
+import java.time.LocalDate;
+import java.util.List;
+
+public class Terreno extends Imovel {
 
     private Double largura;
 
     private Double comprimento;
 
+    private Double area;
+
     private Boolean aclive;
 
     private Boolean declive;
+
+    public Terreno(TipoDisponibilidade tipoDisponibilidade, LocalDate dataConstrucao, List<ClienteProprietario> proprietarios, Endereco endereco, Double largura, Double comprimento, Boolean aclive, Boolean declive) {
+        super(tipoDisponibilidade, dataConstrucao, proprietarios, endereco);
+        this.largura = largura;
+        this.comprimento = comprimento;
+        this.area = largura * comprimento;
+        this.aclive = aclive;
+        this.declive = declive;
+    }
 
     public Double getArea() {
         return area;

@@ -1,5 +1,10 @@
 package main.java.imobiliaria.model;
 
+import main.java.imobiliaria.model.enums.TipoDisponibilidade;
+
+import java.time.LocalDate;
+import java.util.List;
+
 public class Casa extends Imovel {
 
     private Integer quantidadeQuartos;
@@ -17,6 +22,17 @@ public class Casa extends Imovel {
     private Boolean armarioEmbutido;
 
     private String descricao;
+
+    public Casa(TipoDisponibilidade tipoDisponibilidade, LocalDate dataConstrucao, List<ClienteProprietario> proprietarios, Endereco endereco, Integer quantidadeQuartos, Integer quantidadeSuites, Integer quantidadeSalasEstar, Integer quantidadeSalasJantar, Integer quantidadeVagasGaragem, Double area, Boolean armarioEmbutido) {
+        super(tipoDisponibilidade, dataConstrucao, proprietarios, endereco);
+        this.quantidadeQuartos = quantidadeQuartos;
+        this.quantidadeSuites = quantidadeSuites;
+        this.quantidadeSalasEstar = quantidadeSalasEstar;
+        this.quantidadeSalasJantar = quantidadeSalasJantar;
+        this.quantidadeVagasGaragem = quantidadeVagasGaragem;
+        this.area = area;
+        this.armarioEmbutido = armarioEmbutido;
+    }
 
     public Integer getQuantidadeQuartos() {
         return quantidadeQuartos;
