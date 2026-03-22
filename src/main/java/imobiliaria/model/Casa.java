@@ -23,15 +23,20 @@ public class Casa extends Imovel {
 
     private String descricao;
 
-    public Casa(TipoDisponibilidade tipoDisponibilidade, LocalDate dataConstrucao, List<ClienteProprietario> proprietarios, Endereco endereco, Integer quantidadeQuartos, Integer quantidadeSuites, Integer quantidadeSalasEstar, Integer quantidadeSalasJantar, Integer quantidadeVagasGaragem, Double area, Boolean armarioEmbutido) {
-        super(tipoDisponibilidade, dataConstrucao, proprietarios, endereco);
-        this.quantidadeQuartos = quantidadeQuartos;
-        this.quantidadeSuites = quantidadeSuites;
-        this.quantidadeSalasEstar = quantidadeSalasEstar;
-        this.quantidadeSalasJantar = quantidadeSalasJantar;
-        this.quantidadeVagasGaragem = quantidadeVagasGaragem;
+    public Casa(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
+                List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade,
+                Double area, Boolean armarioEmbutido, String descricao, Integer quantidadeQuartos,
+                Integer quantidadeSalasEstar, Integer quantidadeSalasJantar, Integer quantidadeSuites,
+                Integer quantidadeVagasGaragem) {
+        super(dataConstrucao, disponibilidade, endereco, proprietarios, tipoDisponibilidade);
         this.area = area;
         this.armarioEmbutido = armarioEmbutido;
+        this.descricao = descricao;
+        this.quantidadeQuartos = quantidadeQuartos;
+        this.quantidadeSalasEstar = quantidadeSalasEstar;
+        this.quantidadeSalasJantar = quantidadeSalasJantar;
+        this.quantidadeSuites = quantidadeSuites;
+        this.quantidadeVagasGaragem = quantidadeVagasGaragem;
     }
 
     public Integer getQuantidadeQuartos() {

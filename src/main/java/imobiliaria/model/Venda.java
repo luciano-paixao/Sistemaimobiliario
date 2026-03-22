@@ -2,11 +2,16 @@ package main.java.imobiliaria.model;
 
 import main.java.imobiliaria.model.enums.TipoPagamento;
 
+import java.time.LocalDate;
+
 public class Venda extends RegistroTransacao {
 
-    public Venda(int numeroContrato, Imovel imovel, ClienteUsuario cliente,
-                 Funcionario funcionario, Double valorReal, TipoPagamento tipoPagamento) {
+    public Venda(ClienteProprietario clienteProprietario, LocalDate dataTransacao, String formaPagamento, Funcionario funcionario, Imovel imovel, double margemImobiliaria, Integer numContrato, Double valorReal, Double valorSugerido) {
+        super(clienteProprietario, dataTransacao, formaPagamento, funcionario, imovel, margemImobiliaria, numContrato, valorReal, valorSugerido);
+    }
 
-        super(numeroContrato, imovel, cliente, funcionario, valorReal);
+    @Override
+    public String toString() {
+        return "Venda{} " + super.toString();
     }
 }

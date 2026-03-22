@@ -11,39 +11,78 @@ public abstract class Imovel {
     private Boolean disponibilidade;
     private LocalDate dataConstrucao;
     private List<ClienteProprietario> proprietarios;
-    private LocalDate inicioOferta;
-    private static LocalDate finalOferta;
     private Endereco endereco;
+    private Aluguel aluguel;
+    protected Venda venda;
 
-    public Imovel(TipoDisponibilidade tipoDisponibilidade,
-                  LocalDate dataConstrucao,
-                  Endereco endereco,
-                  List<ClienteProprietario> proprietarios,
-                  LocalDate inicioOferta,
-                  LocalDate finalOferta) {
-
-        this.tipoDisponibilidade = tipoDisponibilidade;
-        this.disponibilidade = true;
-
-
-        if (dataConstrucao.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Data de construção inválida.");
-        }
+    public Imovel(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
+                  List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade) {
         this.dataConstrucao = dataConstrucao;
-
+        this.disponibilidade = disponibilidade;
         this.endereco = endereco;
         this.proprietarios = proprietarios;
+        this.tipoDisponibilidade = tipoDisponibilidade;
+    }
 
+    protected void adicionarProprietario(ClienteProprietario cli){
+        this.proprietarios.add(cli);
+    }
 
-        if (inicioOferta.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("Data de início da oferta inválida.");
+    public LocalDate getDataConstrucao() {
+        return dataConstrucao;
+    }
+
+    public void setDataConstrucao(LocalDate dataConstrucao) {
+        this.dataConstrucao = dataConstrucao;
+    }
+
+    public Boolean getDisponibilidade() {
+        return disponibilidade;
+    }
+
+    public void setDisponibilidade(Boolean disponibilidade) {
+        this.disponibilidade = disponibilidade;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public List<ClienteProprietario> getProprietarios() {
+        return proprietarios;
+    }
+
+    public void setProprietarios(List<ClienteProprietario> proprietarios) {
+        this.proprietarios = proprietarios;
+    }
+
+    public TipoDisponibilidade getTipoDisponibilidade() {
+        return tipoDisponibilidade;
+    }
+
+    public void setTipoDisponibilidade(TipoDisponibilidade tipoDisponibilidade) {
+        this.tipoDisponibilidade = tipoDisponibilidade;
+    }
+
+    public String mostarProprietarios(){
+        String nomesProprietarios = "";
+        for (ClienteProprietario Proprietarios : this.proprietarios){
+            nomesProprietarios += Proprietarios.getNome() + ",";
         }
-        this.inicioOferta = inicioOferta;
+        return nomesProprietarios;
+    }
 
-
-        if (finalOferta.isBefore(inicioOferta)) {
-            throw new IllegalArgumentException("Data final da oferta não pode ser antes do início.");
-        }
-        this.finalOferta = finalOferta;
+    @Override
+    public String toString() {
+        return "Imovel{" +
+                "disponibilidade= " + disponibilidade +
+                "\n dataConstrucao= " + dataConstrucao +
+                "\n proprietarios= " + mostarProprietarios() +
+                "\n endereco=" + endereco +
+                '}';
     }
 }

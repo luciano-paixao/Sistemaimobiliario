@@ -26,11 +26,30 @@ public class RegistroTransacao {
         this.funcionario = funcionario;
         this.imovel = imovel;
         this.margemImobiliaria = margemImobiliaria;
-        this.numContrato = numContrato;
+        this.contador++;
+        this.numContrato = this.contador;
         this.usuario = usuario;
         this.valorReal = valorReal;
         this.valorSugerido = valorSugerido;
     }
+
+    public RegistroTransacao(ClienteProprietario clienteProprietario, LocalDate dataTransacao,
+                             String formaPagamento, Funcionario funcionario, Imovel imovel,
+                             double margemImobiliaria, Integer numContrato,
+                             Double valorReal, Double valorSugerido) {
+        this.clienteProprietario = clienteProprietario;
+        this.dataTransacao = dataTransacao;
+        this.formaPagamento = formaPagamento;
+        this.funcionario = funcionario;
+        this.imovel = imovel;
+        this.margemImobiliaria = margemImobiliaria;
+        this.contador++;
+        this.numContrato = this.contador;
+        this.valorReal = valorReal;
+        this.valorSugerido = valorSugerido;
+    }
+
+
 
     public void lucroImobiliaria(){
         if(this.imovel instanceof Casa){
@@ -50,16 +69,16 @@ public class RegistroTransacao {
 
     public void ComissaoFuncionario(){
         if(this.imovel instanceof Casa){
-            this.funcionario.comissoes += valorReal * 0.05;
+            this.funcionario.Totalcomissoes += valorReal * 0.05;
             valorReal -= valorReal * 0.05;
         }if(this.imovel instanceof Terreno){
-            this.funcionario.comissoes += valorReal * 0.01;
+            this.funcionario.Totalcomissoes += valorReal * 0.01;
             valorReal -= valorReal * 0.01;
         }if(this.imovel instanceof Apartamento){
-            this.funcionario.comissoes += valorReal * 0.02;;
+            this.funcionario.Totalcomissoes += valorReal * 0.02;;
             valorReal -= valorReal * 0.02;
         }if(this.imovel instanceof SalaComercial){
-            this.funcionario.comissoes += valorReal * 0.04;
+            this.funcionario.Totalcomissoes += valorReal * 0.04;
             valorReal -= valorReal * 0.04;
         }
     }
@@ -134,5 +153,21 @@ public class RegistroTransacao {
 
     public void setValorSugerido(Double valorSugerido) {
         this.valorSugerido = valorSugerido;
+    }
+
+    @Override
+    public String toString() {
+        return "RegistroTransacao{" +
+                "numContrato=" + numContrato +
+                ", dataTransacao=" + dataTransacao +
+                ", formaPagamento='" + formaPagamento + '\'' +
+                ", imovel=" + imovel +
+                ", funcionario=" + funcionario +
+                ", usuario=" + usuario +
+                ", clienteProprietario=" + clienteProprietario +
+                ", valorSugerido=" + valorSugerido +
+                ", valorReal=" + valorReal +
+                ", margemImobiliaria=" + margemImobiliaria +
+                '}';
     }
 }

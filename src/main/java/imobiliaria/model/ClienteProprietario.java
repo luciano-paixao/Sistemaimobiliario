@@ -8,18 +8,25 @@ import java.util.List;
 
 public class ClienteProprietario extends Cliente{
 
-    private ArrayList<Imovel> imoveis = new ArrayList<>();
+    private ArrayList<Imovel> imoveis;
 
-    public ClienteProprietario(String cpf, String nome, Endereco endereco, List<String> telefones) {
-        super(cpf, nome, endereco, telefones);
+    public ClienteProprietario(){
+        super();
     }
 
-    public ClienteProprietario(String cpf, String nome, Endereco endereco, List<String> telefones, String email, String profissao, Sexo sexo, EstadoCivil estadoCivil, ArrayList<Imovel> imoveis) {
+    public ClienteProprietario(String cpf, String nome, Endereco endereco, List<String> telefones, String email, String profissao, Sexo sexo, EstadoCivil estadoCivil) {
         super(cpf, nome, endereco, telefones, email, profissao, sexo, estadoCivil);
-        this.imoveis = imoveis;
+        imoveis = new ArrayList<>();
     }
 
     public ArrayList<Imovel> getImoveis() {
         return imoveis;
+    }
+
+    @Override
+    public String toString() {
+        return "ClienteProprietario{" +
+                "Nome= " + this.getNome() +
+                '}';
     }
 }

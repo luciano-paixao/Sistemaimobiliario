@@ -29,18 +29,23 @@ public class Apartamento extends Imovel {
 
     private Boolean portaria24hs;
 
-    public Apartamento(TipoDisponibilidade tipoDisponibilidade, LocalDate dataConstrucao, List<ClienteProprietario> proprietarios, Endereco endereco, Integer quantidadeQuartos, Integer quantidadeSuites, Integer quantidadeSalasEstar, Integer quantidadeSalasJantar, Integer quantidadeVagasGaragem, Double area, Boolean armarioEmbutido, Integer andar, Double valorCondominio, Boolean portaria24hs) {
-        super(tipoDisponibilidade, dataConstrucao, proprietarios, endereco);
-        this.quantidadeQuartos = quantidadeQuartos;
-        this.quantidadeSuites = quantidadeSuites;
-        this.quantidadeSalasEstar = quantidadeSalasEstar;
-        this.quantidadeSalasJantar = quantidadeSalasJantar;
-        this.quantidadeVagasGaragem = quantidadeVagasGaragem;
+    public Apartamento(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
+                       List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade,
+                       Integer andar, Double area, Boolean armarioEmbutido, String descricao, Boolean portaria24hs,
+                       Integer quantidadeQuartos, Integer quantidadeSalasEstar, Integer quantidadeSalasJantar,
+                       Integer quantidadeSuites, Integer quantidadeVagasGaragem, Double valorCondominio) {
+        super(dataConstrucao, disponibilidade, endereco, proprietarios, tipoDisponibilidade);
+        this.andar = andar;
         this.area = area;
         this.armarioEmbutido = armarioEmbutido;
-        this.andar = andar;
-        this.valorCondominio = valorCondominio;
+        this.descricao = descricao;
         this.portaria24hs = portaria24hs;
+        this.quantidadeQuartos = quantidadeQuartos;
+        this.quantidadeSalasEstar = quantidadeSalasEstar;
+        this.quantidadeSalasJantar = quantidadeSalasJantar;
+        this.quantidadeSuites = quantidadeSuites;
+        this.quantidadeVagasGaragem = quantidadeVagasGaragem;
+        this.valorCondominio = valorCondominio;
     }
 
     public Integer getQuantidadeQuartos() {

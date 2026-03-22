@@ -13,6 +13,8 @@ public class Pessoa {
 
     private List<String> telefones;
 
+    public Pessoa(){}
+
     public Pessoa(String cpf, String nome, Endereco endereco, List<String> telefones) {
         this.cpf = cpf;
         this.nome = nome;
