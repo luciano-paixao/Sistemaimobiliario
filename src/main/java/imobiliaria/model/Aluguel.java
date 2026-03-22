@@ -14,6 +14,7 @@ public class Aluguel extends RegistroTransacao {
     private LocalDate inicioContrato;
 
     private LocalDate fimContrato;
+    private LocalDate dataAluguel;
 
     private LocalDate dataAluguel;
 
