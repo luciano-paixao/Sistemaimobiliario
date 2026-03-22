@@ -36,11 +36,23 @@ public class Sistema {
                         "gerzinha@hotmail.com",
                         "Qualquer Uma",
                         Sexo.FEMININO,
-                        EstadoCivil.CASADO,
-                        imobi
+                        EstadoCivil.CASADO
                     );
 
+        Funcionario fun1 =
+                new Funcionario(
+                        "12312312345",
+                        "Gertrudes",
+                        endereco1,
+                        telefonesDeQuem,
+                        "VENDEDOR",
+                        5400.0,
+                        "userTest1",
+                        "userPass1"
+                        );
+
             imobi.getClienteProprietarios().add(proprietario1);
+            imobi.getFuncionarios().add(fun1);
 
             // Criando dois apartamentos
             Apartamento ap1 = new Apartamento(
