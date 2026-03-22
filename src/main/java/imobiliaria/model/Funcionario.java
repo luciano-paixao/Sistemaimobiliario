@@ -19,7 +19,7 @@ public class Funcionario extends Pessoa {
 
     public Funcionario(String cpf, String nome, Endereco endereco, String cargo, Double salarioBase, String usuario, String senha) {
         super(cpf, nome, endereco);
-        this.dataIngresso = LocalDate.now();;
+        this.dataIngresso = LocalDate.now();
         this.cargo = cargo;
         this.salarioBase = salarioBase;
         this.usuario = usuario;
@@ -27,9 +27,9 @@ public class Funcionario extends Pessoa {
         this.totalComissoes = 0.0;
     }
 
-    public Funcionario(String cpf, String nome, Endereco endereco, List<String> telefones, LocalDate dataIngresso, String cargo, Double salarioBase, String usuario, String senha) {
+    public Funcionario(String cpf, String nome, Endereco endereco, List<String> telefones, String cargo, Double salarioBase, String usuario, String senha) {
         super(cpf, nome, endereco, telefones);
-        this.dataIngresso = dataIngresso;
+        this.dataIngresso = LocalDate.now();
         this.cargo = cargo;
         this.salarioBase = salarioBase;
         this.usuario = usuario;
