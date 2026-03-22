@@ -80,7 +80,7 @@ public class Aluguel extends RegistroTransacao {
 
     @Override
     public String toString() {
-        return "Aluguel{" +
+        return "** DADOS DA TRANSAÇÃO (ALUGUEL) **\n" +
                 "fiadores=" + fiadores +
                 ", indicacoes=" + indicacoes +
                 ", inicioContrato=" + inicioContrato +

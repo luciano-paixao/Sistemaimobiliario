@@ -29,6 +29,7 @@ public class Imobiliaria {
         this.funcionarios = new ArrayList<>();
         this.clientes = new ArrayList<>();
         this.transacoes = new ArrayList<>();
+        this.totalComissoes = 0.0;
     }
 
     public Funcionario cadastrarFuncionario() {
@@ -136,6 +137,7 @@ public class Imobiliaria {
         if (imovel.getTipoDisponibilidade() == TipoDisponibilidade.VENDER) {
             Venda v = new Venda(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente);
             v.executar();
+            IO.println(v.toString());
         } else {
             //List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato, LocalDate fimContrato
             int n = Integer.parseInt(JOptionPane.showInputDialog("Número de fiadores"));

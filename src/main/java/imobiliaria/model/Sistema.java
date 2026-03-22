@@ -25,12 +25,29 @@ public class Sistema {
             Endereco endereco1 = new Endereco("Rua A", "123", "Centro");
             Endereco endereco2 = new Endereco("Rua B", "456", "Bairro X");
 
+            // USUÁRIO
+
             Cliente cli1 = new Cliente("12312312345", "Semfim", endereco1, "teste@hotmail.com", "Qualqueruma", Sexo.FEMININO, EstadoCivil.DIVORCIADO);
             imobi.adicionarCliente(cli1);
 
-
             List<String> telefonesFu1 = new ArrayList<>();
             telefonesFu1.add("(91) 98888-7777");
+
+
+            // PROPRIETÁRIO
+
+            Endereco enderecoProp = new Endereco("Avenida Nazaré", "1000", "Centro");
+
+            ClienteProprietario novoProprietario = new ClienteProprietario(
+                    "98765432100",
+                    "Maria Oliveira",
+                    enderecoProp,
+                    "maria.oliveira@email.com",
+                    "Engenheira",
+                    Sexo.FEMININO,
+                    EstadoCivil.CASADO
+            );
+            proprietarios1.add(novoProprietario);
 
             Funcionario fu1 = new Funcionario(
                     "12345678900",
@@ -152,9 +169,10 @@ public class Sistema {
                     System.out.println("Vendedor digite usuario e senha para entrar no sistema!");
                             // Usando
                             Cliente cliUsu = imobi.getClientes().get(0);
-                            Imovel imovelTransacionado = imobi.getImoveisDisponiveis().get(0);
+                            Imovel imovelTransacionado = imobi.getImoveisDisponiveis().get(1);
 
                             imobi.realizarTransacao(cliUsu, fu, imovelTransacionado);
+
                             menu(imobi);
                             break;
                 }
