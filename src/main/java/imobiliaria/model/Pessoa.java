@@ -13,13 +13,18 @@ public class Pessoa {
 
     private List<String> telefones;
 
-    public Pessoa(){}
+    public Pessoa(String cpf, String nome, Endereco endereco) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefones = new ArrayList<String>();
+    }
 
     public Pessoa(String cpf, String nome, Endereco endereco, List<String> telefones) {
         this.cpf = cpf;
         this.nome = nome;
         this.endereco = endereco;
-        this.telefones = new ArrayList<String>();
+        this.telefones = telefones;
     }
 
     public String getCpf() {

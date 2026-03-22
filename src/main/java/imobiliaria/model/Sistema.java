@@ -1,8 +1,7 @@
 package main.java.imobiliaria.model;
 
-import main.java.imobiliaria.model.enums.EstadoCivil;
-import main.java.imobiliaria.model.enums.Sexo;
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
+import main.java.imobiliaria.model.exceptions.LoginErrado;
 
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -13,46 +12,15 @@ public class Sistema {
 
     public static void main(String[] args) {
 
-            Imobiliaria imobi = new Imobiliaria();
-
             // Lista de proprietários (exemplo simples)
             List<ClienteProprietario> proprietarios1 = new ArrayList<>();
             List<ClienteProprietario> proprietarios2 = new ArrayList<>();
-            List<String> telefonesDeQuem = new ArrayList<>();
-            telefonesDeQuem.add("11984930403");
 
             // Objetos auxiliares (supondo construtores básicos)
             Endereco endereco1 = new Endereco("Rua A", "123", "Centro");
             Endereco endereco2 = new Endereco("Rua B", "456", "Bairro X");
 
-//            imobi.getFuncionarios().add()
 
-            ClienteProprietario proprietario1 =
-                    new ClienteProprietario(
-                        "12312312345",
-                        "Gertrudes",
-                        endereco1,
-                        telefonesDeQuem,
-                        "gerzinha@hotmail.com",
-                        "Qualquer Uma",
-                        Sexo.FEMININO,
-                        EstadoCivil.CASADO
-                    );
-
-        Funcionario fun1 =
-                new Funcionario(
-                        "12312312345",
-                        "Gertrudes",
-                        endereco1,
-                        telefonesDeQuem,
-                        "VENDEDOR",
-                        5400.0,
-                        "userTest1",
-                        "userPass1"
-                        );
-
-            imobi.getClienteProprietarios().add(proprietario1);
-            imobi.getFuncionarios().add(fun1);
 
             // Criando dois apartamentos
             Apartamento ap1 = new Apartamento(
@@ -112,17 +80,17 @@ public class Sistema {
                 500.0
         );
 
-            imobi.imoveisParaVender.add(ap2);
-            imobi.imoveisParaVender.add(ap1);
-            imobi.imoveisParaVender.add(ap3);
-            IO.println("Teste Básico" + imobi.getClienteProprietarios());
+            Imobiliaria imobi = new Imobiliaria();
+            imobi.getImoveisDisponiveis().add(ap2);
+            imobi.getImoveisDisponiveis().add(ap1);
+            imobi.getImoveisDisponiveis().add(ap3);
             menu(imobi);
         }
 
     public static void menu(Imobiliaria imobi){
         Scanner leitor = new Scanner(System.in);
 
-        IO.println("Olá, bem vindo a imobilíaria");
+        IO.println("olá, bem vindo a imobilíaria");
         System.out.println("Digite o numero de acordo com a opção que deseja realizar");
         System.out.println("1_Cadastrar funcionario");
         System.out.println("2_Cadastrar cliente");

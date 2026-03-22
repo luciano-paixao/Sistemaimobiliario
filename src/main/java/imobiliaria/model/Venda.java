@@ -3,17 +3,42 @@ package main.java.imobiliaria.model;
 import main.java.imobiliaria.model.enums.TipoPagamento;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Venda extends RegistroTransacao {
 
-    public Venda(ClienteProprietario clienteProprietario, LocalDate dataTransacao,
-                 String formaPagamento, Funcionario funcionario, Imovel imovel,
-                 double margemImobiliaria, Double valorReal, Double valorSugerido) {
-        super(clienteProprietario, dataTransacao, formaPagamento, funcionario, imovel, margemImobiliaria, valorReal, valorSugerido);
+    public Venda(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, List<ClienteProprietario> proprietarios, Cliente interessado) {
+        super(tipoPagamento, imovel, funcionario, proprietarios, interessado);
+    }
+
+    @Override
+    public void executar() {
+        ClienteProprietario cp = new ClienteProprietario(getInteressado().getCpf(), getInteressado().getNome(), getInteressado().getEndereco(), getInteressado().getEmail(), getInteressado().getProfissao(), getInteressado().getSexo(), getInteressado().getEstadoCivil());
+        cp.adiiconarImovel(this.getImovel());
+
+        for (ClienteProprietario p : getClienteProprietario()) {
+            if (p.getImoveis().isEmpty()) {
+                Cliente c = new Cliente(p.getCpf(), p.getNome(), p.getEndereco(), p.getEmail(), p.getProfissao(), p.getSexo(), p.getEstadoCivil());
+                this.getImovel().getImobiliaria().adicionarCliente(c);
+                this.getImovel().getImobiliaria().removerCliente(p);
+            }
+        }
+
+        this.getImovel().setProprietarios(null);
+        this.getImovel().adicionarProprietario(cp);
+
+        this.getImovel().setDisponibilidade(false);
+        this.getImovel().setFimOferta(LocalDate.now());
+
+        transferirComissaoImobiliaria();
+        transferirComissaoFuncionario();
+        calcularValorRealTransacao();
+
+        this.getImovel().getImobiliaria().transacoes.add(this);
     }
 
     @Override
     public String toString() {
-        return "Venda{ " + super.toString() + "} " ;
+        return "Venda{} " + super.toString();
     }
 }

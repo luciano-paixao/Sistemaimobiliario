@@ -15,17 +15,26 @@ public class Funcionario extends Pessoa {
 
     private String senha;
 
-    protected Double Totalcomissoes;
+    private Double totalComissoes;
 
-    public Funcionario(String cpf, String nome, Endereco endereco, List<String> telefones,
-                       String cargo, Double salarioBase, String usuario, String senha) {
+    public Funcionario(String cpf, String nome, Endereco endereco, String cargo, Double salarioBase, String usuario, String senha) {
+        super(cpf, nome, endereco);
+        this.dataIngresso = LocalDate.now();
+        this.cargo = cargo;
+        this.salarioBase = salarioBase;
+        this.usuario = usuario;
+        this.senha = senha;
+        this.totalComissoes = 0.0;
+    }
+
+    public Funcionario(String cpf, String nome, Endereco endereco, List<String> telefones, String cargo, Double salarioBase, String usuario, String senha) {
         super(cpf, nome, endereco, telefones);
         this.dataIngresso = LocalDate.now();
         this.cargo = cargo;
         this.salarioBase = salarioBase;
         this.usuario = usuario;
         this.senha = senha;
-        this.Totalcomissoes = 0.0;
+        this.totalComissoes = 0.0;
     }
 
     public Boolean login(String usuario, String senha){
@@ -37,7 +46,11 @@ public class Funcionario extends Pessoa {
     }
 
     public Double calcularSalario() {
-        return salarioBase + Totalcomissoes;
+        return salarioBase + totalComissoes;
+    }
+
+    public void adicionarComissao(Double valor) {
+        this.totalComissoes += valor;
     }
 
     public LocalDate getDataIngresso() {
@@ -81,11 +94,7 @@ public class Funcionario extends Pessoa {
     }
 
     public Double getComissoes() {
-        return Totalcomissoes;
-    }
-
-    public void setComissoes(Double comissoes) {
-        this.Totalcomissoes = comissoes;
+        return totalComissoes;
     }
 
     @Override

@@ -7,25 +7,55 @@ import java.util.List;
 
 public abstract class Imovel {
 
-    private TipoDisponibilidade tipoDisponibilidade;
-    private Boolean disponibilidade;
     private LocalDate dataConstrucao;
-    private List<ClienteProprietario> proprietarios;
+
+    private Boolean disponibilidade;
+
     private Endereco endereco;
-    private Aluguel aluguel;
-    protected Venda venda;
+
+    private List<ClienteProprietario> proprietarios;
+
+    private TipoDisponibilidade tipoDisponibilidade;
+
+    private LocalDate incioOferta;
+
+    private LocalDate fimOferta;
+
+    private Imobiliaria imobiliaria;
+
+    private Double valorSugerido;
+
+    public Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade,
+                  LocalDate incioOferta, LocalDate fimOferta, Imobiliaria imobiliaria, Double valorSugerido) {
+        this.dataConstrucao = dataConstrucao;
+        this.disponibilidade = true;
+        this.endereco = endereco;
+        this.proprietarios = proprietarios;
+        this.tipoDisponibilidade = tipoDisponibilidade;
+        this.incioOferta = incioOferta;
+        this.imobiliaria = imobiliaria;
+        this.valorSugerido = valorSugerido;
+
+        this.fimOferta = fimOferta;
+    }
 
     public Imovel(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
-                  List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade) {
+                  List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade, Double valorSugerido) {
         this.dataConstrucao = dataConstrucao;
         this.disponibilidade = disponibilidade;
         this.endereco = endereco;
         this.proprietarios = proprietarios;
         this.tipoDisponibilidade = tipoDisponibilidade;
+        this.incioOferta = LocalDate.now();
+        this.valorSugerido = valorSugerido;
+    };
+
+    public void adicionarProprietario(ClienteProprietario proprietario){
+        this.proprietarios.add(proprietario);
     }
 
-    protected void adicionarProprietario(ClienteProprietario cli){
-        this.proprietarios.add(cli);
+    public void removerProprietario(ClienteProprietario proprietario){
+        this.proprietarios.remove(proprietario);
     }
 
     public LocalDate getDataConstrucao() {
@@ -68,7 +98,35 @@ public abstract class Imovel {
         this.tipoDisponibilidade = tipoDisponibilidade;
     }
 
-    public String mostarProprietarios(){
+    public LocalDate getIncioOferta() {
+        return incioOferta;
+    }
+
+    public void setIncioOferta(LocalDate incioOferta) {
+        this.incioOferta = incioOferta;
+    }
+
+    public LocalDate getFimOferta() {
+        return fimOferta;
+    }
+
+    public void setFimOferta(LocalDate fimOferta) {
+        this.fimOferta = fimOferta;
+    }
+
+    public Imobiliaria getImobiliaria() {
+        return imobiliaria;
+    }
+
+    public Double getValorSugerido() {
+        return valorSugerido;
+    }
+
+    public void setValorSugerido(Double valorSugerido) {
+        this.valorSugerido = valorSugerido;
+    }
+
+    public String mostrarProprietarios(){
         String nomesProprietarios = "";
         for (ClienteProprietario Proprietarios : this.proprietarios){
             nomesProprietarios += Proprietarios.getNome() + ",";
@@ -81,7 +139,7 @@ public abstract class Imovel {
         return "Imovel{" +
                 "disponibilidade= " + disponibilidade +
                 "\n dataConstrucao= " + dataConstrucao +
-                "\n proprietarios= " + mostarProprietarios() +
+                "\n proprietarios= " + mostrarProprietarios() +
                 "\n endereco=" + endereco +
                 '}';
     }
