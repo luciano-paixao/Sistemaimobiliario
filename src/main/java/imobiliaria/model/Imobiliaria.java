@@ -25,6 +25,7 @@ public class Imobiliaria {
         imoveisParaVender = new ArrayList<>();
         funcionarios = new ArrayList<>();
         this.clienteUsuarios = new ArrayList<>();
+        this.clienteProprietarios = new ArrayList<>();
     }
 
     public void cadastrarFuncionario() {
@@ -210,6 +211,10 @@ public class Imobiliaria {
 
     public void removerClienteusario(ClienteUsuario cliente) {
         this.clienteUsuarios.remove(cliente);
+    }
+
+    public List<ClienteProprietario> getClienteProprietarios() {
+        return clienteProprietarios;
     }
 
     public void adicionarClienteProprietario(ClienteProprietario cliente) {

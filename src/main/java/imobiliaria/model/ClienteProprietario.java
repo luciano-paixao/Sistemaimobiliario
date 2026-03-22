@@ -14,9 +14,10 @@ public class ClienteProprietario extends Cliente{
         super();
     }
 
-    public ClienteProprietario(String cpf, String nome, Endereco endereco, List<String> telefones, String email, String profissao, Sexo sexo, EstadoCivil estadoCivil) {
+    public ClienteProprietario(String cpf, String nome, Endereco endereco, List<String> telefones, String email, String profissao, Sexo sexo, EstadoCivil estadoCivil, Imobiliaria imobi) {
         super(cpf, nome, endereco, telefones, email, profissao, sexo, estadoCivil);
         imoveis = new ArrayList<>();
+        imobi.adicionarClienteProprietario(this);
     }
 
     public ArrayList<Imovel> getImoveis() {

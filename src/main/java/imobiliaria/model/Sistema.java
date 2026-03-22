@@ -1,5 +1,7 @@
 package main.java.imobiliaria.model;
 
+import main.java.imobiliaria.model.enums.EstadoCivil;
+import main.java.imobiliaria.model.enums.Sexo;
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
 
 import java.util.Scanner;
@@ -11,15 +13,19 @@ public class Sistema {
 
     public static void main(String[] args) {
 
+            Imobiliaria imobi = new Imobiliaria();
+
             // Lista de proprietários (exemplo simples)
             List<ClienteProprietario> proprietarios1 = new ArrayList<>();
             List<ClienteProprietario> proprietarios2 = new ArrayList<>();
+            List<String> telefonesDeQuem = new ArrayList<>();
+            telefonesDeQuem.add("11984930403");
 
             // Objetos auxiliares (supondo construtores básicos)
             Endereco endereco1 = new Endereco("Rua A", "123", "Centro");
             Endereco endereco2 = new Endereco("Rua B", "456", "Bairro X");
 
-
+            proprietarios1.add(new ClienteProprietario("12312312345", "Gertrudes", endereco1, telefonesDeQuem, "gerzinha@hotmail.com", "Qualquer Uma", Sexo.FEMININO, EstadoCivil.CASADO, imobi));
 
             // Criando dois apartamentos
             Apartamento ap1 = new Apartamento(
@@ -79,10 +85,10 @@ public class Sistema {
                 500.0
         );
 
-            Imobiliaria imobi = new Imobiliaria();
             imobi.imoveisParaVender.add(ap2);
             imobi.imoveisParaVender.add(ap1);
             imobi.imoveisParaVender.add(ap3);
+            IO.println(proprietarios1);
             menu(imobi);
         }
 
