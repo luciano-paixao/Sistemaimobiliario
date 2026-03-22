@@ -28,6 +28,23 @@ public class Sistema {
             Cliente cli1 = new Cliente("12312312345", "Semfim", endereco1, "teste@hotmail.com", "Qualqueruma", Sexo.FEMININO, EstadoCivil.DIVORCIADO);
             imobi.adicionarCliente(cli1);
 
+
+            List<String> telefonesFu1 = new ArrayList<>();
+            telefonesFu1.add("(91) 98888-7777");
+
+            Funcionario fu1 = new Funcionario(
+                    "12345678900",
+                    "João Silva",
+                    endereco2,
+                    telefonesFu1,
+                    "VENDEDOR",
+                    2500.0,
+                    "joao.vendedor",
+                    "senha123"
+            );
+
+            imobi.adicionarFuncionario(fu1);
+
             // Criando dois apartamentos
             Apartamento ap1 = new Apartamento(
                     LocalDate.of(2015, 5, 10),
@@ -98,9 +115,9 @@ public class Sistema {
                 24000.00
         );
 
-            imobi.getImoveisDisponiveis().add(ap2);
-            imobi.getImoveisDisponiveis().add(ap1);
-            imobi.getImoveisDisponiveis().add(ap3);
+            imobi.getImoveisDisponiveisSimples().add(ap2);
+            imobi.getImoveisDisponiveisSimples().add(ap1);
+            imobi.getImoveisDisponiveisSimples().add(ap3);
             menu(imobi);
         }
 
