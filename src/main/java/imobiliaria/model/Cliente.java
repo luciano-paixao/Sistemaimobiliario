@@ -12,6 +12,10 @@ public class Cliente extends Pessoa {
     private Sexo sexo;
     private EstadoCivil estadoCivil;
 
+    public Cliente(){
+        super();
+    }
+
     public Cliente(String cpf, String nome, Endereco endereco, List<String> telefones, String email, String profissao, Sexo sexo, EstadoCivil estadoCivil) {
         super(cpf, nome, endereco, telefones);
         this.email = email;

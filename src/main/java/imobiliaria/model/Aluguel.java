@@ -12,15 +12,14 @@ public class Aluguel extends RegistroTransacao {
 
     public Aluguel(ClienteProprietario clienteProprietario, LocalDate dataTransacao,
                    String formaPagamento, Funcionario funcionario, Imovel imovel,
-                   double margemImobiliaria, Integer numContrato, ClienteUsuario usuario,
-                   Double valorReal, Double valorSugerido, List<Pessoa> fiadores,
-                   LocalDate fimContrato, List<Pessoa> indicadores, LocalDate inicioContrato) {
-        super(clienteProprietario, dataTransacao, formaPagamento, funcionario, imovel,
-                margemImobiliaria, numContrato, usuario, valorReal, valorSugerido);
+                   double margemImobiliaria, ClienteUsuario usuario, Double valorSugerido,
+                   List<Pessoa> fiadores, List<Pessoa> indicadores, LocalDate inicioContrato,
+                   LocalDate fimContrato) {
+        super(clienteProprietario, dataTransacao, formaPagamento, funcionario, imovel, margemImobiliaria, usuario, valorSugerido);
         this.fiadores = fiadores;
-        this.fimContrato = fimContrato;
         this.indicadores = indicadores;
         this.inicioContrato = inicioContrato;
+        this.fimContrato = fimContrato;
     }
 
     public List<Pessoa> getFiadores() {
@@ -53,5 +52,18 @@ public class Aluguel extends RegistroTransacao {
 
     public void setInicioContrato(LocalDate inicioContrato) {
         this.inicioContrato = inicioContrato;
+    }
+
+    @Override
+    public String toString() {
+        return "Aluguel{" +
+                "fiadores=" + fiadores +
+                ", indicadores=" + indicadores +
+                ", inicioContrato=" + inicioContrato +
+                ", fimContrato=" + fimContrato +
+                ", usuario=" + usuario +
+                ", clienteProprietario=" + clienteProprietario +
+                ", valorAux=" + valorAux +
+                "} " + super.toString();
     }
 }

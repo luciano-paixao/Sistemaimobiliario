@@ -28,6 +28,14 @@ public class Funcionario extends Pessoa {
         this.Totalcomissoes = 0.0;
     }
 
+    public Boolean login(String usuario, String senha){
+        if (usuario.equals(this.usuario) && senha.equals(this.senha)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     public Double calcularSalario() {
         return salarioBase + Totalcomissoes;
     }

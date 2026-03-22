@@ -6,12 +6,12 @@ public class Endereco {
 
     String rua;
 
-    String cep;
+    String numero;
 
-    public Endereco(String bairro, String rua, String cep) {
+    public Endereco(String bairro, String rua, String numero) {
         this.bairro = bairro;
         this.rua = rua;
-        this.cep = cep;
+        this.numero = numero;
     }
 
     public String getBairro() {
@@ -30,12 +30,12 @@ public class Endereco {
         this.rua = rua;
     }
 
-    public String getCep() {
-        return cep;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setCep(String cep) {
-        this.cep = cep;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Endereco {
         return "Endereco{" +
                 "bairro='" + bairro + '\'' +
                 ", rua='" + rua + '\'' +
-                ", cep='" + cep + '\'' +
+                ", numero='" + numero + '\'' +
                 '}';
     }
 }
