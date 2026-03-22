@@ -1,26 +1,42 @@
 package main.java.imobiliaria.model;
 
+import main.java.imobiliaria.model.enums.TipoPagamento;
+
 import java.time.LocalDate;
 import java.util.List;
 
 public class Aluguel extends RegistroTransacao {
 
     private List<Pessoa> fiadores;
-    private List<Pessoa> indicadores;
+
+    private List<Pessoa> indicacoes;
+
     private LocalDate inicioContrato;
+
     private LocalDate fimContrato;
 
-    public Aluguel(ClienteProprietario clienteProprietario, LocalDate dataTransacao,
-                   String formaPagamento, Funcionario funcionario, Imovel imovel,
-                   double margemImobiliaria, Integer numContrato, ClienteUsuario usuario,
-                   Double valorReal, Double valorSugerido, List<Pessoa> fiadores,
-                   LocalDate fimContrato, List<Pessoa> indicadores, LocalDate inicioContrato) {
-        super(clienteProprietario, dataTransacao, formaPagamento, funcionario, imovel,
-                margemImobiliaria, numContrato, usuario, valorReal, valorSugerido);
+    public Aluguel(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, ClienteProprietario proprietario, Cliente comprador,
+                   Double valorReal, Double valorSugerido, List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato, LocalDate fimContrato) {
+        super(tipoPagamento, imovel, funcionario, proprietario, comprador, valorReal, valorSugerido);
         this.fiadores = fiadores;
-        this.fimContrato = fimContrato;
-        this.indicadores = indicadores;
+        this.indicacoes = indicacoes;
         this.inicioContrato = inicioContrato;
+        this.fimContrato = fimContrato;
+    }
+
+    @Override
+    public void executar() {
+//        ClienteProprietario cp = new ClienteProprietario(getCliente().getCpf(), getCliente().getNome(), getCliente().getEndereco(),
+//                getCliente().getEmail(), getCliente().getProfissao(), getCliente().getSexo(), getCliente().getEstadoCivil());
+//        cp.adiiconarImovel(this.getImovel());
+//        this.getImovel().adicionarProprietario(cp);
+//        this.getImovel().removerProprietario(this.getClienteProprietario());
+
+        this.getImovel().setDisponibilidade(false);
+        this.getImovel().setFimOferta(LocalDate.now());
+
+        transferirComissaoImobiliaria();
+        transferirComissaoFuncionario();
     }
 
     public List<Pessoa> getFiadores() {
@@ -32,11 +48,11 @@ public class Aluguel extends RegistroTransacao {
     }
 
     public List<Pessoa> getIndicadores() {
-        return indicadores;
+        return indicacoes;
     }
 
     public void setIndicadores(List<Pessoa> indicadores) {
-        this.indicadores = indicadores;
+        this.indicacoes = indicadores;
     }
 
     public LocalDate getFimContrato() {

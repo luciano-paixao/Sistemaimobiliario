@@ -1,118 +1,83 @@
 package main.java.imobiliaria.model;
 
+import main.java.imobiliaria.model.enums.TipoPagamento;
+
 import java.time.LocalDate;
 
-public class RegistroTransacao {
+public abstract class RegistroTransacao {
 
     private Integer numContrato;
     private static Integer contador;
     private LocalDate dataTransacao;
-    private String formaPagamento;
+    private TipoPagamento tipoPagamento;
     private Imovel imovel;
     private Funcionario funcionario;
-    ClienteUsuario usuario;
-    ClienteProprietario clienteProprietario;
-    private Double valorSugerido;
+    private Cliente comprador;
+    private ClienteProprietario proprietario;
     private Double valorReal;
-    private double margemImobiliaria;
+    private Double valorSugerido;
 
-    public RegistroTransacao(ClienteProprietario clienteProprietario, LocalDate dataTransacao,
-                             String formaPagamento, Funcionario funcionario, Imovel imovel,
-                             double margemImobiliaria, Integer numContrato, ClienteUsuario usuario,
-                             Double valorReal, Double valorSugerido) {
-        this.clienteProprietario = clienteProprietario;
-        this.dataTransacao = dataTransacao;
-        this.formaPagamento = formaPagamento;
-        this.funcionario = funcionario;
+    public RegistroTransacao(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario,
+                             ClienteProprietario proprietario, Cliente comprador, Double valorReal, Double valorSugerido) {
+        this.numContrato = RegistroTransacao.contador++;
+        this.dataTransacao = LocalDate.now();
+        this.tipoPagamento = tipoPagamento;
         this.imovel = imovel;
-        this.margemImobiliaria = margemImobiliaria;
-        this.contador++;
-        this.numContrato = this.contador;
-        this.usuario = usuario;
+        this.funcionario = funcionario;
+        this.proprietario = proprietario;
+        this.comprador = comprador;
         this.valorReal = valorReal;
         this.valorSugerido = valorSugerido;
     }
 
-    public RegistroTransacao(ClienteProprietario clienteProprietario, LocalDate dataTransacao,
-                             String formaPagamento, Funcionario funcionario, Imovel imovel,
-                             double margemImobiliaria, Integer numContrato,
-                             Double valorReal, Double valorSugerido) {
-        this.clienteProprietario = clienteProprietario;
-        this.dataTransacao = dataTransacao;
-        this.formaPagamento = formaPagamento;
-        this.funcionario = funcionario;
-        this.imovel = imovel;
-        this.margemImobiliaria = margemImobiliaria;
-        this.contador++;
-        this.numContrato = this.contador;
-        this.valorReal = valorReal;
-        this.valorSugerido = valorSugerido;
-    }
+    public abstract void executar();
 
-
-
-    public void lucroImobiliaria(){
+    public void transferirComissaoImobiliaria(){
         if(this.imovel instanceof Casa){
-            margemImobiliaria = valorReal * 0.15;
-            valorReal -= valorReal * 0.15;
+            imovel.getImobiliaria().adicionarComissao(valorReal * 0.15);
+            //valorReal -= valorReal * 0.15;
         }if(this.imovel instanceof Terreno){
-            margemImobiliaria = valorReal * 0.10;
-            valorReal -= valorReal * 0.10;
+            imovel.getImobiliaria().adicionarComissao(valorReal * 0.10);
+            //valorReal -= valorReal * 0.10;
         }if(this.imovel instanceof Apartamento){
-            margemImobiliaria = valorReal * 0.12;
-            valorReal -= valorReal * 0.12;
+            imovel.getImobiliaria().adicionarComissao(valorReal * 0.12);
+            //valorReal -= valorReal * 0.12;
         }if(this.imovel instanceof SalaComercial){
-            margemImobiliaria = valorReal * 0.14;
-            valorReal -= valorReal * 0.14;
+            imovel.getImobiliaria().adicionarComissao(valorReal * 0.14);
+            //valorReal -= valorReal * 0.14;
         }
     }
 
-    public void ComissaoFuncionario(){
+    public void transferirComissaoFuncionario(){
         if(this.imovel instanceof Casa){
-            this.funcionario.Totalcomissoes += valorReal * 0.05;
-            valorReal -= valorReal * 0.05;
+            this.funcionario.adicionarComissao(valorReal * 0.05);
+            //valorReal -= valorReal * 0.05;
         }if(this.imovel instanceof Terreno){
-            this.funcionario.Totalcomissoes += valorReal * 0.01;
-            valorReal -= valorReal * 0.01;
+            this.funcionario.adicionarComissao(valorReal * 0.01);
+            //valorReal -= valorReal * 0.01;
         }if(this.imovel instanceof Apartamento){
-            this.funcionario.Totalcomissoes += valorReal * 0.02;;
-            valorReal -= valorReal * 0.02;
+            this.funcionario.adicionarComissao(valorReal * 0.02);
+            //valorReal -= valorReal * 0.02;
         }if(this.imovel instanceof SalaComercial){
-            this.funcionario.Totalcomissoes += valorReal * 0.04;
-            valorReal -= valorReal * 0.04;
+            this.funcionario.adicionarComissao(valorReal * 0.04);
+            //valorReal -= valorReal * 0.04;
         }
     }
 
-    public static Integer getContador() {
-        return contador;
-    }
-
-    public static void setContador(Integer contador) {
-        RegistroTransacao.contador = contador;
+    public Integer getNumContrato() {
+        return numContrato;
     }
 
     public LocalDate getDataTransacao() {
         return dataTransacao;
     }
 
-    public void setDataTransacao(LocalDate dataTransacao) {
-        this.dataTransacao = dataTransacao;
+    public TipoPagamento getTipoPagamento() {
+        return tipoPagamento;
     }
 
-    public String getFormaPagamento() {
-        return formaPagamento;
-    }
-
-    public void setFormaPagamento(String formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
+    public void setTipoPagamento(TipoPagamento tipoPagamento) {
+        this.tipoPagamento = tipoPagamento;
     }
 
     public Imovel getImovel() {
@@ -123,28 +88,28 @@ public class RegistroTransacao {
         this.imovel = imovel;
     }
 
-    public double getMargemImobiliaria() {
-        return margemImobiliaria;
+    public Funcionario getFuncionario() {
+        return funcionario;
     }
 
-    public void setMargemImobiliaria(double margemImobiliaria) {
-        this.margemImobiliaria = margemImobiliaria;
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 
-    public Integer getNumContrato() {
-        return numContrato;
+    public Cliente getCliente() {
+        return comprador;
     }
 
-    public void setNumContrato(Integer numContrato) {
-        this.numContrato = numContrato;
+    public void setCliente(Cliente cliente) {
+        this.comprador = cliente;
     }
 
-    public Double getValorReal() {
-        return valorReal;
+    public ClienteProprietario getClienteProprietario() {
+        return proprietario;
     }
 
-    public void setValorReal(Double valorReal) {
-        this.valorReal = valorReal;
+    public void setClienteProprietario(ClienteProprietario proprietario) {
+        this.proprietario = proprietario;
     }
 
     public Double getValorSugerido() {
@@ -155,19 +120,26 @@ public class RegistroTransacao {
         this.valorSugerido = valorSugerido;
     }
 
+    public Double getValorReal() {
+        return valorReal;
+    }
+
+    public void setValorReal(Double valorReal) {
+        this.valorReal = valorReal;
+    }
+
     @Override
     public String toString() {
         return "RegistroTransacao{" +
                 "numContrato=" + numContrato +
                 ", dataTransacao=" + dataTransacao +
-                ", formaPagamento='" + formaPagamento + '\'' +
+                ", formaPagamento='" + tipoPagamento + '\'' +
                 ", imovel=" + imovel +
                 ", funcionario=" + funcionario +
-                ", usuario=" + usuario +
-                ", clienteProprietario=" + clienteProprietario +
+                ", usuario=" + comprador +
+                ", clienteProprietario=" + proprietario +
                 ", valorSugerido=" + valorSugerido +
                 ", valorReal=" + valorReal +
-                ", margemImobiliaria=" + margemImobiliaria +
                 '}';
     }
 }
