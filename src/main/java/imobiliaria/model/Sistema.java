@@ -25,7 +25,22 @@ public class Sistema {
             Endereco endereco1 = new Endereco("Rua A", "123", "Centro");
             Endereco endereco2 = new Endereco("Rua B", "456", "Bairro X");
 
-            proprietarios1.add(new ClienteProprietario("12312312345", "Gertrudes", endereco1, telefonesDeQuem, "gerzinha@hotmail.com", "Qualquer Uma", Sexo.FEMININO, EstadoCivil.CASADO, imobi));
+//            imobi.getFuncionarios().add()
+
+            ClienteProprietario proprietario1 =
+                    new ClienteProprietario(
+                        "12312312345",
+                        "Gertrudes",
+                        endereco1,
+                        telefonesDeQuem,
+                        "gerzinha@hotmail.com",
+                        "Qualquer Uma",
+                        Sexo.FEMININO,
+                        EstadoCivil.CASADO,
+                        imobi
+                    );
+
+            imobi.getClienteProprietarios().add(proprietario1);
 
             // Criando dois apartamentos
             Apartamento ap1 = new Apartamento(
@@ -88,14 +103,14 @@ public class Sistema {
             imobi.imoveisParaVender.add(ap2);
             imobi.imoveisParaVender.add(ap1);
             imobi.imoveisParaVender.add(ap3);
-            IO.println(proprietarios1);
+            IO.println("Teste Básico" + imobi.getClienteProprietarios());
             menu(imobi);
         }
 
     public static void menu(Imobiliaria imobi){
         Scanner leitor = new Scanner(System.in);
 
-        IO.println("olá, bem vindo a imobilíaria");
+        IO.println("Olá, bem vindo a imobilíaria");
         System.out.println("Digite o numero de acordo com a opção que deseja realizar");
         System.out.println("1_Cadastrar funcionario");
         System.out.println("2_Cadastrar cliente");

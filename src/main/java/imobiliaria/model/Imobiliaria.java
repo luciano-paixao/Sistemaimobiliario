@@ -156,8 +156,45 @@ public class Imobiliaria {
         }
     }
 
-    public void Alugar(){
+    public void Alugar(Cliente cliente, Funcionario fun) throws LoginErrado {
+        if( fun.login(fun.getUsuario(), fun.getSenha())){
+            Scanner leitor = new Scanner(System.in);
+            IO.println("Escolha o imovel que deseja comprar\n");
+            List<Imovel> imoAux = this.imoveisParaAlugar;
 
+            loop:
+            for (Imovel imo : imoAux){
+                IO.println("Se deseja esse imovel digite 1 para selecionar ou 2 para o proximo \n");
+                IO.println(imo + "\n");
+                int opcao = leitor.nextInt();
+
+                switch (opcao){
+                    case 1:
+                        imoveisVendidos.add(imo);
+                        removerImovelParaVender(imo);
+                        imo.setProprietarios(null);
+                        // colocar o metodo executar aqui Débora por favor
+//                    Cliente clientePropri = new ClienteProprietario();
+//                    clientePropri = cliente;
+//                    ClienteProprietario cli = (ClienteProprietario) clientePropri;
+//                    imo.adicionarProprietario(cli);
+
+
+                        IO.println("Teste");
+                        for (Imovel imoTeste : imoveisParaVender){
+                            IO.println(imoTeste);
+                        }
+
+                        //                 imo.venda.
+
+                        break loop;
+                    case 2:
+                        continue;
+                }
+            }
+        }else {
+            throw new LoginErrado();
+        }
     }
 
 
@@ -211,6 +248,10 @@ public class Imobiliaria {
 
     public void removerClienteusario(ClienteUsuario cliente) {
         this.clienteUsuarios.remove(cliente);
+    }
+
+    public List<Funcionario> getFuncionarios() {
+        return this.funcionarios;
     }
 
     public List<ClienteProprietario> getClienteProprietarios() {
