@@ -1,27 +1,41 @@
 package main.java.imobiliaria.model;
 
+import main.java.imobiliaria.model.enums.TipoPagamento;
+
 import java.time.LocalDate;
 import java.util.List;
 
 public class Aluguel extends RegistroTransacao {
 
     private List<Pessoa> fiadores;
-    private List<Pessoa> indicadores;
+
+    private List<Pessoa> indicacoes;
+
     private LocalDate inicioContrato;
+
     private LocalDate fimContrato;
     private LocalDate dataAluguel;
 
-    public Aluguel(ClienteProprietario clienteProprietario, LocalDate dataTransacao,
-                   String formaPagamento, Funcionario funcionario, Imovel imovel,
-                   double margemImobiliaria, ClienteUsuario usuario, Double valorSugerido,
-                   List<Pessoa> fiadores, List<Pessoa> indicadores, LocalDate inicioContrato,
-                   LocalDate fimContrato) {
-        super(clienteProprietario, dataTransacao, formaPagamento, funcionario, imovel, margemImobiliaria, usuario, valorSugerido);
+    private LocalDate dataAluguel;
+
+    public Aluguel(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, ClienteProprietario proprietario, Cliente interessado,
+                   Double valorSugerido, List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato, LocalDate fimContrato) {
+        super(tipoPagamento, imovel, funcionario, proprietario, interessado, valorSugerido);
         this.fiadores = fiadores;
-        this.indicadores = indicadores;
+        this.indicacoes = indicacoes;
         this.inicioContrato = inicioContrato;
         this.fimContrato = fimContrato;
         this.dataAluguel = fimContrato.plusMonths(1);
+    }
+
+    @Override
+    public void executar() {
+        this.getImovel().setDisponibilidade(false);
+        this.getImovel().setFimOferta(LocalDate.now());
+
+        transferirComissaoImobiliaria();
+        transferirComissaoFuncionario();
+        calcularValorRealTransacao();
     }
 
     public List<Pessoa> getFiadores() {
@@ -32,12 +46,12 @@ public class Aluguel extends RegistroTransacao {
         this.fiadores = fiadores;
     }
 
-    public List<Pessoa> getIndicadores() {
-        return indicadores;
+    public List<Pessoa> getIndicacoes() {
+        return indicacoes;
     }
 
-    public void setIndicadores(List<Pessoa> indicadores) {
-        this.indicadores = indicadores;
+    public void setIndicacoes(List<Pessoa> indicacoes) {
+        this.indicacoes = indicacoes;
     }
 
     public LocalDate getFimContrato() {
@@ -56,16 +70,22 @@ public class Aluguel extends RegistroTransacao {
         this.inicioContrato = inicioContrato;
     }
 
+    public LocalDate getDataAluguel() {
+        return dataAluguel;
+    }
+
+    public void setDataAluguel(LocalDate dataAluguel) {
+        this.dataAluguel = dataAluguel;
+    }
+
     @Override
     public String toString() {
         return "Aluguel{" +
                 "fiadores=" + fiadores +
-                ", indicadores=" + indicadores +
+                ", indicacoes=" + indicacoes +
                 ", inicioContrato=" + inicioContrato +
                 ", fimContrato=" + fimContrato +
-                ", usuario=" + usuario +
-                ", clienteProprietario=" + clienteProprietario +
-                ", valorAux=" + valorAux +
-                "} " + super.toString();
+                ", dataAluguel=" + dataAluguel +
+                '}';
     }
 }

@@ -7,13 +7,33 @@ import java.util.List;
 
 public abstract class Imovel {
 
-    private TipoDisponibilidade tipoDisponibilidade;
-    private Boolean disponibilidade;
     private LocalDate dataConstrucao;
-    private List<ClienteProprietario> proprietarios;
+
+    private Boolean disponibilidade;
+
     private Endereco endereco;
-    private Aluguel aluguel;
-    protected Venda venda;
+
+    private List<ClienteProprietario> proprietarios;
+
+    private TipoDisponibilidade tipoDisponibilidade;
+
+    private LocalDate incioOferta;
+
+    private LocalDate fimOferta;
+
+    private Imobiliaria imobiliaria;
+
+    public Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade,
+                  LocalDate incioOferta, LocalDate fimOferta, Imobiliaria imobiliaria) {
+        this.dataConstrucao = dataConstrucao;
+        this.disponibilidade = true;
+        this.endereco = endereco;
+        this.proprietarios = proprietarios;
+        this.tipoDisponibilidade = tipoDisponibilidade;
+        this.incioOferta = incioOferta;
+        this.fimOferta = fimOferta;
+        this.imobiliaria = imobiliaria;
+    }
 
     public Imovel(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
                   List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade) {
@@ -22,10 +42,15 @@ public abstract class Imovel {
         this.endereco = endereco;
         this.proprietarios = proprietarios;
         this.tipoDisponibilidade = tipoDisponibilidade;
+        this.incioOferta = LocalDate.now();
+    };
+
+    public void adicionarProprietario(ClienteProprietario proprietario){
+        this.proprietarios.add(proprietario);
     }
 
-    protected void adicionarProprietario(ClienteProprietario cli){
-        this.proprietarios.add(cli);
+    public void removerProprietario(ClienteProprietario proprietario){
+        this.proprietarios.remove(proprietario);
     }
 
     public LocalDate getDataConstrucao() {
@@ -66,6 +91,26 @@ public abstract class Imovel {
 
     public void setTipoDisponibilidade(TipoDisponibilidade tipoDisponibilidade) {
         this.tipoDisponibilidade = tipoDisponibilidade;
+    }
+
+    public LocalDate getIncioOferta() {
+        return incioOferta;
+    }
+
+    public void setIncioOferta(LocalDate incioOferta) {
+        this.incioOferta = incioOferta;
+    }
+
+    public LocalDate getFimOferta() {
+        return fimOferta;
+    }
+
+    public void setFimOferta(LocalDate fimOferta) {
+        this.fimOferta = fimOferta;
+    }
+
+    public Imobiliaria getImobiliaria() {
+        return imobiliaria;
     }
 
     public String mostarProprietarios(){
