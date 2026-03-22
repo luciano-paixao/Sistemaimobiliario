@@ -3,6 +3,7 @@ package main.java.imobiliaria.model;
 import main.java.imobiliaria.model.enums.TipoPagamento;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public abstract class RegistroTransacao {
 
@@ -20,7 +21,7 @@ public abstract class RegistroTransacao {
 
     private Cliente interessado;
 
-    private ClienteProprietario proprietario;
+    private List<ClienteProprietario> proprietarios;
 
     private Double valorSugerido;
 
@@ -29,13 +30,13 @@ public abstract class RegistroTransacao {
     private Double margemImobiliaria;
 
     public RegistroTransacao(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario,
-                             ClienteProprietario proprietario, Cliente interessado, Double valorSugerido) {
+                             List<ClienteProprietario> proprietarios, Cliente interessado, Double valorSugerido) {
         this.numContrato = RegistroTransacao.contador++;
         this.dataTransacao = LocalDate.now();
         this.tipoPagamento = tipoPagamento;
         this.imovel = imovel;
         this.funcionario = funcionario;
-        this.proprietario = proprietario;
+        this.proprietarios = proprietarios;
         this.interessado = interessado;
         this.valorSugerido = valorSugerido;
         this.valorReal = valorSugerido;
@@ -123,12 +124,12 @@ public abstract class RegistroTransacao {
         this.interessado = interessado;
     }
 
-    public ClienteProprietario getClienteProprietario() {
-        return proprietario;
+    public List<ClienteProprietario> getClienteProprietario() {
+        return proprietarios;
     }
 
-    public void setClienteProprietario(ClienteProprietario proprietario) {
-        this.proprietario = proprietario;
+    public void setClienteProprietario(List<ClienteProprietario> proprietarios) {
+        this.proprietarios = proprietarios;
     }
 
     public Double getValorSugerido() {
@@ -156,7 +157,7 @@ public abstract class RegistroTransacao {
                 ", imovel=" + imovel +
                 ", funcionario=" + funcionario +
                 ", clienteInteressado=" + interessado +
-                ", clienteProprietario=" + proprietario +
+                ", clienteProprietario=" + proprietarios +
                 ", valorSugerido=" + valorSugerido +
                 ", valorReal=" + valorReal +
                 '}';
