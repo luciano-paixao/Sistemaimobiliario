@@ -16,8 +16,6 @@ public class Aluguel extends RegistroTransacao {
     private LocalDate fimContrato;
     private LocalDate dataAluguel;
 
-    private LocalDate dataAluguel;
-
     public Aluguel(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, ClienteProprietario proprietario, Cliente interessado,
                    Double valorSugerido, List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato, LocalDate fimContrato) {
         super(tipoPagamento, imovel, funcionario, proprietario, interessado, valorSugerido);
