@@ -15,28 +15,26 @@ public class Aluguel extends RegistroTransacao {
 
     private LocalDate fimContrato;
 
-    public Aluguel(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, ClienteProprietario proprietario, Cliente comprador,
-                   Double valorReal, Double valorSugerido, List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato, LocalDate fimContrato) {
-        super(tipoPagamento, imovel, funcionario, proprietario, comprador, valorReal, valorSugerido);
+    private LocalDate dataAluguel;
+
+    public Aluguel(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, ClienteProprietario proprietario, Cliente interessado,
+                   Double valorSugerido, List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato, LocalDate fimContrato) {
+        super(tipoPagamento, imovel, funcionario, proprietario, interessado, valorSugerido);
         this.fiadores = fiadores;
         this.indicacoes = indicacoes;
         this.inicioContrato = inicioContrato;
         this.fimContrato = fimContrato;
+        this.dataAluguel = fimContrato.plusMonths(1);
     }
 
     @Override
     public void executar() {
-//        ClienteProprietario cp = new ClienteProprietario(getCliente().getCpf(), getCliente().getNome(), getCliente().getEndereco(),
-//                getCliente().getEmail(), getCliente().getProfissao(), getCliente().getSexo(), getCliente().getEstadoCivil());
-//        cp.adiiconarImovel(this.getImovel());
-//        this.getImovel().adicionarProprietario(cp);
-//        this.getImovel().removerProprietario(this.getClienteProprietario());
-
         this.getImovel().setDisponibilidade(false);
         this.getImovel().setFimOferta(LocalDate.now());
 
         transferirComissaoImobiliaria();
         transferirComissaoFuncionario();
+        calcularValorRealTransacao();
     }
 
     public List<Pessoa> getFiadores() {

@@ -23,8 +23,17 @@ public abstract class Imovel {
 
     private Imobiliaria imobiliaria;
 
-    //private Aluguel aluguel;
-    //protected Venda venda;
+    public Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade,
+                  LocalDate incioOferta, LocalDate fimOferta, Imobiliaria imobiliaria) {
+        this.dataConstrucao = dataConstrucao;
+        this.disponibilidade = true;
+        this.endereco = endereco;
+        this.proprietarios = proprietarios;
+        this.tipoDisponibilidade = tipoDisponibilidade;
+        this.incioOferta = incioOferta;
+        this.fimOferta = fimOferta;
+        this.imobiliaria = imobiliaria;
+    }
 
     public Imovel(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
                   List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade) {

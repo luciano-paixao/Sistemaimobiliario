@@ -7,27 +7,36 @@ import java.time.LocalDate;
 public abstract class RegistroTransacao {
 
     private Integer numContrato;
+
     private static Integer contador;
+
     private LocalDate dataTransacao;
+
     private TipoPagamento tipoPagamento;
+
     private Imovel imovel;
+
     private Funcionario funcionario;
-    private Cliente comprador;
+
+    private Cliente interessado;
+
     private ClienteProprietario proprietario;
-    private Double valorReal;
+
     private Double valorSugerido;
 
+    private Double valorReal;
+
     public RegistroTransacao(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario,
-                             ClienteProprietario proprietario, Cliente comprador, Double valorReal, Double valorSugerido) {
+                             ClienteProprietario proprietario, Cliente interessado, Double valorSugerido) {
         this.numContrato = RegistroTransacao.contador++;
         this.dataTransacao = LocalDate.now();
         this.tipoPagamento = tipoPagamento;
         this.imovel = imovel;
         this.funcionario = funcionario;
         this.proprietario = proprietario;
-        this.comprador = comprador;
-        this.valorReal = valorReal;
+        this.interessado = interessado;
         this.valorSugerido = valorSugerido;
+        this.valorReal = valorSugerido;
     }
 
     public abstract void executar();
@@ -51,16 +60,24 @@ public abstract class RegistroTransacao {
     public void transferirComissaoFuncionario(){
         if(this.imovel instanceof Casa){
             this.funcionario.adicionarComissao(valorSugerido * 0.05);
-            valorReal += valorSugerido * 0.05;
         }if(this.imovel instanceof Terreno){
             this.funcionario.adicionarComissao(valorSugerido * 0.01);
-            valorReal += valorSugerido * 0.01;
         }if(this.imovel instanceof Apartamento){
             this.funcionario.adicionarComissao(valorSugerido * 0.02);
-            valorReal += valorSugerido * 0.02;
         }if(this.imovel instanceof SalaComercial){
             this.funcionario.adicionarComissao(valorSugerido * 0.04);
-            valorReal += valorSugerido * 0.04;
+        }
+    }
+
+    public void calcularValorRealTransacao() {
+        if(this.imovel instanceof Casa){
+            valorReal += valorSugerido * 0.20;
+        }if(this.imovel instanceof Terreno){
+            valorReal += valorSugerido * 0.11;
+        }if(this.imovel instanceof Apartamento){
+            valorReal += valorSugerido * 0.14;
+        }if(this.imovel instanceof SalaComercial){
+            valorReal += valorSugerido * 0.18;
         }
     }
 
@@ -96,12 +113,12 @@ public abstract class RegistroTransacao {
         this.funcionario = funcionario;
     }
 
-    public Cliente getCliente() {
-        return comprador;
+    public Cliente getInteressado() {
+        return interessado;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.comprador = cliente;
+    public void setInteressado(Cliente interessado) {
+        this.interessado = interessado;
     }
 
     public ClienteProprietario getClienteProprietario() {
@@ -136,7 +153,7 @@ public abstract class RegistroTransacao {
                 ", formaPagamento='" + tipoPagamento + '\'' +
                 ", imovel=" + imovel +
                 ", funcionario=" + funcionario +
-                ", usuario=" + comprador +
+                ", clienteInteressado=" + interessado +
                 ", clienteProprietario=" + proprietario +
                 ", valorSugerido=" + valorSugerido +
                 ", valorReal=" + valorReal +

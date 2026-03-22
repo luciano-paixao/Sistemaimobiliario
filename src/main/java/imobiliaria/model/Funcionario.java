@@ -15,12 +15,21 @@ public class Funcionario extends Pessoa {
 
     private String senha;
 
-    protected Double totalComissoes;
+    private Double totalComissoes;
 
-    public Funcionario(String cpf, String nome, Endereco endereco, List<String> telefones,
-                       String cargo, Double salarioBase, String usuario, String senha) {
+    public Funcionario(String cpf, String nome, Endereco endereco, String cargo, Double salarioBase, String usuario, String senha) {
+        super(cpf, nome, endereco);
+        this.dataIngresso = LocalDate.now();;
+        this.cargo = cargo;
+        this.salarioBase = salarioBase;
+        this.usuario = usuario;
+        this.senha = senha;
+        this.totalComissoes = 0.0;
+    }
+
+    public Funcionario(String cpf, String nome, Endereco endereco, List<String> telefones, LocalDate dataIngresso, String cargo, Double salarioBase, String usuario, String senha) {
         super(cpf, nome, endereco, telefones);
-        this.dataIngresso = LocalDate.now();
+        this.dataIngresso = dataIngresso;
         this.cargo = cargo;
         this.salarioBase = salarioBase;
         this.usuario = usuario;
@@ -30,6 +39,14 @@ public class Funcionario extends Pessoa {
 
     public void adicionarComissao(Double valor) {
         this.totalComissoes += valor;
+    }
+
+    public Boolean login(String usuario, String senha){
+        if (usuario.equals(this.usuario) && senha.equals(this.senha)){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public Double calcularSalario() {
