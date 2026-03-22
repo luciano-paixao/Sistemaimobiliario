@@ -33,8 +33,10 @@ public class Apartamento extends Imovel {
                        List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade,
                        Integer andar, Double area, Boolean armarioEmbutido, String descricao, Boolean portaria24hs,
                        Integer quantidadeQuartos, Integer quantidadeSalasEstar, Integer quantidadeSalasJantar,
-                       Integer quantidadeSuites, Integer quantidadeVagasGaragem, Double valorCondominio) {
-        super(dataConstrucao, disponibilidade, endereco, proprietarios, tipoDisponibilidade);
+                       Integer quantidadeSuites, Integer quantidadeVagasGaragem, Double valorCondominio,
+                       LocalDate incioOferta, LocalDate fimOferta, Imobiliaria imo, Double valorSugerido) {
+
+        super(dataConstrucao, endereco, proprietarios, tipoDisponibilidade, incioOferta, fimOferta, imo, valorSugerido);
         this.andar = andar;
         this.area = area;
         this.armarioEmbutido = armarioEmbutido;

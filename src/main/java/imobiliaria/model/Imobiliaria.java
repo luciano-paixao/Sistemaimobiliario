@@ -228,4 +228,8 @@ public class Imobiliaria {
     public Double getTotalcomissoes() {
         return totalComissoes;
     }
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
 }
