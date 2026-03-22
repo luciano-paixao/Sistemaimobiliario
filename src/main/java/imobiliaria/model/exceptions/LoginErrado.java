@@ -1,9 +1,9 @@
-package main.java.imobiliaria.model;
+package main.java.imobiliaria.model.exceptions;
 
 public class LoginErrado extends Exception {
 
     @Override
     public String toString() {
-        return "senha ou usuario incorreto";
+        return "Senha ou usuario incorreto";
     }
 }

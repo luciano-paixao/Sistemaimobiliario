@@ -1,6 +1,7 @@
 package main.java.imobiliaria.model;
 
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
+import main.java.imobiliaria.model.exceptions.LoginErrado;
 
 import java.util.Scanner;
 import java.time.LocalDate;
