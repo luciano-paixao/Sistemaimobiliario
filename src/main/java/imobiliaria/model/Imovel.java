@@ -23,7 +23,7 @@ public abstract class Imovel {
 
     private Imobiliaria imobiliaria;
 
-    ///private Aluguel aluguel;
+    //private Aluguel aluguel;
     //protected Venda venda;
 
     public Imovel(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,

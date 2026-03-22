@@ -34,33 +34,33 @@ public abstract class RegistroTransacao {
 
     public void transferirComissaoImobiliaria(){
         if(this.imovel instanceof Casa){
-            imovel.getImobiliaria().adicionarComissao(valorReal * 0.15);
-            //valorReal -= valorReal * 0.15;
+            imovel.getImobiliaria().adicionarComissao(valorSugerido * 0.15);
+            valorReal += valorSugerido * 0.15;
         }if(this.imovel instanceof Terreno){
-            imovel.getImobiliaria().adicionarComissao(valorReal * 0.10);
-            //valorReal -= valorReal * 0.10;
+            imovel.getImobiliaria().adicionarComissao(valorSugerido * 0.10);
+            valorReal += valorSugerido * 0.10;
         }if(this.imovel instanceof Apartamento){
-            imovel.getImobiliaria().adicionarComissao(valorReal * 0.12);
-            //valorReal -= valorReal * 0.12;
+            imovel.getImobiliaria().adicionarComissao(valorSugerido * 0.12);
+            valorReal += valorSugerido * 0.12;
         }if(this.imovel instanceof SalaComercial){
-            imovel.getImobiliaria().adicionarComissao(valorReal * 0.14);
-            //valorReal -= valorReal * 0.14;
+            imovel.getImobiliaria().adicionarComissao(valorSugerido * 0.14);
+            valorReal += valorSugerido * 0.14;
         }
     }
 
     public void transferirComissaoFuncionario(){
         if(this.imovel instanceof Casa){
-            this.funcionario.adicionarComissao(valorReal * 0.05);
-            //valorReal -= valorReal * 0.05;
+            this.funcionario.adicionarComissao(valorSugerido * 0.05);
+            valorReal += valorSugerido * 0.05;
         }if(this.imovel instanceof Terreno){
-            this.funcionario.adicionarComissao(valorReal * 0.01);
-            //valorReal -= valorReal * 0.01;
+            this.funcionario.adicionarComissao(valorSugerido * 0.01);
+            valorReal += valorSugerido * 0.01;
         }if(this.imovel instanceof Apartamento){
-            this.funcionario.adicionarComissao(valorReal * 0.02);
-            //valorReal -= valorReal * 0.02;
+            this.funcionario.adicionarComissao(valorSugerido * 0.02);
+            valorReal += valorSugerido * 0.02;
         }if(this.imovel instanceof SalaComercial){
-            this.funcionario.adicionarComissao(valorReal * 0.04);
-            //valorReal -= valorReal * 0.04;
+            this.funcionario.adicionarComissao(valorSugerido * 0.04);
+            valorReal += valorSugerido * 0.04;
         }
     }
 
