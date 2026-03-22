@@ -9,6 +9,7 @@ public class Aluguel extends RegistroTransacao {
     private List<Pessoa> indicadores;
     private LocalDate inicioContrato;
     private LocalDate fimContrato;
+    private LocalDate dataAluguel;
 
     public Aluguel(ClienteProprietario clienteProprietario, LocalDate dataTransacao,
                    String formaPagamento, Funcionario funcionario, Imovel imovel,
@@ -20,6 +21,7 @@ public class Aluguel extends RegistroTransacao {
         this.indicadores = indicadores;
         this.inicioContrato = inicioContrato;
         this.fimContrato = fimContrato;
+        this.dataAluguel = fimContrato.plusMonths(1);
     }
 
     public List<Pessoa> getFiadores() {
