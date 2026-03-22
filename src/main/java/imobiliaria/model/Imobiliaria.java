@@ -22,13 +22,13 @@ public class Imobiliaria {
 
     List<Cliente> clientes;
 
-    List<RegistroTransacao> trasacoes;
+    List<RegistroTransacao> transacoes;
 
     public Imobiliaria() {
         this.imoveis = new ArrayList<>();
         this.funcionarios = new ArrayList<>();
         this.clientes = new ArrayList<>();
-        this.trasacoes = new ArrayList<>();
+        this.transacoes = new ArrayList<>();
     }
 
     public Funcionario cadastrarFuncionario() {
@@ -134,7 +134,7 @@ public class Imobiliaria {
         TipoPagamento tipoPagamento = (TipoPagamento) combo.getSelectedItem();
 
         if (imovel.getTipoDisponibilidade() == TipoDisponibilidade.VENDER) {
-            Venda v = new Venda(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, 10000.0 );
+            Venda v = new Venda(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente);
             v.executar();
         } else {
             //List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato, LocalDate fimContrato
@@ -158,7 +158,7 @@ public class Imobiliaria {
             int dia = 1;
             LocalDate inicioContrato = LocalDate.of(ano, mes, dia);
 
-            Aluguel a = new Aluguel(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, 1000.0, fiadores, indicacoes, inicioContrato);
+            Aluguel a = new Aluguel(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, fiadores, indicacoes, inicioContrato);
             a.executar();
         }
     }

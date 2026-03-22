@@ -81,9 +81,9 @@ public class Sistema {
         );
 
             Imobiliaria imobi = new Imobiliaria();
-            imobi.imoveisParaVender.add(ap2);
-            imobi.imoveisParaVender.add(ap1);
-            imobi.imoveisParaVender.add(ap3);
+            imobi.getImoveisDisponiveis().add(ap2);
+            imobi.getImoveisDisponiveis().add(ap1);
+            imobi.getImoveisDisponiveis().add(ap3);
             menu(imobi);
         }
 

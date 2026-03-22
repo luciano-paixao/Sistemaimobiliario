@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Venda extends RegistroTransacao {
 
-    public Venda(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, List<ClienteProprietario> proprietarios, Cliente interessado, Double valorSugerido) {
-        super(tipoPagamento, imovel, funcionario, proprietarios, interessado, valorSugerido);
+    public Venda(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, List<ClienteProprietario> proprietarios, Cliente interessado) {
+        super(tipoPagamento, imovel, funcionario, proprietarios, interessado);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Venda extends RegistroTransacao {
         transferirComissaoFuncionario();
         calcularValorRealTransacao();
 
-        this.getImovel().getImobiliaria().trasacoes.add(this);
+        this.getImovel().getImobiliaria().transacoes.add(this);
     }
 
     @Override
