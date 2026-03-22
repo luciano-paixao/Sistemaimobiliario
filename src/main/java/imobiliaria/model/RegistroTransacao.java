@@ -26,6 +26,8 @@ public abstract class RegistroTransacao {
 
     private Double valorReal;
 
+    private Double margemImobiliaria;
+
     public RegistroTransacao(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario,
                              ClienteProprietario proprietario, Cliente interessado, Double valorSugerido) {
         this.numContrato = RegistroTransacao.contador++;
@@ -43,17 +45,17 @@ public abstract class RegistroTransacao {
 
     public void transferirComissaoImobiliaria(){
         if(this.imovel instanceof Casa){
-            imovel.getImobiliaria().adicionarComissao(valorSugerido * 0.15);
-            valorReal += valorSugerido * 0.15;
+            margemImobiliaria = valorSugerido * 0.15;
+            imovel.getImobiliaria().adicionarComissao(margemImobiliaria);
         }if(this.imovel instanceof Terreno){
-            imovel.getImobiliaria().adicionarComissao(valorSugerido * 0.10);
-            valorReal += valorSugerido * 0.10;
+            margemImobiliaria = valorSugerido * 0.10;
+            imovel.getImobiliaria().adicionarComissao(margemImobiliaria);
         }if(this.imovel instanceof Apartamento){
-            imovel.getImobiliaria().adicionarComissao(valorSugerido * 0.12);
-            valorReal += valorSugerido * 0.12;
+            margemImobiliaria = valorSugerido * 0.12;
+            imovel.getImobiliaria().adicionarComissao(margemImobiliaria);
         }if(this.imovel instanceof SalaComercial){
-            imovel.getImobiliaria().adicionarComissao(valorSugerido * 0.14);
-            valorReal += valorSugerido * 0.14;
+            margemImobiliaria = valorSugerido * 0.14;
+            imovel.getImobiliaria().adicionarComissao(margemImobiliaria);
         }
     }
 
@@ -71,13 +73,13 @@ public abstract class RegistroTransacao {
 
     public void calcularValorRealTransacao() {
         if(this.imovel instanceof Casa){
-            valorReal += valorSugerido * 0.20;
-        }if(this.imovel instanceof Terreno){
-            valorReal += valorSugerido * 0.11;
-        }if(this.imovel instanceof Apartamento){
-            valorReal += valorSugerido * 0.14;
-        }if(this.imovel instanceof SalaComercial){
-            valorReal += valorSugerido * 0.18;
+            valorReal -= valorReal * 0.20;
+        }else if(this.imovel instanceof Terreno){
+            valorReal -= valorReal * 0.11;
+        }else if(this.imovel instanceof Apartamento){
+            valorReal -= valorReal * 0.14;
+        }else if(this.imovel instanceof SalaComercial){
+            valorReal -= valorReal * 0.18;
         }
     }
 

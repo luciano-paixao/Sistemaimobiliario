@@ -133,7 +133,6 @@ public class Imobiliaria {
         //Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade)
     }
 
-
     public List<Imovel> getImoveisDisponiveis() {
         return this.imoveis.stream().filter(i -> i.getDisponibilidade() == true).toList();
     }

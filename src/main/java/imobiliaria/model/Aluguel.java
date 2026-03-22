@@ -45,12 +45,12 @@ public class Aluguel extends RegistroTransacao {
         this.fiadores = fiadores;
     }
 
-    public List<Pessoa> getIndicadores() {
+    public List<Pessoa> getIndicacoes() {
         return indicacoes;
     }
 
-    public void setIndicadores(List<Pessoa> indicadores) {
-        this.indicacoes = indicadores;
+    public void setIndicacoes(List<Pessoa> indicacoes) {
+        this.indicacoes = indicacoes;
     }
 
     public LocalDate getFimContrato() {
@@ -67,5 +67,24 @@ public class Aluguel extends RegistroTransacao {
 
     public void setInicioContrato(LocalDate inicioContrato) {
         this.inicioContrato = inicioContrato;
+    }
+
+    public LocalDate getDataAluguel() {
+        return dataAluguel;
+    }
+
+    public void setDataAluguel(LocalDate dataAluguel) {
+        this.dataAluguel = dataAluguel;
+    }
+
+    @Override
+    public String toString() {
+        return "Aluguel{" +
+                "fiadores=" + fiadores +
+                ", indicacoes=" + indicacoes +
+                ", inicioContrato=" + inicioContrato +
+                ", fimContrato=" + fimContrato +
+                ", dataAluguel=" + dataAluguel +
+                '}';
     }
 }

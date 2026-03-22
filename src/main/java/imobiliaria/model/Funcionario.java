@@ -37,10 +37,6 @@ public class Funcionario extends Pessoa {
         this.totalComissoes = 0.0;
     }
 
-    public void adicionarComissao(Double valor) {
-        this.totalComissoes += valor;
-    }
-
     public Boolean login(String usuario, String senha){
         if (usuario.equals(this.usuario) && senha.equals(this.senha)){
             return true;
@@ -51,6 +47,10 @@ public class Funcionario extends Pessoa {
 
     public Double calcularSalario() {
         return salarioBase + totalComissoes;
+    }
+
+    public void adicionarComissao(Double valor) {
+        this.totalComissoes += valor;
     }
 
     public LocalDate getDataIngresso() {
