@@ -145,10 +145,9 @@ public class Sistema {
         System.out.println("Digite o numero de acordo com a opção que deseja realizar");
         System.out.println("1_Cadastrar funcionario");
         System.out.println("2_Cadastrar cliente");
-        System.out.println("3_Cadastrar imovel");
-        System.out.println("4_Comprar imovel");
-        System.out.println("5_Alugar imovel");
-        System.out.println("6_Sair");
+        System.out.println("3_Cadastrar imóvel");
+        System.out.println("4_Comprar ou Alugar imóvel");
+        System.out.println("5_Sair");
         int num = leitor.nextInt();
 
         if (num == 1){
@@ -190,10 +189,19 @@ public class Sistema {
                                 break;
                             }
 
+                            int tipoOption = 0;
+                            while(tipoOption != 1 && tipoOption != 2) {
+                                System.out.println("\nTipo: [1]ALUGUEL ou [2]VENDA...\n");
+                                tipoOption = leitor.nextInt();
+                            }
+                            TipoDisponibilidade tipo = (tipoOption == 1) ?
+                                                        TipoDisponibilidade.LOCACAO :
+                                                        TipoDisponibilidade.VENDER;
+
                             System.out.println("\nBUSCANDO IMÓVEIS DISPONÍVEIS...\n");
                             escolha = 0;
 
-                            for(Imovel imovel: imobi.getImoveisDisponiveis()) {
+                            for(Imovel imovel: imobi.getImoveisDisponiveisTipo(tipo)) {
                                 System.out.println(imovel.toString());
                                 System.out.println("(1) Escolher este imóvel\n(2) Próximo\n");
                                 escolha = leitor.nextInt();
@@ -224,9 +232,6 @@ public class Sistema {
             }
         }
         else if (num == 5){
-            // mesma coisa do if anterior só que para aluguel
-        }
-        else if (num == 6){
             System.exit(0);
         }
         menu(imobi);

@@ -296,6 +296,13 @@ public class Imobiliaria {
         return this.imoveis.stream().filter(i -> i.getDisponibilidade() == true).toList();
     }
 
+    public List<Imovel> getImoveisDisponiveisTipo(TipoDisponibilidade tipo) {
+        return this.imoveis.stream()
+                .filter(i -> i.getDisponibilidade() == true)
+                .filter(i -> i.getTipoDisponibilidade().equals(tipo))
+                .toList();
+    }
+
     public List<Imovel> getImoveisDisponiveisSimples() {
         return this.imoveis;
     }
