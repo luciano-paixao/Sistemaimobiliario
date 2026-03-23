@@ -44,19 +44,6 @@ public abstract class RegistroTransacao {
         this.valorReal = valorSugerido;
     }
 
-    public RegistroTransacao(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario,
-                             List<ClienteProprietario> proprietarios, Cliente interessado) {
-        this.numContrato = RegistroTransacao.contador++;
-        this.dataTransacao = LocalDate.now();
-        this.tipoPagamento = tipoPagamento;
-        this.imovel = imovel;
-        this.funcionario = funcionario;
-        this.proprietarios = proprietarios;
-        this.interessado = interessado;
-        this.valorSugerido = imovel.getValorSugerido();
-        this.valorReal = valorSugerido;
-    }
-
     public abstract void executar();
 
     public void transferirComissaoImobiliaria(){
@@ -116,7 +103,7 @@ public abstract class RegistroTransacao {
     }
 
     public Imovel getImovel() {
-        return imovel;
+        return this.imovel;
     }
 
     public void setImovel(Imovel imovel) {

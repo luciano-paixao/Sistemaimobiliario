@@ -5,7 +5,6 @@ import main.java.imobiliaria.model.enums.Sexo;
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
 
 import java.util.Scanner;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -80,7 +79,7 @@ public class Sistema {
             imobi.cadastrarFuncionario();
         } else if (num == 2) {
             //Boolean ehProprietario = imobi.ehProprietario();
-            imobi.cadastarCliente(imobi.ehProprietario());
+            imobi.cadastrarCliente(imobi.ehProprietario());
         } else if (num == 3) {
             // imobi.cadastarImovel(clienteProprietario); colocar um objeto já pronto
         } else if (num == 4) {
@@ -103,7 +102,7 @@ public class Sistema {
                         String nomeBusca = leitor.next();
                         cliUsu = imobi.buscarUsuario(nomeBusca);
                     } else {
-                        cliUsu = imobi.cadastarCliente(false);
+                        cliUsu = imobi.cadastrarCliente(false);
                     }
 
                     if (cliUsu == null) {

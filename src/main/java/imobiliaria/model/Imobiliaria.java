@@ -116,7 +116,7 @@ public class Imobiliaria {
         return escolha.equals("PROPRIETÁRIO");
     }
 
-    public Cliente cadastarCliente(Boolean ehProprietario) {
+    public Cliente cadastrarCliente(Boolean ehProprietario) {
 
         //boolean proprietario = ehProprietario();
 
@@ -150,7 +150,7 @@ public class Imobiliaria {
         } else throw new IllegalArgumentException();
     }
 
-    public Imovel cadastarImovel(List<ClienteProprietario> proprietarios) {
+    public Imovel cadastrarImovel(List<ClienteProprietario> proprietarios) {
         JPanel painelPrincipal = new JPanel();
         painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
 
@@ -446,5 +446,9 @@ public class Imobiliaria {
 
     public List<Cliente> getClientes() {
         return clientes;
+    }
+
+    public List<RegistroTransacao> getTransacoes() {
+        return trasacoes;
     }
 }

@@ -35,7 +35,7 @@ public class Aluguel extends RegistroTransacao {
         transferirComissaoFuncionario();
         calcularValorRealTransacao();
 
-        this.getImovel().getImobiliaria().transacoes.add(this);
+        this.getImovel().getImobiliaria().getTransacoes().add(this);
     }
 
     public List<Pessoa> getFiadores() {

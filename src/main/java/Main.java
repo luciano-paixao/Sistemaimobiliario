@@ -14,15 +14,15 @@ public class Main {
         Funcionario funcionario = i.cadastrarFuncionario();
         System.out.println(funcionario);
 
-        Cliente usuario = i.cadastarCliente(true);
+        Cliente usuario = i.cadastrarCliente(true);
         System.out.println(usuario);
 
-        Cliente cliente = i.cadastarCliente(false);
+        Cliente cliente = i.cadastrarCliente(false);
         ClienteProprietario proprietario = (ClienteProprietario) cliente;
         p.add(proprietario);
         System.out.println(proprietario);
 
-        Imovel imovel1 = i.cadastarImovel(p);
+        Imovel imovel1 = i.cadastrarImovel(p);
         System.out.println(imovel1);
 
         imovel1.getProprietarios().add(proprietario);
