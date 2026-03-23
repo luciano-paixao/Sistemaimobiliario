@@ -136,8 +136,13 @@ public abstract class Imovel {
 
     @Override
     public String toString() {
-        return "Imovel{" +
-                "disponibilidade= " + disponibilidade +
+        String tipoDisponStr = "Venda";
+        if(tipoDisponibilidade == TipoDisponibilidade.LOCACAO) {
+            tipoDisponStr = "Aluguel";
+        }
+        return  "Imovel ("+tipoDisponStr.toUpperCase()+") {" +
+                "\n valor" + tipoDisponStr + "=" + valorSugerido +
+                "\n disponibilidade= " + disponibilidade +
                 "\n dataConstrucao= " + dataConstrucao +
                 "\n proprietarios= " + mostrarProprietarios() +
                 "\n endereco=" + endereco +

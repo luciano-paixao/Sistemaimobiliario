@@ -249,6 +249,7 @@ public class Imobiliaria {
 
             Aluguel a = new Aluguel(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, fiadores, indicacoes, inicioContrato);
             a.executar();
+            IO.println(a.toString());
         }
     }
 

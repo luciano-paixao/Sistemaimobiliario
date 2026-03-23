@@ -87,11 +87,11 @@ public class Sistema {
 
             Apartamento ap2 = new Apartamento(
                     LocalDate.of(2020, 8, 20),
-                    false,
+                    true,
                     endereco2,
                     proprietarios2,
                     TipoDisponibilidade.LOCACAO,
-                    24000.00,
+                    1900.00,
                     10,
                     120.0,
                     false,
@@ -114,7 +114,7 @@ public class Sistema {
                 endereco2,
                 proprietarios2,
                 TipoDisponibilidade.LOCACAO,
-                24000.00,
+                1900.00,
                 10,
                 120.0,
                 false,
@@ -130,6 +130,7 @@ public class Sistema {
                 LocalDate.now().plusMonths(24),
                 imobi
         );
+        ap3.setDisponibilidade(false);
 
             imobi.getImoveisDisponiveisSimples().add(ap2);
             imobi.getImoveisDisponiveisSimples().add(ap1);
@@ -166,16 +167,17 @@ public class Sistema {
                 if (fu.getCargo().equals("VENDEDOR")){
                     System.out.println("Vendedor digite usuario e senha para entrar no sistema!");
                             // Usando
-                            Integer escolha = 0;;
+                            Integer escolha = 0;
 
-                            Cliente cliUsu = imobi.getClientes().get(0);
+                            Cliente cliUsu = null;
+                            Imovel imoEscolhido = null;
 
                             while(escolha != 1 && escolha != 2) {
                                 System.out.println("(1) Criar novo usuário\n(2) Procurar na Lista de Usuários\n");
                                 escolha = leitor.nextInt();
                             }
                             if(escolha == 2) {
-                                System.out.println("Por qual usuário você procura? (nome)");
+                                System.out.println("Digite o nome do cliente interessado (usuário):");
                                 String nomeBusca = leitor.next();
                                 cliUsu = imobi.buscarUsuario(nomeBusca);
                             } else {
@@ -188,9 +190,33 @@ public class Sistema {
                                 break;
                             }
 
-                            Imovel imovelTransacionado = imobi.getImoveisDisponiveis().get(1);
+                            System.out.println("\nBUSCANDO IMÓVEIS DISPONÍVEIS...\n");
+                            escolha = 0;
 
-                            imobi.realizarTransacao(cliUsu, fu, imovelTransacionado);
+                            for(Imovel imovel: imobi.getImoveisDisponiveis()) {
+                                System.out.println(imovel.toString());
+                                System.out.println("(1) Escolher este imóvel\n(2) Próximo\n");
+                                escolha = leitor.nextInt();
+
+
+                                if(escolha == 1) {
+                                    imoEscolhido = imovel;
+                                    break;
+                                }
+                            }
+
+                            if(cliUsu == null) {
+                                System.out.println("\n!! Usuário não existe !!\n");
+                                menu(imobi);
+                                break;
+                            }
+                            if(imoEscolhido == null) {
+                                System.out.println("\n!! Nenhum imóvel escolhido !!\n");
+                                menu(imobi);
+                                break;
+                            }
+
+                            imobi.realizarTransacao(cliUsu, fu, imoEscolhido);
 
                             menu(imobi);
                             break;
