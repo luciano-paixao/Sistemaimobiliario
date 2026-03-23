@@ -1,23 +1,23 @@
 package main.java;
 
-import main.java.imobiliaria.model.Cliente;
-import main.java.imobiliaria.model.Funcionario;
-import main.java.imobiliaria.model.Imobiliaria;
-import main.java.imobiliaria.model.Sistema;
+import main.java.imobiliaria.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Sistema.main(new String[]{});
+        Imobiliaria i = new Imobiliaria();
 
         List<ClienteProprietario> p = new ArrayList<>();
 
         Funcionario funcionario = i.cadastrarFuncionario();
         System.out.println(funcionario);
 
-        Cliente usuario = i.cadastarCliente();
+        Cliente usuario = i.cadastarCliente(true);
         System.out.println(usuario);
 
-        Cliente cliente = i.cadastarCliente();
+        Cliente cliente = i.cadastarCliente(false);
         ClienteProprietario proprietario = (ClienteProprietario) cliente;
         p.add(proprietario);
         System.out.println(proprietario);

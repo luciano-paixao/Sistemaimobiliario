@@ -337,19 +337,6 @@ public class Imobiliaria {
         return null;
     }
 
-    public Cliente buscarUsuario(String nome) {
-        Cliente cliUser = getClientes().stream()
-                .filter(c -> c.getNome().equals(nome))
-                .findFirst()
-                .orElse(null);
-        if(cliUser instanceof ClienteProprietario) {
-            System.out.println("Não foi achado nenhum cliente chamado " + nome);
-            return null;
-        }
-
-        return cliUser;
-    }
-
     public Endereco cadastrarEndereco() {
         String bairro = JOptionPane.showInputDialog("Bairro");
         String rua = JOptionPane.showInputDialog("Rua");
@@ -374,6 +361,19 @@ public class Imobiliaria {
         Endereco endereco = cadastrarEndereco();
         List<String> telefones = cadastrarTelefone();
         return new Pessoa(cpf, nome, endereco, telefones);
+    }
+
+    public Cliente buscarUsuario(String nome) {
+        Cliente cliUser = getClientes().stream()
+                .filter(c -> c.getNome().equals(nome))
+                .findFirst()
+                .orElse(null);
+        if(cliUser instanceof ClienteProprietario) {
+            System.out.println("Não foi achado nenhum cliente chamado " + nome);
+            return null;
+        }
+
+        return cliUser;
     }
 
     public List<Imovel> getImoveisPorBairro(String bairro) {
@@ -408,7 +408,7 @@ public class Imobiliaria {
                 .toList();
     }
 
-    public List<Imovel> getImoveisDisponiveisSimples() {
+    public List<Imovel> getImoveis() {
         return this.imoveis;
     }
 
