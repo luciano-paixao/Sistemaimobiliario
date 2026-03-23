@@ -13,11 +13,9 @@ public class SalaComercial extends Imovel {
 
     private Integer quantidadeComodos;
 
-    public SalaComercial(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
-                         List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade, Double valorSugerido,
-                         Double area, Integer quantidadeBanheiros, Integer quantidadeComodos, LocalDate incioOferta, LocalDate fimOferta,
-                         Imobiliaria imo) {
-        super(dataConstrucao, endereco, proprietarios, tipoDisponibilidade, incioOferta, fimOferta, imo, valorSugerido);
+    public SalaComercial(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade,
+                         Imobiliaria imobiliaria, Double area, Integer quantidadeBanheiros, Integer quantidadeComodos) {
+        super(dataConstrucao, endereco, proprietarios, tipoDisponibilidade, imobiliaria);
         this.area = area;
         this.quantidadeBanheiros = quantidadeBanheiros;
         this.quantidadeComodos = quantidadeComodos;

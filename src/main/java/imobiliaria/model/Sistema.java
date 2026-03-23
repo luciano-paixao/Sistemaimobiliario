@@ -8,136 +8,63 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
+
 public class Sistema {
+
 
     public static void main(String[] args) {
 
-            Imobiliaria imobi = new Imobiliaria();
+        Imobiliaria imobi = new Imobiliaria();
 
-            // Lista de proprietários (exemplo simples)
-            List<ClienteProprietario> proprietarios1 = new ArrayList<>();
-            List<ClienteProprietario> proprietarios2 = new ArrayList<>();
+        // Lista de proprietários (exemplo simples)
+        List<ClienteProprietario> proprietarios1 = new ArrayList<>();
+        List<ClienteProprietario> proprietarios2 = new ArrayList<>();
 
-            // Objetos auxiliares (supondo construtores básicos)
-            Endereco endereco1 = new Endereco("Rua A", "123", "Centro");
-            Endereco endereco2 = new Endereco("Rua B", "456", "Bairro X");
+        // Objetos auxiliares (supondo construtores básicos)
+        Endereco endereco1 = new Endereco("Rua A", "123", "Centro");
+        Endereco endereco2 = new Endereco("Rua B", "456", "Bairro X");
 
-            // USUÁRIO
+        // USUÁRIO
 
-            Cliente cli1 = new Cliente("12312312345", "Semfim", endereco1, "teste@hotmail.com", "Qualqueruma", Sexo.FEMININO, EstadoCivil.DIVORCIADO);
-            imobi.adicionarCliente(cli1);
+        Cliente cli1 = new Cliente("12312312345", "Semfim", endereco1, "teste@hotmail.com", "Qualqueruma", Sexo.FEMININO, EstadoCivil.DIVORCIADO);
+        imobi.adicionarCliente(cli1);
 
-            List<String> telefonesFu1 = new ArrayList<>();
-            telefonesFu1.add("(91) 98888-7777");
+        List<String> telefonesFu1 = new ArrayList<>();
+        telefonesFu1.add("(91) 98888-7777");
 
 
-            // PROPRIETÁRIO
+        // PROPRIETÁRIO
 
-            Endereco enderecoProp = new Endereco("Avenida Nazaré", "1000", "Centro");
+        Endereco enderecoProp = new Endereco("Avenida Nazaré", "1000", "Centro");
 
-            ClienteProprietario novoProprietario = new ClienteProprietario(
-                    "98765432100",
-                    "Maria Oliveira",
-                    enderecoProp,
-                    "maria.oliveira@email.com",
-                    "Engenheira",
-                    Sexo.FEMININO,
-                    EstadoCivil.CASADO
-            );
-            proprietarios1.add(novoProprietario);
-            imobi.adicionarCliente(novoProprietario);
-
-            Funcionario fu1 = new Funcionario(
-                    "12345678900",
-                    "José Roberto",
-                    endereco2,
-                    telefonesFu1,
-                    "VENDEDOR",
-                    2500.0,
-                    "jose.vendedor",
-                    "senha123"
-            );
-
-            imobi.adicionarFuncionario(fu1);
-
-            // Criando dois apartamentos
-            Apartamento ap1 = new Apartamento(
-                    LocalDate.of(2015, 5, 10),
-                    true,
-                    endereco1,
-                    proprietarios1,
-                    TipoDisponibilidade.VENDER,
-                    24000.00,
-                    3,
-                    80.0,
-                    true,
-                    "Apartamento bem localizado",
-                    true,
-                    2,
-                    1,
-                    1,
-                    1,
-                    1,
-                    350.0,
-                    LocalDate.now(),
-                    LocalDate.now().plusMonths(24),
-                    imobi
-            );
-
-            Apartamento ap2 = new Apartamento(
-                    LocalDate.of(2020, 8, 20),
-                    true,
-                    endereco2,
-                    proprietarios2,
-                    TipoDisponibilidade.LOCACAO,
-                    1900.00,
-                    10,
-                    120.0,
-                    false,
-                    "Apartamento amplo com vista",
-                    true,
-                    3,
-                    2,
-                    1,
-                    2,
-                    2,
-                    500.0,
-                    LocalDate.now(),
-                    LocalDate.now().plusMonths(24),
-                    imobi
-            );
-
-        Apartamento ap3 = new Apartamento(
-                LocalDate.of(2021, 8, 20),
-                false,
-                endereco2,
-                proprietarios2,
-                TipoDisponibilidade.LOCACAO,
-                1900.00,
-                10,
-                120.0,
-                false,
-                "Apartamento amplo com vista",
-                true,
-                3,
-                2,
-                1,
-                2,
-                2,
-                500.0,
-                LocalDate.now(),
-                LocalDate.now().plusMonths(24),
-                imobi
+        ClienteProprietario novoProprietario = new ClienteProprietario(
+                "98765432100",
+                "Maria Oliveira",
+                enderecoProp,
+                "maria.oliveira@email.com",
+                "Engenheira",
+                Sexo.FEMININO,
+                EstadoCivil.CASADO
         );
-        ap3.setDisponibilidade(false);
+        proprietarios1.add(novoProprietario);
+        imobi.adicionarCliente(novoProprietario);
 
-            imobi.getImoveisDisponiveisSimples().add(ap2);
-            imobi.getImoveisDisponiveisSimples().add(ap1);
-            imobi.getImoveisDisponiveisSimples().add(ap3);
-            menu(imobi);
-        }
+        Funcionario fu1 = new Funcionario(
+                "12345678900",
+                "José Roberto",
+                endereco2,
+                telefonesFu1,
+                "VENDEDOR",
+                2500.0,
+                "jose.vendedor",
+                "senha123"
+        );
 
-    public static void menu(Imobiliaria imobi){
+        imobi.adicionarFuncionario(fu1);
+
+    }
+
+    public static void menu(Imobiliaria imobi) {
         Scanner leitor = new Scanner(System.in);
 
         IO.println("olá, bem vindo a imobilíaria");
@@ -149,88 +76,84 @@ public class Sistema {
         System.out.println("5_Sair");
         int num = leitor.nextInt();
 
-        if (num == 1){
+        if (num == 1) {
             imobi.cadastrarFuncionario();
-        }
-        else if (num == 2){
-            Boolean ehProprietario = imobi.ehProprietario();
-            imobi.cadastrarCliente(ehProprietario);
-        }
-        else if (num == 3){
+        } else if (num == 2) {
+            //Boolean ehProprietario = imobi.ehProprietario();
+            imobi.cadastarCliente(imobi.ehProprietario());
+        } else if (num == 3) {
             // imobi.cadastarImovel(clienteProprietario); colocar um objeto já pronto
-        }
-        else if (num == 4) {
+        } else if (num == 4) {
             IO.println("Nosso vendedor vai o ajudar...");
-            for(Funcionario fu : imobi.funcionarios){
-                if (fu.getCargo().equals("VENDEDOR")){
+            for (Funcionario fu : imobi.funcionarios) {
+                if (fu.getCargo().equals("VENDEDOR")) {
                     System.out.println("Vendedor digite usuario e senha para entrar no sistema!");
-                            // Usando
-                            Integer escolha = 0;
+                    // Usando
+                    Integer escolha = 0;
 
-                            Cliente cliUsu = null;
-                            Imovel imoEscolhido = null;
+                    Cliente cliUsu = null;
+                    Imovel imoEscolhido = null;
 
-                            while(escolha != 1 && escolha != 2) {
-                                System.out.println("(1) Criar novo usuário\n(2) Procurar na Lista de Usuários\n");
-                                escolha = leitor.nextInt();
-                            }
-                            if(escolha == 2) {
-                                System.out.println("Digite o nome do cliente interessado (usuário):");
-                                String nomeBusca = leitor.next();
-                                cliUsu = imobi.buscarUsuario(nomeBusca);
-                            } else {
-                                cliUsu = imobi.cadastrarCliente(false);
-                            }
+                    while (escolha != 1 && escolha != 2) {
+                        System.out.println("(1) Criar novo usuário\n(2) Procurar na Lista de Usuários\n");
+                        escolha = leitor.nextInt();
+                    }
+                    if (escolha == 2) {
+                        System.out.println("Digite o nome do cliente interessado (usuário):");
+                        String nomeBusca = leitor.next();
+                        cliUsu = imobi.buscarUsuario(nomeBusca);
+                    } else {
+                        cliUsu = imobi.cadastarCliente(false);
+                    }
 
-                            if(cliUsu == null) {
-                                System.out.println("\n!! Usuário não existe !!\n");
-                                menu(imobi);
-                                break;
-                            }
+                    if (cliUsu == null) {
+                        System.out.println("\n!! Usuário não existe !!\n");
+                        menu(imobi);
+                        break;
+                    }
 
-                            int tipoOption = 0;
-                            while(tipoOption != 1 && tipoOption != 2) {
-                                System.out.println("\nTipo: [1]ALUGUEL ou [2]VENDA...\n");
-                                tipoOption = leitor.nextInt();
-                            }
-                            TipoDisponibilidade tipo = (tipoOption == 1) ?
-                                                        TipoDisponibilidade.LOCACAO :
-                                                        TipoDisponibilidade.VENDER;
+                    int tipoOption = 0;
+                    while (tipoOption != 1 && tipoOption != 2) {
+                        System.out.println("\nTipo: [1]ALUGUEL ou [2]VENDA...\n");
+                        tipoOption = leitor.nextInt();
+                    }
+                    TipoDisponibilidade tipo = (tipoOption == 1) ?
+                            TipoDisponibilidade.LOCACAO :
+                            TipoDisponibilidade.VENDER;
 
-                            System.out.println("\nBUSCANDO IMÓVEIS DISPONÍVEIS...\n");
-                            escolha = 0;
+                    System.out.println("\nBUSCANDO IMÓVEIS DISPONÍVEIS...\n");
+                    escolha = 0;
 
-                            for(Imovel imovel: imobi.getImoveisDisponiveisTipo(tipo)) {
-                                System.out.println(imovel.toString());
-                                System.out.println("(1) Escolher este imóvel\n(2) Próximo\n");
-                                escolha = leitor.nextInt();
+                    for (Imovel imovel : imobi.getImoveisDisponiveisTipo(tipo)) {
+                        System.out.println(imovel.toString());
+                        System.out.println("(1) Escolher este imóvel\n(2) Próximo\n");
+                        escolha = leitor.nextInt();
 
 
-                                if(escolha == 1) {
-                                    imoEscolhido = imovel;
-                                    break;
-                                }
-                            }
-
-                            if(cliUsu == null) {
-                                System.out.println("\n!! Usuário não existe !!\n");
-                                menu(imobi);
-                                break;
-                            }
-                            if(imoEscolhido == null) {
-                                System.out.println("\n!! Nenhum imóvel escolhido !!\n");
-                                menu(imobi);
-                                break;
-                            }
-
-                            imobi.realizarTransacao(cliUsu, fu, imoEscolhido);
-
-                            menu(imobi);
+                        if (escolha == 1) {
+                            imoEscolhido = imovel;
                             break;
+                        }
+                    }
+
+                    if (cliUsu == null) {
+                        System.out.println("\n!! Usuário não existe !!\n");
+                        menu(imobi);
+                        break;
+                    }
+                    if (imoEscolhido == null) {
+                        System.out.println("\n!! Nenhum imóvel escolhido !!\n");
+                        menu(imobi);
+                        break;
+                    }
+
+                    imobi.realizarTransacao(cliUsu, fu, imoEscolhido);
+
+                    menu(imobi);
+                    break;
                 }
             }
-        }
-        else if (num == 5){
+        } else if (num == 5) {
             System.exit(0);
         }
         menu(imobi);

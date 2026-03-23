@@ -7,6 +7,7 @@ import main.java.imobiliaria.model.enums.TipoPagamento;
 import main.java.imobiliaria.model.exceptions.ConflitoDisponibilidade;
 
 import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,128 +23,22 @@ public class Imobiliaria {
 
     List<Cliente> clientes;
 
-    List<RegistroTransacao> transacoes;
+    List<RegistroTransacao> trasacoes;
 
     public Imobiliaria() {
         this.imoveis = new ArrayList<>();
         this.funcionarios = new ArrayList<>();
         this.clientes = new ArrayList<>();
-        this.transacoes = new ArrayList<>();
-        this.totalComissoes = 0.0;
+        this.trasacoes = new ArrayList<>();
     }
-
-    public Funcionario cadastrarFuncionario() {
-        Scanner leitor = new Scanner(System.in);
-
-        System.out.println("CADASTRO DE FUNCIONÁRIO");
-
-        System.out.print("Digite o CPF: ");
-        String cpf = leitor.nextLine();
-
-        System.out.print("Digite o nome: ");
-        String nome = leitor.nextLine();
-
-        // Endereço
-        System.out.print("Digite a rua: ");
-        String rua = leitor.nextLine();
-
-        System.out.print("Digite o número: ");
-        String numero = leitor.nextLine();
-
-        System.out.print("Digite o bairro: ");
-        String bairro = leitor.nextLine();
-
-        Endereco endereco = new Endereco(bairro, rua, numero);
-
-        List<String> telefones = cadastrarTelefone();
-
-        System.out.print("Digite o cargo: ");
-        String cargo = leitor.nextLine();
-
-        System.out.print("Digite o salário base: ");
-        Double salarioBase = Double.parseDouble(leitor.nextLine());
-
-        System.out.print("Digite o usuário: ");
-        String usuario = leitor.nextLine();
-
-        System.out.print("Digite a senha: ");
-        String senha = leitor.nextLine();
-
-        Funcionario f = new Funcionario(cpf, nome, endereco, telefones, cargo, salarioBase, usuario, senha);
-
-        System.out.println("\nFuncionário cadastrado com sucesso!");
-        System.out.println("Data de ingresso: " + f.getDataIngresso() + "\n");
-
-        this.funcionarios.add(f);
-
-        return f;
-    }
-
-    public Boolean ehProprietario(){
-        Scanner leitor = new Scanner(System.in);
-        System.out.println("CADASTRO DE CLIENTE");
-
-        String escolha = "";
-
-        do {
-            System.out.print("Deseja cadastrar um [USUÁRIO] ou um [PROPRIETÁRIO]?");
-            escolha = leitor.nextLine().toUpperCase();
-        } while (!escolha.equals("USUÁRIO") && !escolha.equals("PROPRIETÁRIO"));
-
-        return escolha.equals("PROPRIETÁRIO");
-    }
-
-    public Cliente cadastrarCliente(Boolean ehProprietario) {
-        Scanner leitor = new Scanner(System.in);
-
-        System.out.print("Digite o CPF: ");
-        String cpf = leitor.nextLine();
-
-        System.out.print("Digite o nome: ");
-        String nome = leitor.nextLine();
-
-        Endereco endereco = cadastrarEndereco();
-
-        System.out.print("Digite o email: ");
-        String email = leitor.nextLine();
-
-        System.out.print("Digite a profissão: ");
-        String profissao = leitor.nextLine();
-
-        System.out.print("Digite o sexo: ");
-        Sexo sexo = Sexo.valueOf(leitor.nextLine().toUpperCase());
-
-        System.out.print("Digite o estado civil: ");
-        EstadoCivil estadoCivil = EstadoCivil.valueOf(leitor.nextLine().toUpperCase());
-
-        if (ehProprietario) {
-            ClienteProprietario p = new ClienteProprietario(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
-            this.clientes.add(p);
-            return p;
-        }
-
-        Cliente c = new Cliente(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
-        this.clientes.add(c);
-
-        System.out.println("Cliente cadastrado com sucesso!");
-
-        IO.println(c.toString());
-
-        return c;
-    }
-    /**
-    public void cadastarImovel() {
-        Scanner leitor = new Scanner(System.in);
-        System.out.println("CADASTRO DE IMÓVEL");
-        //Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade)
-    }
-     **/
 
     public void realizarTransacao(Cliente cliente, Funcionario funcionario, Imovel imovel) {
         if (!imovel.getDisponibilidade()) throw new ConflitoDisponibilidade();
 
         JComboBox<TipoPagamento> combo = new JComboBox<>(TipoPagamento.values());
         TipoPagamento tipoPagamento = (TipoPagamento) combo.getSelectedItem();
+        int result = JOptionPane.showConfirmDialog(null, combo, "Tipo de Pagamento", JOptionPane.OK_CANCEL_OPTION);
+        if (result != JOptionPane.OK_OPTION) return;
 
         if (imovel.getTipoDisponibilidade() == TipoDisponibilidade.VENDER) {
             Venda v = new Venda(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente);
@@ -177,6 +72,269 @@ public class Imobiliaria {
             a.executar();
             IO.println(a.toString());
         }
+    }
+
+    public Funcionario cadastrarFuncionario() {
+
+        String cpf = JOptionPane.showInputDialog("CPF do funcionário");
+
+        String nome = JOptionPane.showInputDialog("Nome do funcionário");
+
+        String cargo = JOptionPane.showInputDialog("Cargo do funcionário");
+
+        Double salarioBase = Double.parseDouble(JOptionPane.showInputDialog("Salário base do funcionário"));
+
+        Endereco endereco = cadastrarEndereco();
+
+        List<String> telefones = cadastrarTelefone();
+
+        String usuario = JOptionPane.showInputDialog("Digite o usuário");
+
+        String senha = JOptionPane.showInputDialog("Digite a senha");
+
+        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar funcionário?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            Funcionario f = new Funcionario(cpf, nome, endereco, telefones, cargo, salarioBase, usuario, senha);
+            this.funcionarios.add(f);
+            return f;
+        } else if (resposta == JOptionPane.NO_OPTION) return null;
+
+        return null;
+    }
+
+    public Boolean ehProprietario() {
+        Scanner leitor = new Scanner(System.in);
+        System.out.println("CADASTRO DE CLIENTE");
+
+        String escolha = "";
+
+        do {
+            System.out.print("Deseja cadastrar um [USUÁRIO] ou um [PROPRIETÁRIO]?");
+            escolha = leitor.nextLine().toUpperCase();
+        } while (!escolha.equals("USUÁRIO") && !escolha.equals("PROPRIETÁRIO"));
+
+        return escolha.equals("PROPRIETÁRIO");
+    }
+
+    public Cliente cadastarCliente(Boolean ehProprietario) {
+
+        //boolean proprietario = ehProprietario();
+
+        String cpf = JOptionPane.showInputDialog("CPF do cliente");
+
+        String nome = JOptionPane.showInputDialog("Nome do cliente");
+
+        String email = JOptionPane.showInputDialog("Email do cliente");
+
+        String profissao = JOptionPane.showInputDialog("Profissão do cliente");
+
+        Endereco endereco = cadastrarEndereco();
+
+        JComboBox<Sexo> comboSexo = new JComboBox<>(Sexo.values());
+        JOptionPane.showMessageDialog(null, comboSexo);
+        Sexo sexo = (Sexo) comboSexo.getSelectedItem();
+
+        JComboBox<EstadoCivil> comboEstadoCivil = new JComboBox<>(EstadoCivil.values());
+        JOptionPane.showMessageDialog(null, comboEstadoCivil);
+        EstadoCivil estadoCivil = (EstadoCivil) comboEstadoCivil.getSelectedItem();
+
+        if (ehProprietario) {
+            ClienteProprietario p = new ClienteProprietario(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
+            this.clientes.add(p);
+            //chamar cadastrarImovel()
+            return p;
+        } else if (!ehProprietario) {
+            Cliente c = new Cliente(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
+            this.clientes.add(c);
+            return c;
+        } else throw new IllegalArgumentException();
+    }
+
+    public Imovel cadastarImovel(List<ClienteProprietario> proprietarios) {
+        JPanel painelPrincipal = new JPanel();
+        painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
+
+        String[] tiposImovel = {"Casa", "Apartamento", "Terreno", "Sala Comercial"};
+        JComboBox<String> comboTipo = new JComboBox<>(tiposImovel);
+
+        CardLayout cardLayout = new CardLayout();
+        JPanel painelCards = new JPanel(cardLayout);
+
+        Endereco endereco = cadastrarEndereco();
+
+        JComboBox<TipoDisponibilidade> comboTipoDisponibilidade = new JComboBox<>(TipoDisponibilidade.values());
+
+        /**---------CASA---------**/
+        JPanel painelCasa = new JPanel(new GridLayout(0, 1));
+
+        JTextField areaCasa = new JTextField();
+        JTextField quantidadeQuartosCasa = new JTextField();
+        JTextField quantidadeSalasEstarCasa = new JTextField();
+        JTextField quantidadeSalasJantarCasa = new JTextField();
+        JTextField quantidadeSuitesCasa = new JTextField();
+        JTextField quantidadeVagasGaragemCasa = new JTextField();
+
+        painelCasa.add(new JLabel("Área"));
+        painelCasa.add(areaCasa);
+        painelCasa.add(new JLabel("Quantidade de Quartos"));
+        painelCasa.add(quantidadeQuartosCasa);
+        painelCasa.add(new JLabel("Quantidade de Salas de Estar"));
+        painelCasa.add(quantidadeSalasEstarCasa);
+        painelCasa.add(new JLabel("Quantidade de Salas de Jantar"));
+        painelCasa.add(quantidadeSalasJantarCasa);
+        painelCasa.add(new JLabel("Quantidade de Suites"));
+        painelCasa.add(quantidadeSuitesCasa);
+        painelCasa.add(new JLabel("Quantidade de Vagas na Garagem"));
+        painelCasa.add(quantidadeVagasGaragemCasa);
+
+        /**---------APARTAMENTO---------**/
+
+        JPanel painelApartamento = new JPanel(new GridLayout(0, 1));
+
+        JTextField andar = new JTextField();
+        JTextField areaApartamento = new JTextField();
+        JTextField quantidadeQuartosApartamento = new JTextField();
+        JTextField quantidadeSalasEstarApartamento = new JTextField();
+        JTextField quantidadeSalasJantarApartamento = new JTextField();
+        JTextField quantidadeSuitesApartamento = new JTextField();
+        JTextField quantidadeVagasGaragemApartamento = new JTextField();
+        JTextField valorCondominio = new JTextField();
+
+        painelApartamento.add(new JLabel("Andar"));
+        painelApartamento.add(andar);
+        painelApartamento.add(new JLabel("Área"));
+        painelApartamento.add(areaApartamento);
+        painelApartamento.add(new JLabel("Quantidade de Quartos"));
+        painelApartamento.add(quantidadeQuartosApartamento);
+        painelApartamento.add(new JLabel("Quantidade de Salas de Estar"));
+        painelApartamento.add(quantidadeSalasEstarApartamento);
+        painelApartamento.add(new JLabel("Quantidade de Salas de Jantar"));
+        painelApartamento.add(quantidadeSalasJantarApartamento);
+        painelApartamento.add(new JLabel("Quantidade de Suites"));
+        painelApartamento.add(quantidadeSuitesApartamento);
+        painelApartamento.add(new JLabel("Quantidade de Vagas na Garagem"));
+        painelApartamento.add(quantidadeVagasGaragemApartamento);
+        painelApartamento.add(new JLabel("Valor do Condomínio"));
+        painelApartamento.add(valorCondominio);
+
+        /**---------TERRENO---------**/
+
+        JPanel painelTerreno = new JPanel(new GridLayout(0, 1));
+
+        JTextField comprimento = new JTextField();
+        JTextField largura = new JTextField();
+
+        painelTerreno.add(new JLabel("Comprimento"));
+        painelTerreno.add(comprimento);
+        painelTerreno.add(new JLabel("Largura"));
+        painelTerreno.add(largura);
+
+        /**---------SALA COMERCIAL---------**/
+
+        JPanel painelSalaComercial = new JPanel(new GridLayout(0, 1));
+
+        JTextField areaSalaComercial = new JTextField();
+        JTextField quantidadeBanheiros = new JTextField();
+        JTextField quantidadeComodos = new JTextField();
+
+        painelSalaComercial.add(new JLabel("Área"));
+        painelSalaComercial.add(areaSalaComercial);
+        painelSalaComercial.add(new JLabel("Quantidade de Banheiros"));
+        painelSalaComercial.add(quantidadeBanheiros);
+        painelSalaComercial.add(new JLabel("Quantidade de Cômodos"));
+        painelSalaComercial.add(quantidadeComodos);
+
+        /**---------------------------------**/
+
+        painelCards.add(painelCasa, "Casa");
+        painelCards.add(painelApartamento, "Apartamento");
+        painelCards.add(painelTerreno, "Terreno");
+        painelCards.add(painelSalaComercial, "Sala Comercial");
+
+        comboTipo.addActionListener(e -> cardLayout.show(painelCards, (String) comboTipo.getSelectedItem()));
+
+        painelPrincipal.add(new JLabel("Tipo de Imóvel"));
+        painelPrincipal.add(comboTipo);
+        painelPrincipal.add(new JLabel("Disponibilidade"));
+        painelPrincipal.add(comboTipoDisponibilidade);
+        painelPrincipal.add(painelCards);
+
+        int result = JOptionPane.showConfirmDialog(null, painelPrincipal, "Cadastro Imóvel", JOptionPane.OK_CANCEL_OPTION);
+        if (result != JOptionPane.OK_OPTION) return null;
+
+        String tipoSelecionado = (String) comboTipo.getSelectedItem();
+        TipoDisponibilidade tipo = (TipoDisponibilidade) comboTipoDisponibilidade.getSelectedItem();
+
+        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar Imóvel?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            if (tipoSelecionado.equals("Casa")) {
+                Casa c = new Casa(
+                        LocalDate.now(),
+                        endereco,
+                        proprietarios,
+                        tipo,
+                        this,
+                        Integer.parseInt(quantidadeQuartosCasa.getText()),
+                        Integer.parseInt(quantidadeSuitesCasa.getText()),
+                        Integer.parseInt(quantidadeSalasEstarCasa.getText()),
+                        Integer.parseInt(quantidadeSalasJantarCasa.getText()),
+                        Integer.parseInt(quantidadeVagasGaragemCasa.getText()),
+                        Double.parseDouble(areaCasa.getText()),
+                        true
+                );
+                this.imoveis.add(c);
+                return c;
+            } else if (tipoSelecionado.equals("Apartamento")) {
+                Apartamento a = new Apartamento(
+                        LocalDate.now(),
+                        endereco,
+                        proprietarios,
+                        tipo,
+                        this,
+                        Integer.parseInt(quantidadeQuartosApartamento.getText()),
+                        Integer.parseInt(quantidadeSuitesApartamento.getText()),
+                        Integer.parseInt(quantidadeSalasEstarApartamento.getText()),
+                        Integer.parseInt(quantidadeSalasJantarApartamento.getText()),
+                        Integer.parseInt(quantidadeVagasGaragemApartamento.getText()),
+                        Double.parseDouble(areaApartamento.getText()),
+                        false,
+                        Integer.parseInt(andar.getText()),
+                        Double.parseDouble(valorCondominio.getText()),
+                        false
+                );
+                this.imoveis.add(a);
+                return a;
+            } else if (tipoSelecionado.equals("Terreno")) {
+                Terreno t = new Terreno(
+                        LocalDate.now(),
+                        endereco,
+                        proprietarios,
+                        tipo,
+                        this,
+                        Double.parseDouble(largura.getText()),
+                        Double.parseDouble(comprimento.getText()),
+                        false,
+                        false
+                );
+                this.imoveis.add(t);
+                return t;
+            } else {
+                SalaComercial sc = new SalaComercial(
+                        LocalDate.now(),
+                        endereco,
+                        proprietarios,
+                        tipo,
+                        this,
+                        Double.parseDouble(areaSalaComercial.getText()),
+                        Integer.parseInt(quantidadeBanheiros.getText()),
+                        Integer.parseInt(quantidadeComodos.getText())
+                );
+                this.imoveis.add(sc);
+                return sc;
+            }
+        } else if (resposta == JOptionPane.NO_OPTION) return null;
+
+        return null;
     }
 
     public Cliente buscarUsuario(String nome) {
@@ -218,8 +376,29 @@ public class Imobiliaria {
         return new Pessoa(cpf, nome, endereco, telefones);
     }
 
-    public List<Imovel> getImoveisDisponiveis() {
-        return this.imoveis.stream().filter(i -> i.getDisponibilidade() == true).toList();
+    public List<Imovel> getImoveisPorBairro(String bairro) {
+        return imoveis.stream()
+                .filter(i -> i.getEndereco().getBairro().equalsIgnoreCase(bairro)).toList();
+    }
+
+    public List<Imovel> getImoveisDisponiveis(List<Imovel> imoveis) {
+        return imoveis.stream().filter(i -> i.getDisponibilidade() == true).toList();
+    }
+
+    public List<Imovel> getImoveisIndisponiveis(List<Imovel> imoveis) {
+        return imoveis.stream().filter(i -> i.getDisponibilidade() == false).toList();
+    }
+
+    public List<Imovel> getImoveisParaVenda() {
+        return imoveis.stream()
+                .filter(i -> i.getTipoDisponibilidade() == TipoDisponibilidade.VENDER)
+                .toList();
+    }
+
+    public List<Imovel> getImoveisParaAluguel() {
+        return imoveis.stream()
+                .filter(i -> i.getTipoDisponibilidade() == TipoDisponibilidade.LOCACAO)
+                .toList();
     }
 
     public List<Imovel> getImoveisDisponiveisTipo(TipoDisponibilidade tipo) {
@@ -231,10 +410,6 @@ public class Imobiliaria {
 
     public List<Imovel> getImoveisDisponiveisSimples() {
         return this.imoveis;
-    }
-
-    public List<Imovel> getImoveisIndisponiveis() {
-        return this.imoveis.stream().filter(i -> i.getDisponibilidade() == false).toList();
     }
 
     public void adicionarComissao(Double valor) {
@@ -271,17 +446,5 @@ public class Imobiliaria {
 
     public List<Cliente> getClientes() {
         return clientes;
-    }
-
-    public List<Imovel> getImoveis() {
-        return imoveis;
-    }
-
-    public List<Funcionario> getFuncionarios() {
-        return funcionarios;
-    }
-
-    public List<RegistroTransacao> getTrasacoes() {
-        return transacoes;
     }
 }

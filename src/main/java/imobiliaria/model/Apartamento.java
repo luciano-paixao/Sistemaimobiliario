@@ -2,6 +2,7 @@ package main.java.imobiliaria.model;
 
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,24 +30,20 @@ public class Apartamento extends Imovel {
 
     private Boolean portaria24hs;
 
-    public Apartamento(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
-                       List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade, Double valorSugerido,
-                       Integer andar, Double area, Boolean armarioEmbutido, String descricao, Boolean portaria24hs,
-                       Integer quantidadeQuartos, Integer quantidadeSalasEstar, Integer quantidadeSalasJantar,
-                       Integer quantidadeSuites, Integer quantidadeVagasGaragem, Double valorCondominio,
-                       LocalDate incioOferta, LocalDate fimOferta, Imobiliaria imo) {
-        super(dataConstrucao, endereco, proprietarios, tipoDisponibilidade, incioOferta, fimOferta, imo, valorSugerido);
-        this.andar = andar;
-        this.area = area;
-        this.armarioEmbutido = armarioEmbutido;
-        this.descricao = descricao;
-        this.portaria24hs = portaria24hs;
+    public Apartamento(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade, Imobiliaria imobiliaria,
+                       Integer quantidadeQuartos, Integer quantidadeSuites, Integer quantidadeSalasEstar, Integer quantidadeSalasJantar, Integer quantidadeVagasGaragem,
+                       Double area, Boolean armarioEmbutido, Integer andar, Double valorCondominio, Boolean portaria24hs) {
+        super(dataConstrucao, endereco, proprietarios, tipoDisponibilidade, imobiliaria);
         this.quantidadeQuartos = quantidadeQuartos;
+        this.quantidadeSuites = quantidadeSuites;
         this.quantidadeSalasEstar = quantidadeSalasEstar;
         this.quantidadeSalasJantar = quantidadeSalasJantar;
-        this.quantidadeSuites = quantidadeSuites;
         this.quantidadeVagasGaragem = quantidadeVagasGaragem;
+        this.area = area;
+        this.armarioEmbutido = armarioEmbutido;
+        this.andar = andar;
         this.valorCondominio = valorCondominio;
+        this.portaria24hs = portaria24hs;
     }
 
     public Integer getQuantidadeQuartos() {

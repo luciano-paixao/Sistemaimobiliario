@@ -3,6 +3,7 @@ package main.java.imobiliaria.model;
 import main.java.imobiliaria.model.enums.TipoPagamento;
 
 import java.time.LocalDate;
+
 import java.util.List;
 
 public abstract class RegistroTransacao {
@@ -29,6 +30,19 @@ public abstract class RegistroTransacao {
     private Double valorReal;
 
     private Double margemImobiliaria;
+
+    public RegistroTransacao(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario,
+                             List<ClienteProprietario> proprietarios, Cliente interessado) {
+        this.numContrato = RegistroTransacao.contador++;
+        this.dataTransacao = LocalDate.now();
+        this.tipoPagamento = tipoPagamento;
+        this.imovel = imovel;
+        this.funcionario = funcionario;
+        this.proprietarios = proprietarios;
+        this.interessado = interessado;
+        this.valorSugerido = imovel.getValorSugerido();
+        this.valorReal = valorSugerido;
+    }
 
     public RegistroTransacao(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario,
                              List<ClienteProprietario> proprietarios, Cliente interessado) {
