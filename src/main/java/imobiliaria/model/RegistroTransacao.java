@@ -32,6 +32,19 @@ public abstract class RegistroTransacao {
     private Double margemImobiliaria;
 
     public RegistroTransacao(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario,
+                             List<ClienteProprietario> proprietarios, Cliente interessado, Double valorSugerido) {
+        this.numContrato = RegistroTransacao.contador++;
+        this.dataTransacao = LocalDate.now();
+        this.tipoPagamento = tipoPagamento;
+        this.imovel = imovel;
+        this.funcionario = funcionario;
+        this.proprietarios = proprietarios;
+        this.interessado = interessado;
+        this.valorSugerido = valorSugerido;
+        this.valorReal = valorSugerido;
+    }
+
+    public RegistroTransacao(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario,
                              List<ClienteProprietario> proprietarios, Cliente interessado) {
         this.numContrato = RegistroTransacao.contador++;
         this.dataTransacao = LocalDate.now();
