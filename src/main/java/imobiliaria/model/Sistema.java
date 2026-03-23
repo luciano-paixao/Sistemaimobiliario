@@ -156,8 +156,8 @@ public class Sistema {
             menu(imobi);
         }
         else if (num == 2){
-            // vai chamar o método chamar cadastrar cliente na class imobiliaria (mas clinte Proprietario ou usuario?
-            //  sei lá, resolvam aí KKKKKKKKKKKKKKK)
+            imobi.cadastarCliente();
+
         }
         else if (num == 3){
             // imobi.cadastarImovel(clienteProprietario); colocar um objeto já pronto
@@ -177,7 +177,6 @@ public class Sistema {
                             break;
                 }
             }
-            menu(imobi);
         }
         else if (num == 5){
             // mesma coisa do if anterior só que para aluguel
@@ -185,6 +184,7 @@ public class Sistema {
         else if (num == 6){
             System.exit(0);
         }
+        menu(imobi);
     }
 }
 

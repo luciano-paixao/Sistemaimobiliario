@@ -102,7 +102,7 @@ public class Imobiliaria {
         String profissao = leitor.nextLine();
 
         System.out.print("Digite o sexo: ");
-        Sexo sexo = Sexo.valueOf(leitor.nextLine());
+        Sexo sexo = Sexo.valueOf(leitor.nextLine().toUpperCase());
 
         System.out.print("Digite o estado civil: ");
         EstadoCivil estadoCivil = EstadoCivil.valueOf(leitor.nextLine().toUpperCase());
@@ -117,6 +117,8 @@ public class Imobiliaria {
         this.clientes.add(c);
 
         System.out.println("Cliente cadastrado com sucesso!");
+
+        IO.println(c.toString());
 
         return c;
     }
