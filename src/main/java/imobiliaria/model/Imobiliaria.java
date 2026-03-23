@@ -7,10 +7,10 @@ import main.java.imobiliaria.model.enums.TipoPagamento;
 import main.java.imobiliaria.model.exceptions.ConflitoDisponibilidade;
 
 import javax.swing.*;
-import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Imobiliaria {
 
@@ -22,95 +22,121 @@ public class Imobiliaria {
 
     List<Cliente> clientes;
 
-    List<RegistroTransacao> trasacoes;
+    List<RegistroTransacao> transacoes;
 
     public Imobiliaria() {
         this.imoveis = new ArrayList<>();
         this.funcionarios = new ArrayList<>();
         this.clientes = new ArrayList<>();
-        this.trasacoes = new ArrayList<>();
+        this.transacoes = new ArrayList<>();
+        this.totalComissoes = 0.0;
     }
 
-    public void cadastrarFuncionario() {
+    public Funcionario cadastrarFuncionario() {
+        Scanner leitor = new Scanner(System.in);
 
-        String cpf = JOptionPane.showInputDialog("CPF do funcionário");
+        System.out.println("CADASTRO DE FUNCIONÁRIO");
 
-        String nome = JOptionPane.showInputDialog("Nome do funcionário");
+        System.out.print("Digite o CPF: ");
+        String cpf = leitor.nextLine();
 
-        String cargo = JOptionPane.showInputDialog("Cargo do funcionário");
+        System.out.print("Digite o nome: ");
+        String nome = leitor.nextLine();
 
-        Double salarioBase = Double.parseDouble(JOptionPane.showInputDialog("Salário base do funcionário"));
+        // Endereço
+        System.out.print("Digite a rua: ");
+        String rua = leitor.nextLine();
 
-        Endereco endereco = cadastrarEndereco();
+        System.out.print("Digite o número: ");
+        String numero = leitor.nextLine();
+
+        System.out.print("Digite o bairro: ");
+        String bairro = leitor.nextLine();
+
+        Endereco endereco = new Endereco(bairro, rua, numero);
 
         List<String> telefones = cadastrarTelefone();
 
-        String usuario = JOptionPane.showInputDialog("Digite o usuário");
+        System.out.print("Digite o cargo: ");
+        String cargo = leitor.nextLine();
 
-        String senha = JOptionPane.showInputDialog("Digite a senha");
+        System.out.print("Digite o salário base: ");
+        Double salarioBase = Double.parseDouble(leitor.nextLine());
 
-        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar funcionário?", "Confirmar", JOptionPane.YES_NO_OPTION);
-        if (resposta == JOptionPane.YES_OPTION) {
-            Funcionario f = new Funcionario(cpf, nome, endereco, telefones, cargo, salarioBase, usuario, senha);
-            this.funcionarios.add(f);
-        } else if (resposta == JOptionPane.NO_OPTION) {
-            cadastrarFuncionario();
-        }
+        System.out.print("Digite o usuário: ");
+        String usuario = leitor.nextLine();
+
+        System.out.print("Digite a senha: ");
+        String senha = leitor.nextLine();
+
+        Funcionario f = new Funcionario(cpf, nome, endereco, telefones, cargo, salarioBase, usuario, senha);
+
+        System.out.println("\nFuncionário cadastrado com sucesso!");
+        System.out.println("Data de ingresso: " + f.getDataIngresso() + "\n");
+
+        this.funcionarios.add(f);
+
+        return f;
     }
 
-    public void cadastarCliente() {
-//        JPanel painelPrincipal = new JPanel();
-//        painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
-//
-//        CardLayout cardLayout = new CardLayout();
-//        JPanel painelCards = new JPanel(cardLayout);
-//
-//        String[] tiposCliente = {"Usuário", "Proprietário"};
-//        JComboBox<String> comboEscolha = new JComboBox<>(tiposCliente);
-//        comboEscolha.addActionListener(e -> {
-//            String escolha = (String) comboEscolha.getSelectedItem();
-//            cardLayout.show(painelCards, escolha.toUpperCase());
-//        });
-//
-//        painelPrincipal.add(comboEscolha);
-//        painelPrincipal.add(painelCards);
+    public Boolean ehProprietario(){
+        Scanner leitor = new Scanner(System.in);
+        System.out.println("CADASTRO DE CLIENTE");
 
-        String escolha = JOptionPane.showInputDialog("Deseja cadastrar um [usuário] ou [proprietário]").toUpperCase();
+        String escolha = "";
 
-        String cpf = JOptionPane.showInputDialog("CPF do cliente");
+        do {
+            System.out.print("Deseja cadastrar um [USUÁRIO] ou um [PROPRIETÁRIO]?");
+            escolha = leitor.nextLine().toUpperCase();
+        } while (!escolha.equals("USUÁRIO") && !escolha.equals("PROPRIETÁRIO"));
 
-        String nome = JOptionPane.showInputDialog("Nome do cliente");
+        return escolha.equals("PROPRIETÁRIO");
+    }
 
-        String email = JOptionPane.showInputDialog("Email do cliente");
+    public Cliente cadastrarCliente(Boolean ehProprietario) {
+        Scanner leitor = new Scanner(System.in);
 
-        String profissao = JOptionPane.showInputDialog("Profissão do cliente");
+        System.out.print("Digite o CPF: ");
+        String cpf = leitor.nextLine();
+
+        System.out.print("Digite o nome: ");
+        String nome = leitor.nextLine();
 
         Endereco endereco = cadastrarEndereco();
 
-        JComboBox<Sexo> comboSexo = new JComboBox<>(Sexo.values());
-        Sexo sexo = (Sexo) comboSexo.getSelectedItem();
+        System.out.print("Digite o email: ");
+        String email = leitor.nextLine();
 
-        JComboBox<EstadoCivil> comboEstadoCivil = new JComboBox<>(EstadoCivil.values());
-        EstadoCivil estadoCivil = (EstadoCivil) comboEstadoCivil.getSelectedItem();
+        System.out.print("Digite a profissão: ");
+        String profissao = leitor.nextLine();
 
-        if (escolha.equals("PROPRIETARIO")) {
+        System.out.print("Digite o sexo: ");
+        Sexo sexo = Sexo.valueOf(leitor.nextLine().toUpperCase());
+
+        System.out.print("Digite o estado civil: ");
+        EstadoCivil estadoCivil = EstadoCivil.valueOf(leitor.nextLine().toUpperCase());
+
+        if (ehProprietario) {
             ClienteProprietario p = new ClienteProprietario(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
             this.clientes.add(p);
-            //chamar cadastrarImovel()
-        } else if (escolha.equals("USUARIO")) {
-            Cliente c = new Cliente(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
-            this.clientes.add(c);
-        } else throw new IllegalArgumentException();
+            return p;
+        }
 
-        System.out.println("Cliente cadastrado com sucesso!");;
+        Cliente c = new Cliente(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
+        this.clientes.add(c);
+
+        System.out.println("Cliente cadastrado com sucesso!");
+
+        IO.println(c.toString());
+
+        return c;
     }
-
     /**
-     * public void cadastarImovel() {
-     * Scanner leitor = new Scanner(System.in);
-     * System.out.println("CADASTRO DE IMÓVEL");
-     * //Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade)
-     * }
+    public void cadastarImovel() {
+        Scanner leitor = new Scanner(System.in);
+        System.out.println("CADASTRO DE IMÓVEL");
+        //Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade)
+    }
      **/
 
     public void realizarTransacao(Cliente cliente, Funcionario funcionario, Imovel imovel) {
@@ -120,8 +146,9 @@ public class Imobiliaria {
         TipoPagamento tipoPagamento = (TipoPagamento) combo.getSelectedItem();
 
         if (imovel.getTipoDisponibilidade() == TipoDisponibilidade.VENDER) {
-            Venda v = new Venda(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, 10000.0);
+            Venda v = new Venda(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente);
             v.executar();
+            IO.println(v.toString());
         } else {
             //List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato, LocalDate fimContrato
             int n = Integer.parseInt(JOptionPane.showInputDialog("Número de fiadores"));
@@ -131,7 +158,9 @@ public class Imobiliaria {
                 fiadores.add(fiador);
             }
 
-            n = Integer.parseInt(JOptionPane.showInputDialog("Número de indicações (mínimo dois)"));
+            do {
+                n = Integer.parseInt(JOptionPane.showInputDialog("Número de indicações (mínimo dois)"));
+            } while(n < 2);
             List<Pessoa> indicacoes = new ArrayList<>();
             for (int i = 0; i < n; i++) {
                 Pessoa indicacao = cadastrarPessoa();
@@ -144,9 +173,23 @@ public class Imobiliaria {
             int dia = 1;
             LocalDate inicioContrato = LocalDate.of(ano, mes, dia);
 
-            Aluguel a = new Aluguel(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, 1000.0, fiadores, indicacoes, inicioContrato);
+            Aluguel a = new Aluguel(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, fiadores, indicacoes, inicioContrato);
             a.executar();
+            IO.println(a.toString());
         }
+    }
+
+    public Cliente buscarUsuario(String nome) {
+        Cliente cliUser = getClientes().stream()
+                .filter(c -> c.getNome().equals(nome))
+                .findFirst()
+                .orElse(null);
+        if(cliUser instanceof ClienteProprietario) {
+            System.out.println("Não foi achado nenhum cliente chamado " + nome);
+            return null;
+        }
+
+        return cliUser;
     }
 
     public Endereco cadastrarEndereco() {
@@ -177,6 +220,17 @@ public class Imobiliaria {
 
     public List<Imovel> getImoveisDisponiveis() {
         return this.imoveis.stream().filter(i -> i.getDisponibilidade() == true).toList();
+    }
+
+    public List<Imovel> getImoveisDisponiveisTipo(TipoDisponibilidade tipo) {
+        return this.imoveis.stream()
+                .filter(i -> i.getDisponibilidade() == true)
+                .filter(i -> i.getTipoDisponibilidade().equals(tipo))
+                .toList();
+    }
+
+    public List<Imovel> getImoveisDisponiveisSimples() {
+        return this.imoveis;
     }
 
     public List<Imovel> getImoveisIndisponiveis() {
@@ -215,6 +269,10 @@ public class Imobiliaria {
         return totalComissoes;
     }
 
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
     public List<Imovel> getImoveis() {
         return imoveis;
     }
@@ -223,11 +281,7 @@ public class Imobiliaria {
         return funcionarios;
     }
 
-    public List<Cliente> getClientes() {
-        return clientes;
-    }
-
     public List<RegistroTransacao> getTrasacoes() {
-        return trasacoes;
+        return transacoes;
     }
 }

@@ -14,6 +14,7 @@ public class Aluguel extends RegistroTransacao {
     private LocalDate inicioContrato;
 
     private LocalDate fimContrato;
+    private LocalDate dataAluguel;
 
     public Aluguel(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, List<ClienteProprietario> proprietarios, Cliente interessado,
                    List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato) {
@@ -79,12 +80,12 @@ public class Aluguel extends RegistroTransacao {
 
     @Override
     public String toString() {
-        return "Aluguel{" +
-                "fiadores=" + fiadores +
-                ", indicacoes=" + indicacoes +
-                ", inicioContrato=" + inicioContrato +
-                ", fimContrato=" + fimContrato +
-                ", dataAluguel=" + dataAluguel +
-                super.toString() + '}';
+        return "\n** DADOS DA TRANSAÇÃO (ALUGUEL) **\n" +
+                "valorAluguel=" + super.getValorSugerido() +
+                "\nfiadores=" + fiadores +
+                "\n, indicacoes=" + indicacoes +
+                "\n, inicioContrato=" + inicioContrato +
+                "\n, fimContrato=" + fimContrato +
+                "\n, dataAluguel=" + dataAluguel;
     }
 }

@@ -23,12 +23,13 @@ public class Casa extends Imovel {
 
     private String descricao;
 
-    public Casa(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
-                List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade,
+    public Casa(LocalDate dataConstrucao, Endereco endereco,
+                List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade, Double valorSugerido,
                 Double area, Boolean armarioEmbutido, String descricao, Integer quantidadeQuartos,
                 Integer quantidadeSalasEstar, Integer quantidadeSalasJantar, Integer quantidadeSuites,
-                Integer quantidadeVagasGaragem) {
-        super(dataConstrucao, disponibilidade, endereco, proprietarios, tipoDisponibilidade);
+                Integer quantidadeVagasGaragem, LocalDate incioOferta, LocalDate fimOferta,
+                Imobiliaria imo) {
+        super(dataConstrucao, endereco, proprietarios, tipoDisponibilidade, incioOferta, fimOferta, imo, valorSugerido);
         this.area = area;
         this.armarioEmbutido = armarioEmbutido;
         this.descricao = descricao;

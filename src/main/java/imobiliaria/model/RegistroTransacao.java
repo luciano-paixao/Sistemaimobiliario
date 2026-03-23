@@ -9,7 +9,8 @@ public abstract class RegistroTransacao {
 
     private Integer numContrato;
 
-    private static Integer contador;
+    // ATRIBUIR 0 PORQUE SENÃO GERA NULLPOINTEREXCEPTION (contador fica null)
+    private static Integer contador = 0;
 
     private LocalDate dataTransacao;
 
@@ -150,16 +151,15 @@ public abstract class RegistroTransacao {
 
     @Override
     public String toString() {
-        return "RegistroTransacao{" +
-                "numContrato=" + numContrato +
-                ", dataTransacao=" + dataTransacao +
-                ", formaPagamento='" + tipoPagamento + '\'' +
-                ", imovel=" + imovel +
-                ", funcionario=" + funcionario +
-                ", clienteInteressado=" + interessado +
-                ", clienteProprietario=" + proprietarios +
-                ", valorSugerido=" + valorSugerido +
-                ", valorReal=" + valorReal +
-                '}';
+        return  "numContrato=" + numContrato +
+                "\n, dataTransacao=" + dataTransacao +
+                "\n, formaPagamento='" + tipoPagamento + '\'' +
+                "\n, imovel=" + imovel.getEndereco() +
+                "\n, funcionario=" + funcionario.getNome() +
+                "\n, clienteInteressado=" + interessado.getNome() +
+                "\n, clienteProprietario=" + proprietarios.get(0).getNome() +
+                "\n, valorSugerido=" + valorSugerido +
+                "\n, valorReal=" + valorReal +
+                "}\n";
     }
 }
