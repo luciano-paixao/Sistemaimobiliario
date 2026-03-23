@@ -174,6 +174,7 @@ public class Imobiliaria {
         JTextField quantidadeSalasJantarCasa = new JTextField();
         JTextField quantidadeSuitesCasa = new JTextField();
         JTextField quantidadeVagasGaragemCasa = new JTextField();
+        JTextField valorSugeridoCasa = new JTextField();
 
         painelCasa.add(new JLabel("Área"));
         painelCasa.add(areaCasa);
@@ -187,6 +188,8 @@ public class Imobiliaria {
         painelCasa.add(quantidadeSuitesCasa);
         painelCasa.add(new JLabel("Quantidade de Vagas na Garagem"));
         painelCasa.add(quantidadeVagasGaragemCasa);
+        painelCasa.add(new JLabel("Por quanto deseja anunciar essa casa?"));
+        painelCasa.add(valorSugeridoCasa);
 
         /**---------APARTAMENTO---------**/
 
@@ -200,6 +203,7 @@ public class Imobiliaria {
         JTextField quantidadeSuitesApartamento = new JTextField();
         JTextField quantidadeVagasGaragemApartamento = new JTextField();
         JTextField valorCondominio = new JTextField();
+        JTextField valorSugeridoApartamento = new JTextField();
 
         painelApartamento.add(new JLabel("Andar"));
         painelApartamento.add(andar);
@@ -217,6 +221,8 @@ public class Imobiliaria {
         painelApartamento.add(quantidadeVagasGaragemApartamento);
         painelApartamento.add(new JLabel("Valor do Condomínio"));
         painelApartamento.add(valorCondominio);
+        painelCasa.add(new JLabel("Por quanto deseja anunciar esse apartamento?"));
+        painelCasa.add(valorSugeridoApartamento);
 
         /**---------TERRENO---------**/
 
@@ -224,11 +230,14 @@ public class Imobiliaria {
 
         JTextField comprimento = new JTextField();
         JTextField largura = new JTextField();
+        JTextField valorSugeridoTerreno = new JTextField();
 
         painelTerreno.add(new JLabel("Comprimento"));
         painelTerreno.add(comprimento);
         painelTerreno.add(new JLabel("Largura"));
         painelTerreno.add(largura);
+        painelCasa.add(new JLabel("Por quanto deseja anunciar esse terreno?"));
+        painelCasa.add(valorSugeridoTerreno);
 
         /**---------SALA COMERCIAL---------**/
 
@@ -237,6 +246,7 @@ public class Imobiliaria {
         JTextField areaSalaComercial = new JTextField();
         JTextField quantidadeBanheiros = new JTextField();
         JTextField quantidadeComodos = new JTextField();
+        JTextField valorSugeridoSalaComercial = new JTextField();
 
         painelSalaComercial.add(new JLabel("Área"));
         painelSalaComercial.add(areaSalaComercial);
@@ -244,6 +254,8 @@ public class Imobiliaria {
         painelSalaComercial.add(quantidadeBanheiros);
         painelSalaComercial.add(new JLabel("Quantidade de Cômodos"));
         painelSalaComercial.add(quantidadeComodos);
+        painelCasa.add(new JLabel("Por quanto deseja anunciar essa sala comercial?"));
+        painelCasa.add(valorSugeridoSalaComercial);
 
         /**---------------------------------**/
 
@@ -275,6 +287,7 @@ public class Imobiliaria {
                         proprietarios,
                         tipo,
                         this,
+                        Double.parseDouble(valorSugeridoCasa.getText()),
                         Integer.parseInt(quantidadeQuartosCasa.getText()),
                         Integer.parseInt(quantidadeSuitesCasa.getText()),
                         Integer.parseInt(quantidadeSalasEstarCasa.getText()),
@@ -292,6 +305,7 @@ public class Imobiliaria {
                         proprietarios,
                         tipo,
                         this,
+                        Double.parseDouble(valorSugeridoApartamento.getText()),
                         Integer.parseInt(quantidadeQuartosApartamento.getText()),
                         Integer.parseInt(quantidadeSuitesApartamento.getText()),
                         Integer.parseInt(quantidadeSalasEstarApartamento.getText()),
@@ -312,6 +326,7 @@ public class Imobiliaria {
                         proprietarios,
                         tipo,
                         this,
+                        Double.parseDouble(valorSugeridoTerreno.getText()),
                         Double.parseDouble(largura.getText()),
                         Double.parseDouble(comprimento.getText()),
                         false,
@@ -326,6 +341,7 @@ public class Imobiliaria {
                         proprietarios,
                         tipo,
                         this,
+                        Double.parseDouble(valorSugeridoSalaComercial.getText()),
                         Double.parseDouble(areaSalaComercial.getText()),
                         Integer.parseInt(quantidadeBanheiros.getText()),
                         Integer.parseInt(quantidadeComodos.getText())
@@ -350,7 +366,7 @@ public class Imobiliaria {
         int n = Integer.parseInt(JOptionPane.showInputDialog("Quantos telefones deseja cadastrar?"));
         if (n == 0) return null;
         for (int i = 0; i < n; i++) {
-            String t = JOptionPane.showInputDialog("Número de telefone [(xx) xxxx-xxxx]");
+            String t = JOptionPane.showInputDialog("Número de telefone");
             telefones.add(t);
         }
         return telefones;
@@ -388,18 +404,6 @@ public class Imobiliaria {
 
     public List<Imovel> getImoveisIndisponiveis(List<Imovel> imoveis) {
         return imoveis.stream().filter(i -> i.getDisponibilidade() == false).toList();
-    }
-
-    public List<Imovel> getImoveisParaVenda() {
-        return imoveis.stream()
-                .filter(i -> i.getTipoDisponibilidade() == TipoDisponibilidade.VENDER)
-                .toList();
-    }
-
-    public List<Imovel> getImoveisParaAluguel() {
-        return imoveis.stream()
-                .filter(i -> i.getTipoDisponibilidade() == TipoDisponibilidade.LOCACAO)
-                .toList();
     }
 
     public List<Imovel> getImoveisDisponiveisTipo(TipoDisponibilidade tipo) {

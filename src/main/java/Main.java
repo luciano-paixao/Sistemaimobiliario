@@ -11,24 +11,22 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Imobiliaria i = new Imobiliaria();
+        Imobiliaria imobiliaria = new Imobiliaria();
 
         List<ClienteProprietario> p = new ArrayList<>();
 
-        Funcionario funcionario = i.cadastrarFuncionario();
+        Funcionario funcionario = imobiliaria.cadastrarFuncionario();
         System.out.println(funcionario);
 
-        Cliente usuario = i.cadastrarCliente(true);
+        Cliente usuario = imobiliaria.cadastrarCliente(true);
         System.out.println(usuario);
 
-        Imovel imovel1 = i.cadastrarImovel(p);
+        Imovel imovel1 = imobiliaria.cadastrarImovel(p);
         System.out.println(imovel1);
 
         System.out.println(funcionario.getComissoes());
-        System.out.println(i.getImoveisDisponiveis(i.getImoveis()));
+        System.out.println(imobiliaria.getImoveisDisponiveis(imobiliaria.getImoveis()));
 
-        // ==================== IMOBILIARIA ====================
-        Imobiliaria imobiliaria = new Imobiliaria(); // ajuste conforme seu construtor
 
 // ==================== ENDEREÇOS ====================
         Endereco endCliente1 = new Endereco("Centro", "Rua das Palmeiras", "100");
@@ -73,7 +71,6 @@ public class Main {
                 250000.0,
                 20.0,
                 30.0,
-                600.0,
                 false,
                 false
         );
@@ -152,7 +149,6 @@ public class Main {
                 150000.0,
                 20.0,
                 10.0,
-                200.0,
                 true,
                 false
         );
@@ -180,11 +176,11 @@ public class Main {
         );
 
         IO.println(funcionario.getComissoes());
-        IO.println(i.getTotalcomissoes());
+        IO.println(imobiliaria.getTotalcomissoes());
 
-        i.realizarTransacao(cli1, funcionario, casa2);
+        imobiliaria.realizarTransacao(cli1, funcionario, casa2);
 
         IO.println(funcionario.getComissoes());
-        IO.println(i.getTotalcomissoes());
+        IO.println(imobiliaria.getTotalcomissoes());
     }
 }
