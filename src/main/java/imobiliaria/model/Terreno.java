@@ -67,4 +67,15 @@ public class Terreno extends Imovel {
     public void setDeclive(Boolean declive) {
         this.declive = declive;
     }
+
+    @Override
+    public String toString() {
+        return "Terreno{" +
+                "largura=" + largura +
+                ", comprimento=" + comprimento +
+                ", area=" + area +
+                ", aclive=" + aclive +
+                ", declive=" + declive +
+                super.toString() + '}';
+    }
 }

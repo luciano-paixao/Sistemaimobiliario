@@ -102,4 +102,18 @@ public class Casa extends Imovel {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    @Override
+    public String toString() {
+        return "Casa{" +
+                "quantidadeQuartos=" + quantidadeQuartos +
+                ", quantidadeSuites=" + quantidadeSuites +
+                ", quantidadeSalasEstar=" + quantidadeSalasEstar +
+                ", quantidadeSalasJantar=" + quantidadeSalasJantar +
+                ", quantidadeVagasGaragem=" + quantidadeVagasGaragem +
+                ", area=" + area +
+                ", armarioEmbutido=" + armarioEmbutido +
+                ", descricao='" + descricao + '\'' +
+                super.toString() + '}';
+    }
 }

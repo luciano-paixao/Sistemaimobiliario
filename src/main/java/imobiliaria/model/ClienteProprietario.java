@@ -35,7 +35,7 @@ public class ClienteProprietario extends Cliente {
     @Override
     public String toString() {
         return "ClienteProprietario{" +
-                "Nome= " + this.getNome() +
-                '}';
+                "imoveis=" + imoveis +
+                super.toString() + '}';
     }
 }

@@ -124,10 +124,14 @@ public abstract class Imovel {
     @Override
     public String toString() {
         return "Imovel{" +
-                "disponibilidade= " + disponibilidade +
-                "\n dataConstrucao= " + dataConstrucao +
-                "\n proprietarios= " + mostarProprietarios() +
-                "\n endereco=" + endereco +
+                "dataConstrucao=" + dataConstrucao +
+                ", disponibilidade=" + disponibilidade +
+                ", endereco=" + endereco +
+                ", proprietarios=" + mostarProprietarios() +
+                ", tipoDisponibilidade=" + tipoDisponibilidade +
+                ", incioOferta=" + incioOferta +
+                ", fimOferta=" + fimOferta +
+                ", imobiliaria=" + imobiliaria +
                 '}';
     }
 }

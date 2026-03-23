@@ -45,4 +45,13 @@ public class SalaComercial extends Imovel {
     public void setQuantidadeComodos(Integer quantidadeComodos) {
         this.quantidadeComodos = quantidadeComodos;
     }
+
+    @Override
+    public String toString() {
+        return "SalaComercial{" +
+                "area=" + area +
+                ", quantidadeBanheiros=" + quantidadeBanheiros +
+                ", quantidadeComodos=" + quantidadeComodos +
+                super.toString() + '}';
+    }
 }
