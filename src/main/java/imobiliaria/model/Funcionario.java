@@ -105,6 +105,7 @@ public class Funcionario extends Pessoa {
                 ", salarioBase=" + salarioBase +
                 ", usuario='" + usuario + '\'' +
                 ", senha='" + senha + '\'' +
-                '}';
+                ", totalComissoes=" + totalComissoes +
+                super.toString() + '}';
     }
 }
