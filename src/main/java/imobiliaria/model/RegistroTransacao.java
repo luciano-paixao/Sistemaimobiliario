@@ -75,13 +75,13 @@ public abstract class RegistroTransacao {
 
     public void calcularValorRealTransacao() {
         if(this.imovel instanceof Casa){
-            valorReal -= valorReal * 0.20;
+            valorReal += valorReal * 0.20;
         }else if(this.imovel instanceof Terreno){
-            valorReal -= valorReal * 0.11;
+            valorReal += valorReal * 0.11;
         }else if(this.imovel instanceof Apartamento){
-            valorReal -= valorReal * 0.14;
+            valorReal += valorReal * 0.14;
         }else if(this.imovel instanceof SalaComercial){
-            valorReal -= valorReal * 0.18;
+            valorReal += valorReal * 0.18;
         }
     }
 
