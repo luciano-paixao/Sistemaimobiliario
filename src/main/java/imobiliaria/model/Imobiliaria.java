@@ -445,6 +445,10 @@ public class Imobiliaria {
         return totalComissoes;
     }
 
+    public List<RegistroTransacao> getTrasacoes() {
+        return trasacoes;
+    }
+
     public List<Cliente> getClientes() {
         return clientes;
     }
