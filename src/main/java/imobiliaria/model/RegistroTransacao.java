@@ -9,7 +9,7 @@ public abstract class RegistroTransacao {
 
     private Integer numContrato;
 
-    private static Integer contador;
+    private static Integer contador = 0;
 
     private LocalDate dataTransacao;
 

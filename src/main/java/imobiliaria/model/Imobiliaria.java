@@ -11,6 +11,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Imobiliaria {
 
@@ -31,7 +32,45 @@ public class Imobiliaria {
         this.trasacoes = new ArrayList<>();
     }
 
-    public void cadastrarFuncionario() {
+    public void realizarTransacao(Cliente cliente, Funcionario funcionario, Imovel imovel) {
+        if (!imovel.getDisponibilidade()) throw new ConflitoDisponibilidade();
+
+        JComboBox<TipoPagamento> combo = new JComboBox<>(TipoPagamento.values());
+        TipoPagamento tipoPagamento = (TipoPagamento) combo.getSelectedItem();
+        int result = JOptionPane.showConfirmDialog(null, combo, "Tipo de Pagamento", JOptionPane.OK_CANCEL_OPTION);
+        if (result != JOptionPane.OK_OPTION) return;
+
+        if (imovel.getTipoDisponibilidade() == TipoDisponibilidade.VENDER) {
+            Venda v = new Venda(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, 10000.0);
+            v.executar();
+        } else {
+            //List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato, LocalDate fimContrato
+            int n = Integer.parseInt(JOptionPane.showInputDialog("Número de fiadores"));
+            List<Pessoa> fiadores = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                Pessoa fiador = cadastrarPessoa();
+                fiadores.add(fiador);
+            }
+
+            n = Integer.parseInt(JOptionPane.showInputDialog("Número de indicações (mínimo dois)"));
+            List<Pessoa> indicacoes = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                Pessoa indicacao = cadastrarPessoa();
+                indicacoes.add(indicacao);
+            }
+
+            //Adicionar card para incializar as datas corretamente
+            int ano = 2000;
+            int mes = 1;
+            int dia = 1;
+            LocalDate inicioContrato = LocalDate.of(ano, mes, dia);
+
+            Aluguel a = new Aluguel(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, 1000.0, fiadores, indicacoes, inicioContrato);
+            a.executar();
+        }
+    }
+
+    public Funcionario cadastrarFuncionario() {
 
         String cpf = JOptionPane.showInputDialog("CPF do funcionário");
 
@@ -53,29 +92,29 @@ public class Imobiliaria {
         if (resposta == JOptionPane.YES_OPTION) {
             Funcionario f = new Funcionario(cpf, nome, endereco, telefones, cargo, salarioBase, usuario, senha);
             this.funcionarios.add(f);
-        } else if (resposta == JOptionPane.NO_OPTION) {
-            cadastrarFuncionario();
-        }
+            return f;
+        } else if (resposta == JOptionPane.NO_OPTION) return null;
+
+        return null;
     }
 
-    public void cadastarCliente() {
-//        JPanel painelPrincipal = new JPanel();
-//        painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
-//
-//        CardLayout cardLayout = new CardLayout();
-//        JPanel painelCards = new JPanel(cardLayout);
-//
-//        String[] tiposCliente = {"Usuário", "Proprietário"};
-//        JComboBox<String> comboEscolha = new JComboBox<>(tiposCliente);
-//        comboEscolha.addActionListener(e -> {
-//            String escolha = (String) comboEscolha.getSelectedItem();
-//            cardLayout.show(painelCards, escolha.toUpperCase());
-//        });
-//
-//        painelPrincipal.add(comboEscolha);
-//        painelPrincipal.add(painelCards);
+    public Boolean ehProprietario() {
+        Scanner leitor = new Scanner(System.in);
+        System.out.println("CADASTRO DE CLIENTE");
 
-        String escolha = JOptionPane.showInputDialog("Deseja cadastrar um [usuário] ou [proprietário]").toUpperCase();
+        String escolha = "";
+
+        do {
+            System.out.print("Deseja cadastrar um [USUÁRIO] ou um [PROPRIETÁRIO]?");
+            escolha = leitor.nextLine().toUpperCase();
+        } while (!escolha.equals("USUÁRIO") && !escolha.equals("PROPRIETÁRIO"));
+
+        return escolha.equals("PROPRIETÁRIO");
+    }
+
+    public Cliente cadastarCliente() {
+
+        boolean proprietario = ehProprietario();
 
         String cpf = JOptionPane.showInputDialog("CPF do cliente");
 
@@ -88,65 +127,212 @@ public class Imobiliaria {
         Endereco endereco = cadastrarEndereco();
 
         JComboBox<Sexo> comboSexo = new JComboBox<>(Sexo.values());
+        JOptionPane.showMessageDialog(null, comboSexo);
         Sexo sexo = (Sexo) comboSexo.getSelectedItem();
 
         JComboBox<EstadoCivil> comboEstadoCivil = new JComboBox<>(EstadoCivil.values());
+        JOptionPane.showMessageDialog(null, comboEstadoCivil);
         EstadoCivil estadoCivil = (EstadoCivil) comboEstadoCivil.getSelectedItem();
 
-        if (escolha.equals("PROPRIETARIO")) {
+        if (proprietario) {
             ClienteProprietario p = new ClienteProprietario(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
             this.clientes.add(p);
             //chamar cadastrarImovel()
-        } else if (escolha.equals("USUARIO")) {
+            return p;
+        } else if (!proprietario) {
             Cliente c = new Cliente(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
             this.clientes.add(c);
+            return c;
         } else throw new IllegalArgumentException();
-
-        System.out.println("Cliente cadastrado com sucesso!");;
     }
 
-    /**
-     * public void cadastarImovel() {
-     * Scanner leitor = new Scanner(System.in);
-     * System.out.println("CADASTRO DE IMÓVEL");
-     * //Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade)
-     * }
-     **/
+    public Imovel cadastarImovel(List<ClienteProprietario> proprietarios) {
+        JPanel painelPrincipal = new JPanel();
+        painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
 
-    public void realizarTransacao(Cliente cliente, Funcionario funcionario, Imovel imovel) {
-        if (!imovel.getDisponibilidade()) throw new ConflitoDisponibilidade();
+        String[] tiposImovel = {"Casa", "Apartamento", "Terreno", "Sala Comercial"};
+        JComboBox<String> comboTipo = new JComboBox<>(tiposImovel);
 
-        JComboBox<TipoPagamento> combo = new JComboBox<>(TipoPagamento.values());
-        TipoPagamento tipoPagamento = (TipoPagamento) combo.getSelectedItem();
+        CardLayout cardLayout = new CardLayout();
+        JPanel painelCards = new JPanel(cardLayout);
 
-        if (imovel.getTipoDisponibilidade() == TipoDisponibilidade.VENDER) {
-            Venda v = new Venda(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, 10000.0);
-            v.executar();
-        } else {
-            //List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato, LocalDate fimContrato
-            int n = Integer.parseInt(JOptionPane.showInputDialog("Número de fiadores"));
-            List<Pessoa> fiadores = new ArrayList<>();
-            for (int i = 0; i < n; i++) {
-                Pessoa fiador = cadastrarPessoa();
-                fiadores.add(fiador);
+        Endereco endereco = cadastrarEndereco();
+
+        JComboBox<TipoDisponibilidade> comboTipoDisponibilidade = new JComboBox<>(TipoDisponibilidade.values());
+
+        /**---------CASA---------**/
+        JPanel painelCasa = new JPanel(new GridLayout(0, 1));
+
+        JTextField areaCasa = new JTextField();
+        JTextField quantidadeQuartosCasa = new JTextField();
+        JTextField quantidadeSalasEstarCasa = new JTextField();
+        JTextField quantidadeSalasJantarCasa = new JTextField();
+        JTextField quantidadeSuitesCasa = new JTextField();
+        JTextField quantidadeVagasGaragemCasa = new JTextField();
+
+        painelCasa.add(new JLabel("Área"));
+        painelCasa.add(areaCasa);
+        painelCasa.add(new JLabel("Quantidade de Quartos"));
+        painelCasa.add(quantidadeQuartosCasa);
+        painelCasa.add(new JLabel("Quantidade de Salas de Estar"));
+        painelCasa.add(quantidadeSalasEstarCasa);
+        painelCasa.add(new JLabel("Quantidade de Salas de Jantar"));
+        painelCasa.add(quantidadeSalasJantarCasa);
+        painelCasa.add(new JLabel("Quantidade de Suites"));
+        painelCasa.add(quantidadeSuitesCasa);
+        painelCasa.add(new JLabel("Quantidade de Vagas na Garagem"));
+        painelCasa.add(quantidadeVagasGaragemCasa);
+
+        /**---------APARTAMENTO---------**/
+
+        JPanel painelApartamento = new JPanel(new GridLayout(0, 1));
+
+        JTextField andar = new JTextField();
+        JTextField areaApartamento = new JTextField();
+        JTextField quantidadeQuartosApartamento = new JTextField();
+        JTextField quantidadeSalasEstarApartamento = new JTextField();
+        JTextField quantidadeSalasJantarApartamento = new JTextField();
+        JTextField quantidadeSuitesApartamento = new JTextField();
+        JTextField quantidadeVagasGaragemApartamento = new JTextField();
+        JTextField valorCondominio = new JTextField();
+
+        painelApartamento.add(new JLabel("Andar"));
+        painelApartamento.add(andar);
+        painelApartamento.add(new JLabel("Área"));
+        painelApartamento.add(areaApartamento);
+        painelApartamento.add(new JLabel("Quantidade de Quartos"));
+        painelApartamento.add(quantidadeQuartosApartamento);
+        painelApartamento.add(new JLabel("Quantidade de Salas de Estar"));
+        painelApartamento.add(quantidadeSalasEstarApartamento);
+        painelApartamento.add(new JLabel("Quantidade de Salas de Jantar"));
+        painelApartamento.add(quantidadeSalasJantarApartamento);
+        painelApartamento.add(new JLabel("Quantidade de Suites"));
+        painelApartamento.add(quantidadeSuitesApartamento);
+        painelApartamento.add(new JLabel("Quantidade de Vagas na Garagem"));
+        painelApartamento.add(quantidadeVagasGaragemApartamento);
+        painelApartamento.add(new JLabel("Valor do Condomínio"));
+        painelApartamento.add(valorCondominio);
+
+        /**---------TERRENO---------**/
+
+        JPanel painelTerreno = new JPanel(new GridLayout(0, 1));
+
+        JTextField comprimento = new JTextField();
+        JTextField largura = new JTextField();
+
+        painelTerreno.add(new JLabel("Comprimento"));
+        painelTerreno.add(comprimento);
+        painelTerreno.add(new JLabel("Largura"));
+        painelTerreno.add(largura);
+
+        /**---------SALA COMERCIAL---------**/
+
+        JPanel painelSalaComercial = new JPanel(new GridLayout(0, 1));
+
+        JTextField areaSalaComercial = new JTextField();
+        JTextField quantidadeBanheiros = new JTextField();
+        JTextField quantidadeComodos = new JTextField();
+
+        painelSalaComercial.add(new JLabel("Área"));
+        painelSalaComercial.add(areaSalaComercial);
+        painelSalaComercial.add(new JLabel("Quantidade de Banheiros"));
+        painelSalaComercial.add(quantidadeBanheiros);
+        painelSalaComercial.add(new JLabel("Quantidade de Cômodos"));
+        painelSalaComercial.add(quantidadeComodos);
+
+        /**---------------------------------**/
+
+        painelCards.add(painelCasa, "Casa");
+        painelCards.add(painelApartamento, "Apartamento");
+        painelCards.add(painelTerreno, "Terreno");
+        painelCards.add(painelSalaComercial, "Sala Comercial");
+
+        comboTipo.addActionListener(e -> {
+            cardLayout.show(painelCards, (String) comboTipo.getSelectedItem());
+        });
+
+        painelPrincipal.add(new JLabel("Tipo de Imóvel"));
+        painelPrincipal.add(comboTipo);
+        painelPrincipal.add(new JLabel("Disponibilidade"));
+        painelPrincipal.add(comboTipoDisponibilidade);
+        painelPrincipal.add(painelCards);
+
+        int result = JOptionPane.showConfirmDialog(null, painelPrincipal, "Cadastro Imóvel", JOptionPane.OK_CANCEL_OPTION);
+        if (result != JOptionPane.OK_OPTION) return null;
+
+        String tipoSelecionado = (String) comboTipo.getSelectedItem();
+        TipoDisponibilidade tipo = (TipoDisponibilidade) comboTipoDisponibilidade.getSelectedItem();
+
+        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar Imóvel?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            if (tipoSelecionado.equals("Casa")) {
+                Casa c = new Casa(
+                        LocalDate.now(),
+                        endereco,
+                        proprietarios,
+                        tipo,
+                        this,
+                        Integer.parseInt(quantidadeQuartosCasa.getText()),
+                        Integer.parseInt(quantidadeSuitesCasa.getText()),
+                        Integer.parseInt(quantidadeSalasEstarCasa.getText()),
+                        Integer.parseInt(quantidadeSalasJantarCasa.getText()),
+                        Integer.parseInt(quantidadeVagasGaragemCasa.getText()),
+                        Double.parseDouble(areaCasa.getText()),
+                        true
+                );
+                this.imoveis.add(c);
+                return c;
+            } else if (tipoSelecionado.equals("Apartamento")) {
+                Apartamento a = new Apartamento(
+                        LocalDate.now(),
+                        endereco,
+                        proprietarios,
+                        tipo,
+                        this,
+                        Integer.parseInt(quantidadeQuartosApartamento.getText()),
+                        Integer.parseInt(quantidadeSuitesApartamento.getText()),
+                        Integer.parseInt(quantidadeSalasEstarApartamento.getText()),
+                        Integer.parseInt(quantidadeSalasJantarApartamento.getText()),
+                        Integer.parseInt(quantidadeVagasGaragemApartamento.getText()),
+                        Double.parseDouble(areaApartamento.getText()),
+                        false,
+                        Integer.parseInt(andar.getText()),
+                        Double.parseDouble(valorCondominio.getText()),
+                        false
+                );
+                this.imoveis.add(a);
+                return a;
+            } else if (tipoSelecionado.equals("Terreno")) {
+                Terreno t = new Terreno(
+                        LocalDate.now(),
+                        endereco,
+                        proprietarios,
+                        tipo,
+                        this,
+                        Double.parseDouble(largura.getText()),
+                        Double.parseDouble(comprimento.getText()),
+                        false,
+                        false
+                );
+                this.imoveis.add(t);
+                return t;
+            } else {
+                SalaComercial sc = new SalaComercial(
+                        LocalDate.now(),
+                        endereco,
+                        proprietarios,
+                        tipo,
+                        this,
+                        Double.parseDouble(areaSalaComercial.getText()),
+                        Integer.parseInt(quantidadeBanheiros.getText()),
+                        Integer.parseInt(quantidadeComodos.getText())
+                );
+                this.imoveis.add(sc);
+                return sc;
             }
+        } else if (resposta == JOptionPane.NO_OPTION) return null;
 
-            n = Integer.parseInt(JOptionPane.showInputDialog("Número de indicações (mínimo dois)"));
-            List<Pessoa> indicacoes = new ArrayList<>();
-            for (int i = 0; i < n; i++) {
-                Pessoa indicacao = cadastrarPessoa();
-                fiadores.add(indicacao);
-            }
-
-            //Adicionar card para incializar as datas corretamente
-            int ano = 2000;
-            int mes = 1;
-            int dia = 1;
-            LocalDate inicioContrato = LocalDate.of(ano, mes, dia);
-
-            Aluguel a = new Aluguel(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, 1000.0, fiadores, indicacoes, inicioContrato);
-            a.executar();
-        }
+        return null;
     }
 
     public Endereco cadastrarEndereco() {
@@ -175,12 +361,53 @@ public class Imobiliaria {
         return new Pessoa(cpf, nome, endereco, telefones);
     }
 
-    public List<Imovel> getImoveisDisponiveis() {
-        return this.imoveis.stream().filter(i -> i.getDisponibilidade() == true).toList();
+    public List<Imovel> getImoveisPorBairro(String bairro) {
+        return imoveis.stream()
+                .filter(i -> i.getEndereco().getBairro().equalsIgnoreCase(bairro)).toList();
     }
 
-    public List<Imovel> getImoveisIndisponiveis() {
-        return this.imoveis.stream().filter(i -> i.getDisponibilidade() == false).toList();
+    public List<Imovel> getImoveisDisponiveis(List<Imovel> imoveis) {
+        return imoveis.stream().filter(i -> i.getDisponibilidade() == true).toList();
+    }
+
+    public List<Imovel> getImoveisIndisponiveis(List<Imovel> imoveis) {
+        return imoveis.stream().filter(i -> i.getDisponibilidade() == false).toList();
+    }
+
+    public List<Imovel> getImoveisParaVenda() {
+        return imoveis.stream()
+                .filter(i -> i.getTipoDisponibilidade() == TipoDisponibilidade.VENDER)
+                .toList();
+    }
+
+    public List<Imovel> getImoveisParaAluguel() {
+        return imoveis.stream()
+                .filter(i -> i.getTipoDisponibilidade() == TipoDisponibilidade.LOCACAO)
+                .toList();
+    }
+
+    public List<Imovel> getCasas() {
+        return imoveis.stream().filter(i -> i instanceof Casa).toList();
+    }
+
+    public List<Imovel> getApartamentos() {
+        return imoveis.stream().filter(i -> i instanceof Apartamento).toList();
+    }
+
+    public List<Imovel> getTerrenos() {
+        return imoveis.stream().filter(i -> i instanceof Terreno).toList();
+    }
+
+    public List<Imovel> getSalasComercias() {
+        return imoveis.stream().filter(i -> i instanceof SalaComercial).toList();
+    }
+
+    public List<Imovel> getSalasComercias(List<Imovel> imoveis) {
+        List<Imovel> salasComercias = new ArrayList<>();
+        for (Imovel i : imoveis) {
+            if (i instanceof SalaComercial) salasComercias.add(i);
+        }
+        return salasComercias;
     }
 
     public void adicionarComissao(Double valor) {

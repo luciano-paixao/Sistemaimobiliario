@@ -1,23 +1,40 @@
 package main.java;
 
-import main.java.imobiliaria.model.Cliente;
-import main.java.imobiliaria.model.Funcionario;
-import main.java.imobiliaria.model.Imobiliaria;
+import main.java.imobiliaria.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         Imobiliaria i = new Imobiliaria();
 
-        for (int j = 0; j < 2; j++) {
-            i.cadastarCliente();
-        }
+        List<ClienteProprietario> p = new ArrayList<>();
 
-        for (Cliente c : i.getClientes()) {
-            System.out.println(c);
-        }
+        Funcionario funcionario = i.cadastrarFuncionario();
+        System.out.println(funcionario);
 
-        for (Funcionario f : i.getFuncionarios()) {
-            System.out.println(f);
-        }
+        Cliente usuario = i.cadastarCliente();
+        System.out.println(usuario);
+
+        Cliente cliente = i.cadastarCliente();
+        ClienteProprietario proprietario = (ClienteProprietario) cliente;
+        p.add(proprietario);
+        System.out.println(proprietario);
+
+        Imovel imovel1 = i.cadastarImovel(p);
+        System.out.println(imovel1);
+
+        imovel1.getProprietarios().add(proprietario);
+        proprietario.getImoveis().add(imovel1);
+
+        System.out.println(funcionario.getComissoes());
+        System.out.println(proprietario.getImoveis());
+        System.out.println(i.getImoveisDisponiveis(i.getImoveis()));
+
+        i.realizarTransacao(usuario, funcionario, imovel1);
+
+        System.out.println(funcionario.getComissoes());
+        System.out.println(i.getImoveisDisponiveis(i.getImoveis()));
     }
 }

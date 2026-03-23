@@ -3,6 +3,7 @@ package main.java.imobiliaria.model;
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Imovel {
@@ -13,7 +14,7 @@ public abstract class Imovel {
 
     private Endereco endereco;
 
-    private List<ClienteProprietario> proprietarios;
+    private List<ClienteProprietario> proprietarios = new ArrayList<>();
 
     private TipoDisponibilidade tipoDisponibilidade;
 
@@ -23,27 +24,14 @@ public abstract class Imovel {
 
     private Imobiliaria imobiliaria;
 
-    public Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade,
-                  LocalDate incioOferta, LocalDate fimOferta, Imobiliaria imobiliaria) {
+    public Imovel(LocalDate dataConstrucao, Endereco endereco, TipoDisponibilidade tipoDisponibilidade, Imobiliaria imobiliaria) {
         this.dataConstrucao = dataConstrucao;
         this.disponibilidade = true;
         this.endereco = endereco;
-        this.proprietarios = proprietarios;
-        this.tipoDisponibilidade = tipoDisponibilidade;
-        this.incioOferta = incioOferta;
-        this.fimOferta = fimOferta;
-        this.imobiliaria = imobiliaria;
-    }
-
-    public Imovel(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
-                  List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade) {
-        this.dataConstrucao = dataConstrucao;
-        this.disponibilidade = disponibilidade;
-        this.endereco = endereco;
-        this.proprietarios = proprietarios;
         this.tipoDisponibilidade = tipoDisponibilidade;
         this.incioOferta = LocalDate.now();
-    };
+        this.imobiliaria = imobiliaria;
+    }
 
     public void adicionarProprietario(ClienteProprietario proprietario){
         this.proprietarios.add(proprietario);
