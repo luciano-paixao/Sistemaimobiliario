@@ -38,15 +38,15 @@ public class Imobiliaria {
 
         JComboBox<TipoPagamento> combo = new JComboBox<>(TipoPagamento.values());
         TipoPagamento tipoPagamento = (TipoPagamento) combo.getSelectedItem();
+
         int result = JOptionPane.showConfirmDialog(null, combo, "Tipo de Pagamento", JOptionPane.OK_CANCEL_OPTION);
         if (result != JOptionPane.OK_OPTION) return;
 
         if (imovel.getTipoDisponibilidade() == TipoDisponibilidade.VENDER) {
             Venda v = new Venda(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente);
             v.executar();
-            IO.println(v.toString());
+            System.out.println(v);
         } else {
-            //List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato, LocalDate fimContrato
             int n = Integer.parseInt(JOptionPane.showInputDialog("Número de fiadores"));
             List<Pessoa> fiadores = new ArrayList<>();
             for (int i = 0; i < n; i++) {
@@ -71,7 +71,7 @@ public class Imobiliaria {
 
             Aluguel a = new Aluguel(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, fiadores, indicacoes, inicioContrato);
             a.executar();
-            IO.println(a.toString());
+            System.out.println(a);
         }
     }
 

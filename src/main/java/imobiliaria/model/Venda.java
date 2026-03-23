@@ -14,12 +14,12 @@ public class Venda extends RegistroTransacao {
 
     @Override
     public void executar() {
-        ClienteProprietario cp = new ClienteProprietario(getInteressado().getCpf(), getInteressado().getNome(), getInteressado().getEndereco(), getInteressado().getEmail(), getInteressado().getProfissao(), getInteressado().getSexo(), getInteressado().getEstadoCivil());
+        ClienteProprietario cp = new ClienteProprietario(getInteressado().getCpf(), getInteressado().getNome(), getInteressado().getEndereco(), getInteressado().getTelefones(), getInteressado().getEmail(), getInteressado().getProfissao(), getInteressado().getSexo(), getInteressado().getEstadoCivil());
         cp.adiiconarImovel(this.getImovel());
 
         for (ClienteProprietario p : getClienteProprietario()) {
             if (p.getImoveis().isEmpty()) {
-                Cliente c = new Cliente(p.getCpf(), p.getNome(), p.getEndereco(), p.getEmail(), p.getProfissao(), p.getSexo(), p.getEstadoCivil());
+                Cliente c = new Cliente(p.getCpf(), p.getNome(), p.getEndereco(), p.getTelefones(), p.getEmail(), p.getProfissao(), p.getSexo(), p.getEstadoCivil());
                 this.getImovel().getImobiliaria().adicionarCliente(c);
                 this.getImovel().getImobiliaria().removerCliente(p);
             }
