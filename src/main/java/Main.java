@@ -28,10 +28,18 @@ public class Main {
         System.out.println(imobiliaria.getImoveisDisponiveis(imobiliaria.getImoveis()));
 
 
-// ==================== ENDEREÇOS ====================
+// ==================== UTILS ====================
         Endereco endCliente1 = new Endereco("Centro", "Rua das Palmeiras", "100");
         Endereco endCliente2 = new Endereco("Jardim América", "Av. Paulista", "200");
         Endereco endCliente3 = new Endereco("Boa Viagem", "Rua do Mar", "300");
+
+        List<String> telefones1 = new ArrayList<>();
+        String telefone1 = "(00)00000-0000";
+        telefones1.add(telefone1);
+
+        List<String> telefones2 = new ArrayList<>();
+        String telefone2 = "(00)00000-0000";
+        telefones2.add(telefone2);
 
 // ==================== CLIENTES PROPRIETÁRIOS (lista de imóveis vazia por enquanto) ====================
 
@@ -162,17 +170,24 @@ public class Main {
         Endereco endCli2 = new Endereco("Copacabana", "Av. Nossa Senhora de Copacabana", "320");
 
         Cliente cli1 = new Cliente(
-                "777.777.777-77", "Lucas Ferreira",
+                "777.777.777-77",
+                "Lucas Ferreira",
                 endCli1,
-                "lucas@email.com", "Analista de Sistemas",
-                Sexo.MASCULINO, EstadoCivil.SOLTEIRO
+                telefones1,
+                "lucas@email.com",
+                "Analista de Sistemas",
+                Sexo.MASCULINO,
+                EstadoCivil.SOLTEIRO
         );
 
         Cliente cli2 = new Cliente(
                 "888.888.888-88", "Juliana Castro",
                 endCli2,
-                "juliana@email.com", "Designer",
-                Sexo.FEMININO, EstadoCivil.CASADO
+                telefones2,
+                "juliana@email.com",
+                "Designer",
+                Sexo.FEMININO,
+                EstadoCivil.CASADO
         );
 
         IO.println(funcionario.getComissoes());

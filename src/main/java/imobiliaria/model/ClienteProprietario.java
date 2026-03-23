@@ -10,9 +10,9 @@ public class ClienteProprietario extends Cliente {
 
     private ArrayList<Imovel> imoveis;
 
-    public ClienteProprietario(String cpf, String nome, Endereco endereco, String email, String profissao, Sexo sexo, EstadoCivil estadoCivil) {
-        super(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
-        imoveis = new ArrayList<>();
+    public ClienteProprietario(String cpf, String nome, Endereco endereco, List<String> telefones, String email, String profissao, Sexo sexo, EstadoCivil estadoCivil) {
+        super(cpf, nome, endereco, telefones, email, profissao, sexo, estadoCivil);
+        this.imoveis = new ArrayList<>();
     }
 
     public ClienteProprietario(String cpf, String nome, Endereco endereco, List<String> telefones, String email, String profissao, Sexo sexo, EstadoCivil estadoCivil, ArrayList<Imovel> imoveis) {

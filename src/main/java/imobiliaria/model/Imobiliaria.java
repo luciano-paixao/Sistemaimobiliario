@@ -103,33 +103,14 @@ public class Imobiliaria {
         return null;
     }
 
-    public Boolean ehProprietario() {
-        Scanner leitor = new Scanner(System.in);
-        System.out.println("CADASTRO DE CLIENTE");
-
-        String escolha = "";
-
-        do {
-            System.out.print("Deseja cadastrar um [USUÁRIO] ou um [PROPRIETÁRIO]?");
-            escolha = leitor.nextLine().toUpperCase();
-        } while (!escolha.equals("USUÁRIO") && !escolha.equals("PROPRIETÁRIO"));
-
-        return escolha.equals("PROPRIETÁRIO");
-    }
-
     public Cliente cadastrarCliente(Boolean ehProprietario) {
 
-        //boolean proprietario = ehProprietario();
-
         String cpf = JOptionPane.showInputDialog("CPF do cliente");
-
         String nome = JOptionPane.showInputDialog("Nome do cliente");
-
         String email = JOptionPane.showInputDialog("Email do cliente");
-
         String profissao = JOptionPane.showInputDialog("Profissão do cliente");
-
         Endereco endereco = cadastrarEndereco();
+        List<String> telefones = cadastrarTelefone();
 
         JComboBox<Sexo> comboSexo = new JComboBox<>(Sexo.values());
         JOptionPane.showMessageDialog(null, comboSexo);
@@ -139,16 +120,17 @@ public class Imobiliaria {
         JOptionPane.showMessageDialog(null, comboEstadoCivil);
         EstadoCivil estadoCivil = (EstadoCivil) comboEstadoCivil.getSelectedItem();
 
-        if (ehProprietario) {
-            ClienteProprietario p = new ClienteProprietario(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
+        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar cliente?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION && ehProprietario) {
+            ClienteProprietario p = new ClienteProprietario(cpf, nome, endereco, telefones, email, profissao, sexo, estadoCivil);
             this.clientes.add(p);
-            //chamar cadastrarImovel()
             return p;
-        } else if (!ehProprietario) {
-            Cliente c = new Cliente(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
+        } else if (resposta == JOptionPane.YES_OPTION && !ehProprietario) {
+            Cliente c = new Cliente(cpf, nome, endereco, telefones, email, profissao, sexo, estadoCivil);
             this.clientes.add(c);
             return c;
-        } else throw new IllegalArgumentException();
+        } else if (resposta == JOptionPane.NO_OPTION) return null;
+        else throw new RuntimeException();
     }
 
     public Imovel cadastrarImovel(List<ClienteProprietario> proprietarios) {
@@ -280,74 +262,79 @@ public class Imobiliaria {
 
         int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar Imóvel?", "Confirmar", JOptionPane.YES_NO_OPTION);
         if (resposta == JOptionPane.YES_OPTION) {
-            if (tipoSelecionado.equals("Casa")) {
-                Casa c = new Casa(
-                        LocalDate.now(),
-                        endereco,
-                        proprietarios,
-                        tipo,
-                        this,
-                        Double.parseDouble(valorSugeridoCasa.getText()),
-                        Integer.parseInt(quantidadeQuartosCasa.getText()),
-                        Integer.parseInt(quantidadeSuitesCasa.getText()),
-                        Integer.parseInt(quantidadeSalasEstarCasa.getText()),
-                        Integer.parseInt(quantidadeSalasJantarCasa.getText()),
-                        Integer.parseInt(quantidadeVagasGaragemCasa.getText()),
-                        Double.parseDouble(areaCasa.getText()),
-                        true
-                );
-                this.imoveis.add(c);
-                return c;
-            } else if (tipoSelecionado.equals("Apartamento")) {
-                Apartamento a = new Apartamento(
-                        LocalDate.now(),
-                        endereco,
-                        proprietarios,
-                        tipo,
-                        this,
-                        Double.parseDouble(valorSugeridoApartamento.getText()),
-                        Integer.parseInt(quantidadeQuartosApartamento.getText()),
-                        Integer.parseInt(quantidadeSuitesApartamento.getText()),
-                        Integer.parseInt(quantidadeSalasEstarApartamento.getText()),
-                        Integer.parseInt(quantidadeSalasJantarApartamento.getText()),
-                        Integer.parseInt(quantidadeVagasGaragemApartamento.getText()),
-                        Double.parseDouble(areaApartamento.getText()),
-                        false,
-                        Integer.parseInt(andar.getText()),
-                        Double.parseDouble(valorCondominio.getText()),
-                        false
-                );
-                this.imoveis.add(a);
-                return a;
-            } else if (tipoSelecionado.equals("Terreno")) {
-                Terreno t = new Terreno(
-                        LocalDate.now(),
-                        endereco,
-                        proprietarios,
-                        tipo,
-                        this,
-                        Double.parseDouble(valorSugeridoTerreno.getText()),
-                        Double.parseDouble(largura.getText()),
-                        Double.parseDouble(comprimento.getText()),
-                        false,
-                        true
-                );
-                this.imoveis.add(t);
-                return t;
-            } else {
-                SalaComercial sc = new SalaComercial(
-                        LocalDate.now(),
-                        endereco,
-                        proprietarios,
-                        tipo,
-                        this,
-                        Double.parseDouble(valorSugeridoSalaComercial.getText()),
-                        Double.parseDouble(areaSalaComercial.getText()),
-                        Integer.parseInt(quantidadeBanheiros.getText()),
-                        Integer.parseInt(quantidadeComodos.getText())
-                );
-                this.imoveis.add(sc);
-                return sc;
+            switch (tipoSelecionado) {
+                case "Casa" -> {
+                    Casa c = new Casa(
+                            LocalDate.now(),
+                            endereco,
+                            proprietarios,
+                            tipo,
+                            this,
+                            Double.parseDouble(valorSugeridoCasa.getText()),
+                            Integer.parseInt(quantidadeQuartosCasa.getText()),
+                            Integer.parseInt(quantidadeSuitesCasa.getText()),
+                            Integer.parseInt(quantidadeSalasEstarCasa.getText()),
+                            Integer.parseInt(quantidadeSalasJantarCasa.getText()),
+                            Integer.parseInt(quantidadeVagasGaragemCasa.getText()),
+                            Double.parseDouble(areaCasa.getText()),
+                            true
+                    );
+                    this.imoveis.add(c);
+                    return c;
+                }
+                case "Apartamento" -> {
+                    Apartamento a = new Apartamento(
+                            LocalDate.now(),
+                            endereco,
+                            proprietarios,
+                            tipo,
+                            this,
+                            Double.parseDouble(valorSugeridoApartamento.getText()),
+                            Integer.parseInt(quantidadeQuartosApartamento.getText()),
+                            Integer.parseInt(quantidadeSuitesApartamento.getText()),
+                            Integer.parseInt(quantidadeSalasEstarApartamento.getText()),
+                            Integer.parseInt(quantidadeSalasJantarApartamento.getText()),
+                            Integer.parseInt(quantidadeVagasGaragemApartamento.getText()),
+                            Double.parseDouble(areaApartamento.getText()),
+                            false,
+                            Integer.parseInt(andar.getText()),
+                            Double.parseDouble(valorCondominio.getText()),
+                            false
+                    );
+                    this.imoveis.add(a);
+                    return a;
+                }
+                case "Terreno" -> {
+                    Terreno t = new Terreno(
+                            LocalDate.now(),
+                            endereco,
+                            proprietarios,
+                            tipo,
+                            this,
+                            Double.parseDouble(valorSugeridoTerreno.getText()),
+                            Double.parseDouble(largura.getText()),
+                            Double.parseDouble(comprimento.getText()),
+                            false,
+                            true
+                    );
+                    this.imoveis.add(t);
+                    return t;
+                }
+                default -> {
+                    SalaComercial sc = new SalaComercial(
+                            LocalDate.now(),
+                            endereco,
+                            proprietarios,
+                            tipo,
+                            this,
+                            Double.parseDouble(valorSugeridoSalaComercial.getText()),
+                            Double.parseDouble(areaSalaComercial.getText()),
+                            Integer.parseInt(quantidadeBanheiros.getText()),
+                            Integer.parseInt(quantidadeComodos.getText())
+                    );
+                    this.imoveis.add(sc);
+                    return sc;
+                }
             }
         } else if (resposta == JOptionPane.NO_OPTION) return null;
 
@@ -358,16 +345,29 @@ public class Imobiliaria {
         String bairro = JOptionPane.showInputDialog("Bairro");
         String rua = JOptionPane.showInputDialog("Rua");
         String numero = JOptionPane.showInputDialog("Número");
-        return new Endereco(bairro, rua, numero);
+
+        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar cliente?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            return new Endereco(bairro, rua, numero);
+        } else if (resposta == JOptionPane.NO_OPTION) return null;
+
+        return null;
     }
 
     public List<String> cadastrarTelefone() {
         List<String> telefones = new ArrayList<>();
+
         int n = Integer.parseInt(JOptionPane.showInputDialog("Quantos telefones deseja cadastrar?"));
+
         if (n == 0) return null;
+
         for (int i = 0; i < n; i++) {
             String t = JOptionPane.showInputDialog("Número de telefone");
-            telefones.add(t);
+
+            int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar cliente?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                telefones.add(t);
+            } else if (resposta == JOptionPane.NO_OPTION) return null;
         }
         return telefones;
     }
@@ -377,7 +377,27 @@ public class Imobiliaria {
         String nome = JOptionPane.showInputDialog("Nome");
         Endereco endereco = cadastrarEndereco();
         List<String> telefones = cadastrarTelefone();
-        return new Pessoa(cpf, nome, endereco, telefones);
+
+        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar pessoa?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            return new Pessoa(cpf, nome, endereco, telefones);
+        } else if (resposta == JOptionPane.NO_OPTION) return null;
+
+        return null;
+    }
+
+    public Boolean ehProprietario() {
+        Scanner leitor = new Scanner(System.in);
+        System.out.println("CADASTRO DE CLIENTE");
+
+        String escolha = "";
+
+        do {
+            System.out.print("Deseja cadastrar um [USUÁRIO] ou um [PROPRIETÁRIO]?");
+            escolha = leitor.nextLine().toUpperCase();
+        } while (!escolha.equals("USUÁRIO") && !escolha.equals("PROPRIETÁRIO"));
+
+        return escolha.equals("PROPRIETÁRIO");
     }
 
     public Cliente buscarUsuario(String nome) {
