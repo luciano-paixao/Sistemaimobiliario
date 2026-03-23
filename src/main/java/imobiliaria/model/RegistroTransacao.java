@@ -3,12 +3,14 @@ package main.java.imobiliaria.model;
 import main.java.imobiliaria.model.enums.TipoPagamento;
 
 import java.time.LocalDate;
+
 import java.util.List;
 
 public abstract class RegistroTransacao {
 
     private Integer numContrato;
 
+    // ATRIBUIR 0 PORQUE SENÃO GERA NULLPOINTEREXCEPTION (contador fica null)
     private static Integer contador = 0;
 
     private LocalDate dataTransacao;
@@ -30,7 +32,7 @@ public abstract class RegistroTransacao {
     private Double margemImobiliaria;
 
     public RegistroTransacao(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario,
-                             List<ClienteProprietario> proprietarios, Cliente interessado, Double valorSugerido) {
+                             List<ClienteProprietario> proprietarios, Cliente interessado) {
         this.numContrato = RegistroTransacao.contador++;
         this.dataTransacao = LocalDate.now();
         this.tipoPagamento = tipoPagamento;
@@ -38,7 +40,7 @@ public abstract class RegistroTransacao {
         this.funcionario = funcionario;
         this.proprietarios = proprietarios;
         this.interessado = interessado;
-        this.valorSugerido = valorSugerido;
+        this.valorSugerido = imovel.getValorSugerido();
         this.valorReal = valorSugerido;
     }
 
@@ -150,16 +152,15 @@ public abstract class RegistroTransacao {
 
     @Override
     public String toString() {
-        return "RegistroTransacao{" +
-                "numContrato=" + numContrato +
-                ", dataTransacao=" + dataTransacao +
-                ", formaPagamento='" + tipoPagamento + '\'' +
-                ", imovel=" + imovel +
-                ", funcionario=" + funcionario +
-                ", clienteInteressado=" + interessado +
-                ", clienteProprietario=" + proprietarios +
-                ", valorSugerido=" + valorSugerido +
-                ", valorReal=" + valorReal +
-                '}';
+        return  "numContrato=" + numContrato +
+                "\n, dataTransacao=" + dataTransacao +
+                "\n, formaPagamento='" + tipoPagamento + '\'' +
+                "\n, imovel=" + imovel.getEndereco() +
+                "\n, funcionario=" + funcionario.getNome() +
+                "\n, clienteInteressado=" + interessado.getNome() +
+                "\n, clienteProprietario=" + proprietarios.get(0).getNome() +
+                "\n, valorSugerido=" + valorSugerido +
+                "\n, valorReal=" + valorReal +
+                "}\n";
     }
 }

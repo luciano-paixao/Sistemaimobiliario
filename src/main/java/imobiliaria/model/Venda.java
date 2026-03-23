@@ -3,12 +3,13 @@ package main.java.imobiliaria.model;
 import main.java.imobiliaria.model.enums.TipoPagamento;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Venda extends RegistroTransacao {
 
-    public Venda(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, List<ClienteProprietario> proprietarios, Cliente interessado, Double valorSugerido) {
-        super(tipoPagamento, imovel, funcionario, proprietarios, interessado, valorSugerido);
+    public Venda(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, List<ClienteProprietario> proprietarios, Cliente interessado) {
+        super(tipoPagamento, imovel, funcionario, proprietarios, interessado);
     }
 
     @Override
@@ -24,7 +25,7 @@ public class Venda extends RegistroTransacao {
             }
         }
 
-        this.getImovel().setProprietarios(null);
+        this.getImovel().setProprietarios(new ArrayList<>());
         this.getImovel().adicionarProprietario(cp);
 
         this.getImovel().setDisponibilidade(false);
@@ -39,6 +40,6 @@ public class Venda extends RegistroTransacao {
 
     @Override
     public String toString() {
-        return "Venda{} " + super.toString();
+        return "\n** DADOS DA TRANSAÇÃO (VENDA) **\n" + super.toString();
     }
 }

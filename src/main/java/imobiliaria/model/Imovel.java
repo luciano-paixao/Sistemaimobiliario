@@ -3,7 +3,6 @@ package main.java.imobiliaria.model;
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Imovel {
@@ -14,7 +13,7 @@ public abstract class Imovel {
 
     private Endereco endereco;
 
-    private List<ClienteProprietario> proprietarios = new ArrayList<>();
+    private List<ClienteProprietario> proprietarios;
 
     private TipoDisponibilidade tipoDisponibilidade;
 
@@ -24,14 +23,32 @@ public abstract class Imovel {
 
     private Imobiliaria imobiliaria;
 
-    public Imovel(LocalDate dataConstrucao, Endereco endereco, TipoDisponibilidade tipoDisponibilidade, Imobiliaria imobiliaria) {
+    private Double valorSugerido;
+
+    public Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade,
+                  LocalDate incioOferta, LocalDate fimOferta, Imobiliaria imobiliaria, Double valorSugerido) {
         this.dataConstrucao = dataConstrucao;
         this.disponibilidade = true;
         this.endereco = endereco;
+        this.proprietarios = proprietarios;
+        this.tipoDisponibilidade = tipoDisponibilidade;
+        this.incioOferta = incioOferta;
+        this.imobiliaria = imobiliaria;
+        this.valorSugerido = valorSugerido;
+
+        this.fimOferta = fimOferta;
+    }
+
+    public Imovel(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
+                  List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade, Double valorSugerido) {
+        this.dataConstrucao = dataConstrucao;
+        this.disponibilidade = disponibilidade;
+        this.endereco = endereco;
+        this.proprietarios = proprietarios;
         this.tipoDisponibilidade = tipoDisponibilidade;
         this.incioOferta = LocalDate.now();
-        this.imobiliaria = imobiliaria;
-    }
+        this.valorSugerido = valorSugerido;
+    };
 
     public void adicionarProprietario(ClienteProprietario proprietario){
         this.proprietarios.add(proprietario);
@@ -101,7 +118,15 @@ public abstract class Imovel {
         return imobiliaria;
     }
 
-    public String mostarProprietarios(){
+    public Double getValorSugerido() {
+        return valorSugerido;
+    }
+
+    public void setValorSugerido(Double valorSugerido) {
+        this.valorSugerido = valorSugerido;
+    }
+
+    public String mostrarProprietarios(){
         String nomesProprietarios = "";
         for (ClienteProprietario Proprietarios : this.proprietarios){
             nomesProprietarios += Proprietarios.getNome() + ",";
@@ -111,15 +136,16 @@ public abstract class Imovel {
 
     @Override
     public String toString() {
-        return "Imovel{" +
-                "dataConstrucao=" + dataConstrucao +
-                ", disponibilidade=" + disponibilidade +
-                ", endereco=" + endereco +
-                ", proprietarios=" + mostarProprietarios() +
-                ", tipoDisponibilidade=" + tipoDisponibilidade +
-                ", incioOferta=" + incioOferta +
-                ", fimOferta=" + fimOferta +
-                ", imobiliaria=" + imobiliaria +
+        String tipoDisponStr = "Venda";
+        if(tipoDisponibilidade == TipoDisponibilidade.LOCACAO) {
+            tipoDisponStr = "Aluguel";
+        }
+        return  "Imovel ("+tipoDisponStr.toUpperCase()+") {" +
+                "\n valor" + tipoDisponStr + "=" + valorSugerido +
+                "\n disponibilidade= " + disponibilidade +
+                "\n dataConstrucao= " + dataConstrucao +
+                "\n proprietarios= " + mostrarProprietarios() +
+                "\n endereco=" + endereco +
                 '}';
     }
 }
