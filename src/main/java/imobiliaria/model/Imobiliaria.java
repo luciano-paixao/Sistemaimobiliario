@@ -232,7 +232,9 @@ public class Imobiliaria {
                 fiadores.add(fiador);
             }
 
-            n = Integer.parseInt(JOptionPane.showInputDialog("Número de indicações (mínimo dois)"));
+            do {
+                n = Integer.parseInt(JOptionPane.showInputDialog("Número de indicações (mínimo dois)"));
+            } while(n < 2);
             List<Pessoa> indicacoes = new ArrayList<>();
             for (int i = 0; i < n; i++) {
                 Pessoa indicacao = cadastrarPessoa();
