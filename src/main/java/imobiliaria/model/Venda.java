@@ -25,7 +25,7 @@ public class Venda extends RegistroTransacao {
             }
         }
 
-        this.getImovel().setProprietarios(new ArrayList<>());
+        this.getImovel().setProprietarios(new ArrayList<ClienteProprietario>());
         this.getImovel().adicionarProprietario(cp);
 
         this.getImovel().setDisponibilidade(false);
@@ -35,7 +35,7 @@ public class Venda extends RegistroTransacao {
         transferirComissaoFuncionario();
         calcularValorRealTransacao();
 
-        this.getImovel().getImobiliaria().trasacoes.add(this);
+        this.getImovel().getImobiliaria().transacoes.add(this);
     }
 
     @Override

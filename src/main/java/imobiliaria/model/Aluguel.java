@@ -14,7 +14,6 @@ public class Aluguel extends RegistroTransacao {
     private LocalDate inicioContrato;
 
     private LocalDate fimContrato;
-
     private LocalDate dataAluguel;
 
     public Aluguel(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, List<ClienteProprietario> proprietarios, Cliente interessado,
@@ -36,7 +35,7 @@ public class Aluguel extends RegistroTransacao {
         transferirComissaoFuncionario();
         calcularValorRealTransacao();
 
-        this.getImovel().getImobiliaria().trasacoes.add(this);
+        this.getImovel().getImobiliaria().transacoes.add(this);
     }
 
     public List<Pessoa> getFiadores() {

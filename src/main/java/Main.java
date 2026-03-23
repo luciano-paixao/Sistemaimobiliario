@@ -1,13 +1,13 @@
 package main.java;
 
-import main.java.imobiliaria.model.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import main.java.imobiliaria.model.Cliente;
+import main.java.imobiliaria.model.Funcionario;
+import main.java.imobiliaria.model.Imobiliaria;
+import main.java.imobiliaria.model.Sistema;
 
 public class Main {
     public static void main(String[] args) {
-        Imobiliaria i = new Imobiliaria();
+        Sistema.main(new String[]{});
 
         List<ClienteProprietario> p = new ArrayList<>();
 
