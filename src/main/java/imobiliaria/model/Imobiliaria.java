@@ -72,20 +72,29 @@ public class Imobiliaria {
         Funcionario f = new Funcionario(cpf, nome, endereco, telefones, cargo, salarioBase, usuario, senha);
 
         System.out.println("\nFuncionário cadastrado com sucesso!");
-        System.out.println("Data de ingresso: " + f.getDataIngresso());
+        System.out.println("Data de ingresso: " + f.getDataIngresso() + "\n");
 
         this.funcionarios.add(f);
 
         return f;
     }
 
-    public Cliente cadastarCliente() {
+    public Boolean ehProprietario(){
         Scanner leitor = new Scanner(System.in);
-
         System.out.println("CADASTRO DE CLIENTE");
 
-        System.out.print("Deseja cadastrar um [USUÁRIO] ou um [PROPRIETÁRIO]?");
-        String escolha = leitor.nextLine().toUpperCase();
+        String escolha = "";
+
+        do {
+            System.out.print("Deseja cadastrar um [USUÁRIO] ou um [PROPRIETÁRIO]?");
+            escolha = leitor.nextLine().toUpperCase();
+        } while (!escolha.equals("USUÁRIO") && !escolha.equals("PROPRIETÁRIO"));
+
+        return escolha.equals("PROPRIETÁRIO");
+    }
+
+    public Cliente cadastrarCliente(Boolean ehProprietario) {
+        Scanner leitor = new Scanner(System.in);
 
         System.out.print("Digite o CPF: ");
         String cpf = leitor.nextLine();
@@ -107,7 +116,7 @@ public class Imobiliaria {
         System.out.print("Digite o estado civil: ");
         EstadoCivil estadoCivil = EstadoCivil.valueOf(leitor.nextLine().toUpperCase());
 
-        if (escolha.equals("PROPRIETARIO")) {
+        if (ehProprietario) {
             ClienteProprietario p = new ClienteProprietario(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
             this.clientes.add(p);
             return p;
@@ -122,13 +131,87 @@ public class Imobiliaria {
 
         return c;
     }
-    /**
+
     public void cadastarImovel() {
         Scanner leitor = new Scanner(System.in);
-        System.out.println("CADASTRO DE IMÓVEL");
-        //Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade)
+
+        System.out.println("CADASTRO DE CLIENTE");
+
+        System.out.print("Escolha uma categoria [Casa, Apartamento, Terreno, SalaComercial]");
+        String escolha = leitor.nextLine().toUpperCase();
+
+        System.out.print("DATA DE CONSTRUÇÃO DO IMÓVEL:");
+        System.out.println("Ano: ");
+        Integer ano = leitor.nextInt();
+        System.out.println("Mês: ");
+        Integer mes = leitor.nextInt();
+        System.out.println("Dia: ");
+        Integer dia = leitor.nextInt();
+        LocalDate data = LocalDate.of(ano, mes, dia);
+
+        System.out.print("Digite o CPF: ");
+        String cpf = leitor.nextLine();
+
+        System.out.print("Digite o nome: ");
+        String nome = leitor.nextLine();
+
+        Endereco endereco = cadastrarEndereco();
+
+        //PROPRIETARIOS
+        List<ClienteProprietario> proprietarios = new ArrayList<>();
+        System.out.print("Quantos proprietários deseja cadastrar? ");
+        int n = leitor.nextInt();
+        for(int i = 1; i <= n; i++) {
+            ClienteProprietario c = (ClienteProprietario)cadastrarCliente(true);
+            proprietarios.add(c);
+        }
+
+        System.out.print("[VENDA] ou [ALUGUEL]? ");
+        TipoDisponibilidade tipoDispon = TipoDisponibilidade.valueOf(leitor.nextLine().toUpperCase());
+
+        System.out.print("Qual o valor sugerido pelo proprietário? ");
+        Double valorSugerido = leitor.nextDouble();
+
+        switch (escolha) {
+            case "CASA":
+                System.out.print("\nDADOS ESPECÍFICOS: ");
+                System.out.println("Área: ");
+                Double area = leitor.nextDouble();
+                System.out.println("Armario Embutido (s/n): ");
+                String opcao = leitor.nextLine();
+                Boolean armarioEmb = opcao.equals("s");
+
+                System.out.println("Descrição (opcional): ");
+                String descricao = leitor.nextLine();
+
+                System.out.println("Número de quartos: ");
+                Integer qtdQuartos = leitor.nextInt();
+                System.out.println("Número de salas de estar: ");
+                Integer qtdSalasEstar = leitor.nextInt();
+                System.out.println("Número de salas de jantar: ");
+                Integer qtdSalasJantar = leitor.nextInt();
+                System.out.println("Número de suítes: ");
+                Integer qtdSuites = leitor.nextInt();
+                System.out.println("Número de vagas na garagem: ");
+                Integer qtdvagas = leitor.nextInt();;
+
+//                Casa casa =
+//                        new Casa(data, endereco,
+//                                    proprietarios, tipoDispon, valorSugerido,
+//                                    area, armarioEmb, descricao, qtdQuartos,
+//                                    qtdSalasEstar, qtdSalasJantar,qtdSuites,
+//                                    qtdvagas, LocalDate.now(), null, imobi);
+        }
+
+//        Cliente c = new Cliente(cpf, nome, endereco, email, profissao, sexo, estadoCivil);
+//        this.clientes.add(c);
+
+        System.out.println("Cliente cadastrado com sucesso!");
+
+//        IO.println(c.toString());
+
+        return;
     }
-     **/
 
     public void realizarTransacao(Cliente cliente, Funcionario funcionario, Imovel imovel) {
         if (!imovel.getDisponibilidade()) throw new ConflitoDisponibilidade();
@@ -165,6 +248,19 @@ public class Imobiliaria {
             Aluguel a = new Aluguel(tipoPagamento, imovel, funcionario, imovel.getProprietarios(), cliente, fiadores, indicacoes, inicioContrato);
             a.executar();
         }
+    }
+
+    public Cliente buscarUsuario(String nome) {
+        Cliente cliUser = getClientes().stream()
+                .filter(c -> c.getNome().equals(nome))
+                .findFirst()
+                .orElse(null);
+        if(cliUser instanceof ClienteProprietario) {
+            System.out.println("Não foi achado nenhum cliente chamado " + nome);
+            return null;
+        }
+
+        return cliUser;
     }
 
     public Endereco cadastrarEndereco() {

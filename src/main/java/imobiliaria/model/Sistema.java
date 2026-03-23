@@ -3,9 +3,7 @@ package main.java.imobiliaria.model;
 import main.java.imobiliaria.model.enums.EstadoCivil;
 import main.java.imobiliaria.model.enums.Sexo;
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
-import main.java.imobiliaria.model.exceptions.LoginErrado;
 
-import java.util.Locale;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.util.List;
@@ -48,15 +46,16 @@ public class Sistema {
                     EstadoCivil.CASADO
             );
             proprietarios1.add(novoProprietario);
+            imobi.adicionarCliente(novoProprietario);
 
             Funcionario fu1 = new Funcionario(
                     "12345678900",
-                    "João Silva",
+                    "José Roberto",
                     endereco2,
                     telefonesFu1,
                     "VENDEDOR",
                     2500.0,
-                    "joao.vendedor",
+                    "jose.vendedor",
                     "senha123"
             );
 
@@ -69,6 +68,7 @@ public class Sistema {
                     endereco1,
                     proprietarios1,
                     TipoDisponibilidade.VENDER,
+                    24000.00,
                     3,
                     80.0,
                     true,
@@ -82,8 +82,7 @@ public class Sistema {
                     350.0,
                     LocalDate.now(),
                     LocalDate.now().plusMonths(24),
-                    imobi,
-                    24000.00
+                    imobi
             );
 
             Apartamento ap2 = new Apartamento(
@@ -92,6 +91,7 @@ public class Sistema {
                     endereco2,
                     proprietarios2,
                     TipoDisponibilidade.LOCACAO,
+                    24000.00,
                     10,
                     120.0,
                     false,
@@ -105,8 +105,7 @@ public class Sistema {
                     500.0,
                     LocalDate.now(),
                     LocalDate.now().plusMonths(24),
-                    imobi,
-                    24000.00
+                    imobi
             );
 
         Apartamento ap3 = new Apartamento(
@@ -115,6 +114,7 @@ public class Sistema {
                 endereco2,
                 proprietarios2,
                 TipoDisponibilidade.LOCACAO,
+                24000.00,
                 10,
                 120.0,
                 false,
@@ -128,8 +128,7 @@ public class Sistema {
                 500.0,
                 LocalDate.now(),
                 LocalDate.now().plusMonths(24),
-                imobi,
-                24000.00
+                imobi
         );
 
             imobi.getImoveisDisponiveisSimples().add(ap2);
@@ -153,11 +152,10 @@ public class Sistema {
 
         if (num == 1){
             imobi.cadastrarFuncionario();
-            menu(imobi);
         }
         else if (num == 2){
-            imobi.cadastarCliente();
-
+            Boolean ehProprietario = imobi.ehProprietario();
+            imobi.cadastrarCliente(ehProprietario);
         }
         else if (num == 3){
             // imobi.cadastarImovel(clienteProprietario); colocar um objeto já pronto
@@ -168,7 +166,28 @@ public class Sistema {
                 if (fu.getCargo().equals("VENDEDOR")){
                     System.out.println("Vendedor digite usuario e senha para entrar no sistema!");
                             // Usando
+                            Integer escolha = 0;;
+
                             Cliente cliUsu = imobi.getClientes().get(0);
+
+                            while(escolha != 1 && escolha != 2) {
+                                System.out.println("(1) Criar novo usuário\n(2) Procurar na Lista de Usuários\n");
+                                escolha = leitor.nextInt();
+                            }
+                            if(escolha == 2) {
+                                System.out.println("Por qual usuário você procura? (nome)");
+                                String nomeBusca = leitor.next();
+                                cliUsu = imobi.buscarUsuario(nomeBusca);
+                            } else {
+                                cliUsu = imobi.cadastrarCliente(false);
+                            }
+
+                            if(cliUsu == null) {
+                                System.out.println("\n!! Usuário não existe !!\n");
+                                menu(imobi);
+                                break;
+                            }
+
                             Imovel imovelTransacionado = imobi.getImoveisDisponiveis().get(1);
 
                             imobi.realizarTransacao(cliUsu, fu, imovelTransacionado);
