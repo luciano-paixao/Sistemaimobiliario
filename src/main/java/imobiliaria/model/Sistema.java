@@ -19,7 +19,7 @@ public class Sistema {
     public static void menu(Imobiliaria imobi) {
         Scanner leitor = new Scanner(System.in);
 
-        IO.println("olá, bem vindo a imobilíaria");
+        System.out.println("Olá! bem vindo a imobilíaria");
         System.out.println("Digite o numero de acordo com a opção que deseja realizar");
         System.out.println("1_Cadastrar funcionario");
         System.out.println("2_Cadastrar cliente");
@@ -38,7 +38,7 @@ public class Sistema {
             //imobi.cadastrarImovel()
             // imobi.cadastarImovel(clienteProprietario); colocar um objeto já pronto
         } else if (num == 4) {
-            IO.println("Nosso vendedor vai o ajudar...");
+            System.out.println("Nosso vendedor vai o ajudar...");
             for (Funcionario fu : imobi.funcionarios) {
                 if (fu.getCargo().equals("VENDEDOR")) {
                     System.out.println("Vendedor digite usuario e senha para entrar no sistema!");

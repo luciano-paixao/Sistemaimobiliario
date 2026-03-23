@@ -190,12 +190,12 @@ public class Main {
                 EstadoCivil.CASADO
         );
 
-        IO.println(funcionario.getComissoes());
-        IO.println(imobiliaria.getTotalcomissoes());
+        System.out.println(funcionario.getComissoes());
+        System.out.println(imobiliaria.getTotalcomissoes());
 
         imobiliaria.realizarTransacao(cli1, funcionario, casa2);
 
-        IO.println(funcionario.getComissoes());
-        IO.println(imobiliaria.getTotalcomissoes());
+        System.out.println(funcionario.getComissoes());
+        System.out.println(imobiliaria.getTotalcomissoes());
     }
 }

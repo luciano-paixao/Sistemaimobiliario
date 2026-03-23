@@ -75,64 +75,6 @@ public class Imobiliaria {
         }
     }
 
-    public Funcionario cadastrarFuncionario() {
-
-        String cpf = JOptionPane.showInputDialog("CPF do funcionário");
-
-        String nome = JOptionPane.showInputDialog("Nome do funcionário");
-
-        String cargo = JOptionPane.showInputDialog("Cargo do funcionário");
-
-        Double salarioBase = Double.parseDouble(JOptionPane.showInputDialog("Salário base do funcionário"));
-
-        Endereco endereco = cadastrarEndereco();
-
-        List<String> telefones = cadastrarTelefone();
-
-        String usuario = JOptionPane.showInputDialog("Digite o usuário");
-
-        String senha = JOptionPane.showInputDialog("Digite a senha");
-
-        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar funcionário?", "Confirmar", JOptionPane.YES_NO_OPTION);
-        if (resposta == JOptionPane.YES_OPTION) {
-            Funcionario f = new Funcionario(cpf, nome, endereco, telefones, cargo, salarioBase, usuario, senha);
-            this.funcionarios.add(f);
-            return f;
-        } else if (resposta == JOptionPane.NO_OPTION) return null;
-
-        return null;
-    }
-
-    public Cliente cadastrarCliente(Boolean ehProprietario) {
-
-        String cpf = JOptionPane.showInputDialog("CPF do cliente");
-        String nome = JOptionPane.showInputDialog("Nome do cliente");
-        String email = JOptionPane.showInputDialog("Email do cliente");
-        String profissao = JOptionPane.showInputDialog("Profissão do cliente");
-        Endereco endereco = cadastrarEndereco();
-        List<String> telefones = cadastrarTelefone();
-
-        JComboBox<Sexo> comboSexo = new JComboBox<>(Sexo.values());
-        JOptionPane.showMessageDialog(null, comboSexo);
-        Sexo sexo = (Sexo) comboSexo.getSelectedItem();
-
-        JComboBox<EstadoCivil> comboEstadoCivil = new JComboBox<>(EstadoCivil.values());
-        JOptionPane.showMessageDialog(null, comboEstadoCivil);
-        EstadoCivil estadoCivil = (EstadoCivil) comboEstadoCivil.getSelectedItem();
-
-        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar cliente?", "Confirmar", JOptionPane.YES_NO_OPTION);
-        if (resposta == JOptionPane.YES_OPTION && ehProprietario) {
-            ClienteProprietario p = new ClienteProprietario(cpf, nome, endereco, telefones, email, profissao, sexo, estadoCivil);
-            this.clientes.add(p);
-            return p;
-        } else if (resposta == JOptionPane.YES_OPTION && !ehProprietario) {
-            Cliente c = new Cliente(cpf, nome, endereco, telefones, email, profissao, sexo, estadoCivil);
-            this.clientes.add(c);
-            return c;
-        } else if (resposta == JOptionPane.NO_OPTION) return null;
-        else throw new RuntimeException();
-    }
-
     public Imovel cadastrarImovel(List<ClienteProprietario> proprietarios) {
         JPanel painelPrincipal = new JPanel();
         painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
@@ -203,8 +145,8 @@ public class Imobiliaria {
         painelApartamento.add(quantidadeVagasGaragemApartamento);
         painelApartamento.add(new JLabel("Valor do Condomínio"));
         painelApartamento.add(valorCondominio);
-        painelCasa.add(new JLabel("Por quanto deseja anunciar esse apartamento?"));
-        painelCasa.add(valorSugeridoApartamento);
+        painelApartamento.add(new JLabel("Por quanto deseja anunciar esse apartamento?"));
+        painelApartamento.add(valorSugeridoApartamento);
 
         /**---------TERRENO---------**/
 
@@ -218,8 +160,8 @@ public class Imobiliaria {
         painelTerreno.add(comprimento);
         painelTerreno.add(new JLabel("Largura"));
         painelTerreno.add(largura);
-        painelCasa.add(new JLabel("Por quanto deseja anunciar esse terreno?"));
-        painelCasa.add(valorSugeridoTerreno);
+        painelTerreno.add(new JLabel("Por quanto deseja anunciar esse terreno?"));
+        painelTerreno.add(valorSugeridoTerreno);
 
         /**---------SALA COMERCIAL---------**/
 
@@ -236,8 +178,8 @@ public class Imobiliaria {
         painelSalaComercial.add(quantidadeBanheiros);
         painelSalaComercial.add(new JLabel("Quantidade de Cômodos"));
         painelSalaComercial.add(quantidadeComodos);
-        painelCasa.add(new JLabel("Por quanto deseja anunciar essa sala comercial?"));
-        painelCasa.add(valorSugeridoSalaComercial);
+        painelSalaComercial.add(new JLabel("Por quanto deseja anunciar essa sala comercial?"));
+        painelSalaComercial.add(valorSugeridoSalaComercial);
 
         /**---------------------------------**/
 
@@ -254,7 +196,7 @@ public class Imobiliaria {
         painelPrincipal.add(comboTipoDisponibilidade);
         painelPrincipal.add(painelCards);
 
-        int result = JOptionPane.showConfirmDialog(null, painelPrincipal, "Cadastro Imóvel", JOptionPane.OK_CANCEL_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, painelPrincipal, "Cadastrar Imóvel?", JOptionPane.OK_CANCEL_OPTION);
         if (result != JOptionPane.OK_OPTION) return null;
 
         String tipoSelecionado = (String) comboTipo.getSelectedItem();
@@ -339,6 +281,65 @@ public class Imobiliaria {
         } else if (resposta == JOptionPane.NO_OPTION) return null;
 
         return null;
+    }
+
+
+    public Funcionario cadastrarFuncionario() {
+
+        String cpf = JOptionPane.showInputDialog("CPF do funcionário");
+
+        String nome = JOptionPane.showInputDialog("Nome do funcionário");
+
+        String cargo = JOptionPane.showInputDialog("Cargo do funcionário");
+
+        Double salarioBase = Double.parseDouble(JOptionPane.showInputDialog("Salário base do funcionário"));
+
+        Endereco endereco = cadastrarEndereco();
+
+        List<String> telefones = cadastrarTelefone();
+
+        String usuario = JOptionPane.showInputDialog("Digite o usuário");
+
+        String senha = JOptionPane.showInputDialog("Digite a senha");
+
+        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar funcionário?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            Funcionario f = new Funcionario(cpf, nome, endereco, telefones, cargo, salarioBase, usuario, senha);
+            this.funcionarios.add(f);
+            return f;
+        } else if (resposta == JOptionPane.NO_OPTION) return null;
+
+        return null;
+    }
+
+    public Cliente cadastrarCliente(Boolean ehProprietario) {
+
+        String cpf = JOptionPane.showInputDialog("CPF do cliente");
+        String nome = JOptionPane.showInputDialog("Nome do cliente");
+        String email = JOptionPane.showInputDialog("Email do cliente");
+        String profissao = JOptionPane.showInputDialog("Profissão do cliente");
+        Endereco endereco = cadastrarEndereco();
+        List<String> telefones = cadastrarTelefone();
+
+        JComboBox<Sexo> comboSexo = new JComboBox<>(Sexo.values());
+        JOptionPane.showMessageDialog(null, comboSexo);
+        Sexo sexo = (Sexo) comboSexo.getSelectedItem();
+
+        JComboBox<EstadoCivil> comboEstadoCivil = new JComboBox<>(EstadoCivil.values());
+        JOptionPane.showMessageDialog(null, comboEstadoCivil);
+        EstadoCivil estadoCivil = (EstadoCivil) comboEstadoCivil.getSelectedItem();
+
+        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar cliente?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION && ehProprietario) {
+            ClienteProprietario p = new ClienteProprietario(cpf, nome, endereco, telefones, email, profissao, sexo, estadoCivil);
+            this.clientes.add(p);
+            return p;
+        } else if (resposta == JOptionPane.YES_OPTION && !ehProprietario) {
+            Cliente c = new Cliente(cpf, nome, endereco, telefones, email, profissao, sexo, estadoCivil);
+            this.clientes.add(c);
+            return c;
+        } else if (resposta == JOptionPane.NO_OPTION) return null;
+        else throw new RuntimeException();
     }
 
     public Endereco cadastrarEndereco() {
