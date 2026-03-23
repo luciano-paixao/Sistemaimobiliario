@@ -55,9 +55,9 @@ public class Sistema {
                 new Endereco("Centro", "Rua das Acácias", "10"),
                 150000.0,
                 List.of(prop1),
-                TipoDisponibilidade.VENDA,
+                TipoDisponibilidade.VENDER,
                 LocalDate.of(2024, 1, 1), LocalDate.of(2024, 12, 31),
-                imobiliaria,
+                imobi,
                 false, 500.0, 25.0, true, 20.0
         );
 
@@ -66,11 +66,11 @@ public class Sistema {
                 true,
                 new Endereco("Centro", "Av. Comercial", "55"),
                 List.of(prop1),
-                TipoDisponibilidade.ALUGUEL,
+                TipoDisponibilidade.LOCACAO,
                 3000.0,
                 80.0, 2, 5,
                 LocalDate.of(2024, 2, 1), LocalDate.of(2025, 2, 1),
-                imobiliaria
+                imobi
         );
 
         Apartamento apto1 = new Apartamento(
@@ -78,12 +78,12 @@ public class Sistema {
                 true,
                 new Endereco("Jardim Primavera", "Rua das Flores", "200"),
                 List.of(prop1),
-                TipoDisponibilidade.VENDA,
+                TipoDisponibilidade.VENDER,
                 450000.0,
                 5, 90.0, true, "Apartamento com vista para o parque",
                 true, 3, 1, 1, 2, 1, 800.0,
                 LocalDate.of(2024, 3, 1), LocalDate.of(2025, 3, 1),
-                imobiliaria
+                imobi
         );
 
         prop1.getImoveis().add(terreno1);
@@ -95,12 +95,12 @@ public class Sistema {
                 LocalDate.of(2005, 8, 10),
                 new Endereco("Jardim América", "Rua dos Ipês", "321"),
                 List.of(prop2),
-                TipoDisponibilidade.VENDA,
+                TipoDisponibilidade.VENDER,
                 600000.0,
                 200.0, true, "Casa espaçosa com quintal",
                 4, 1, 1, 2, 3,
                 LocalDate.of(2024, 1, 15), LocalDate.of(2025, 1, 15),
-                imobiliaria
+                imobi
         );
 
         SalaComercial sala2 = new SalaComercial(
@@ -108,11 +108,11 @@ public class Sistema {
                 true,
                 new Endereco("Centro", "Av. Principal", "900"),
                 List.of(prop2),
-                TipoDisponibilidade.ALUGUEL,
+                TipoDisponibilidade.LOCACAO,
                 4500.0,
                 120.0, 3, 8,
                 LocalDate.of(2024, 4, 1), LocalDate.of(2025, 4, 1),
-                imobiliaria
+                imobi
         );
 
         Terreno terreno2 = new Terreno(
@@ -120,9 +120,9 @@ public class Sistema {
                 new Endereco("Bairro Novo", "Estrada Rural", "Km 3"),
                 200000.0,
                 List.of(prop2),
-                TipoDisponibilidade.VENDA,
+                TipoDisponibilidade.VENDER,
                 LocalDate.of(2024, 5, 1), LocalDate.of(2025, 5, 1),
-                imobiliaria,
+                imobi,
                 true, 1000.0, 50.0, false, 20.0
         );
 
@@ -136,24 +136,24 @@ public class Sistema {
                 true,
                 new Endereco("Boa Viagem", "Av. Atlântica", "1500"),
                 List.of(prop3),
-                TipoDisponibilidade.VENDA,
+                TipoDisponibilidade.VENDER,
                 800000.0,
                 10, 110.0, true, "Apartamento de frente para o mar",
                 true, 3, 2, 1, 2, 2, 1200.0,
                 LocalDate.of(2024, 6, 1), LocalDate.of(2025, 6, 1),
-                imobiliaria
+                imobi
         );
 
         Casa casa3 = new Casa(
                 LocalDate.of(2008, 4, 22),
                 new Endereco("Pinheiros", "Rua Harmonia", "77"),
                 List.of(prop3),
-                TipoDisponibilidade.ALUGUEL,
+                TipoDisponibilidade.LOCACAO,
                 3500.0,
                 150.0, false, "Casa com piscina e área gourmet",
                 3, 2, 1, 1, 2,
                 LocalDate.of(2024, 7, 1), LocalDate.of(2025, 7, 1),
-                imobiliaria
+                imobi
         );
 
         Terreno terreno3 = new Terreno(
@@ -161,9 +161,9 @@ public class Sistema {
                 new Endereco("Zona Norte", "Rua das Pedras", "40"),
                 90000.0,
                 List.of(prop3),
-                TipoDisponibilidade.VENDA,
+                TipoDisponibilidade.VENDER,
                 LocalDate.of(2024, 8, 1), LocalDate.of(2025, 8, 1),
-                imobiliaria,
+                imobi,
                 false, 300.0, 15.0, false, 20.0
         );
 
@@ -187,12 +187,12 @@ public class Sistema {
                 LocalDate.of(2003, 2, 18),
                 new Endereco("Moema", "Rua Itapeva", "88"),
                 List.of(prop4),
-                TipoDisponibilidade.VENDA,
+                TipoDisponibilidade.VENDER,
                 750000.0,
                 220.0, true, "Casa moderna com área gourmet e piscina",
                 4, 2, 1, 3, 4,
                 LocalDate.of(2024, 9, 1), LocalDate.of(2025, 9, 1),
-                imobiliaria
+                imobi
         );
 
         Apartamento apto4 = new Apartamento(
@@ -200,12 +200,12 @@ public class Sistema {
                 true,
                 new Endereco("Vila Mariana", "Av. Domingos de Morais", "560"),
                 List.of(prop4),
-                TipoDisponibilidade.ALUGUEL,
+                TipoDisponibilidade.LOCACAO,
                 5500.0,
                 8, 95.0, true, "Apartamento moderno próximo ao metrô",
                 true, 2, 1, 1, 1, 1, 900.0,
                 LocalDate.of(2024, 9, 1), LocalDate.of(2025, 9, 1),
-                imobiliaria
+                imobi
         );
 
         Terreno terreno4 = new Terreno(
@@ -213,9 +213,9 @@ public class Sistema {
                 new Endereco("Alphaville", "Rua das Amendoeiras", "15"),
                 320000.0,
                 List.of(prop4),
-                TipoDisponibilidade.VENDA,
+                TipoDisponibilidade.VENDER,
                 LocalDate.of(2024, 9, 1), LocalDate.of(2025, 9, 1),
-                imobiliaria,
+                imobi,
                 false, 800.0, 40.0, false, 20.0
         );
 
@@ -240,11 +240,11 @@ public class Sistema {
                 true,
                 new Endereco("Savassi", "Av. do Contorno", "1200"),
                 List.of(prop5),
-                TipoDisponibilidade.ALUGUEL,
+                TipoDisponibilidade.LOCACAO,
                 6000.0,
                 150.0, 4, 10,
                 LocalDate.of(2024, 10, 1), LocalDate.of(2025, 10, 1),
-                imobiliaria
+                imobi
         );
 
         Apartamento apto5 = new Apartamento(
@@ -252,12 +252,12 @@ public class Sistema {
                 true,
                 new Endereco("Lourdes", "Rua Maranhão", "340"),
                 List.of(prop5),
-                TipoDisponibilidade.VENDA,
+                TipoDisponibilidade.VENDER,
                 920000.0,
                 15, 130.0, true, "Cobertura com terraço e vista panorâmica",
                 true, 4, 2, 1, 3, 2, 1500.0,
                 LocalDate.of(2024, 10, 1), LocalDate.of(2025, 10, 1),
-                imobiliaria
+                imobi
         );
 
         Terreno terreno5 = new Terreno(
@@ -265,9 +265,9 @@ public class Sistema {
                 new Endereco("Caiçara", "Rua Padre Eustáquio", "22"),
                 110000.0,
                 List.of(prop5),
-                TipoDisponibilidade.VENDA,
+                TipoDisponibilidade.VENDER,
                 LocalDate.of(2024, 10, 1), LocalDate.of(2025, 10, 1),
-                imobiliaria,
+                imobi,
                 true, 450.0, 30.0, false, 15.0
         );
 
@@ -291,12 +291,12 @@ public class Sistema {
                 LocalDate.of(2011, 7, 30),
                 new Endereco("Aldeota", "Rua Silva Jatahy", "190"),
                 List.of(prop6),
-                TipoDisponibilidade.VENDA,
+                TipoDisponibilidade.VENDER,
                 480000.0,
                 180.0, false, "Casa ampla com jardim e varanda",
                 3, 1, 1, 1, 2,
                 LocalDate.of(2024, 11, 1), LocalDate.of(2025, 11, 1),
-                imobiliaria
+                imobi
         );
 
         SalaComercial sala6 = new SalaComercial(
@@ -304,11 +304,11 @@ public class Sistema {
                 true,
                 new Endereco("Centro", "Av. Monsenhor Tabosa", "800"),
                 List.of(prop6),
-                TipoDisponibilidade.ALUGUEL,
+                TipoDisponibilidade.LOCACAO,
                 3800.0,
                 100.0, 2, 6,
                 LocalDate.of(2024, 11, 1), LocalDate.of(2025, 11, 1),
-                imobiliaria
+                imobi
         );
 
         Apartamento apto6 = new Apartamento(
@@ -316,12 +316,12 @@ public class Sistema {
                 true,
                 new Endereco("Meireles", "Av. Beira Mar", "1000"),
                 List.of(prop6),
-                TipoDisponibilidade.VENDA,
+                TipoDisponibilidade.VENDER,
                 700000.0,
                 12, 105.0, true, "Apartamento com varanda e vista para o mar",
                 true, 3, 1, 1, 2, 1, 1100.0,
                 LocalDate.of(2024, 11, 1), LocalDate.of(2025, 11, 1),
-                imobiliaria
+                imobi
         );
 
         prop6.getImoveis().add(casa6);
@@ -333,25 +333,51 @@ public class Sistema {
         Endereco endCli2 = new Endereco("Copacabana", "Av. Nossa Senhora de Copacabana", "320");
 
         Cliente cli1 = new Cliente(
-                "777.777.777-77", "Lucas Ferreira",
+                "777.777.777-77", "Lucas",
                 endCli1,
                 "lucas@email.com", "Analista de Sistemas",
                 Sexo.MASCULINO, EstadoCivil.SOLTEIRO
         );
 
         Cliente cli2 = new Cliente(
-                "888.888.888-88", "Juliana Castro",
+                "888.888.888-88", "Juliana",
                 endCli2,
                 "juliana@email.com", "Designer",
                 Sexo.FEMININO, EstadoCivil.CASADO
         );
 
-            imobi.adicionarCliente(cli1, cli2, prop1, prop2, prop3, prop4, prop5, prop6);
+        Endereco endereco1 = new Endereco("Jardim Primavera", "Rua das Flores", "123");
+        Endereco endereco2 = new Endereco("Centro", "Av. Brasil", "456");
+        Endereco endereco3 = new Endereco("Bela Vista", "Rua Sete de Setembro", "789");
 
-            imobi.getImoveisDisponiveisSimples().add(terreno1, terreno2, terreno3, terreno4, terreno5);
-            imobi.getImoveisDisponiveisSimples().add(casa2, casa3, casa4, casa6);
-            imobi.getImoveisDisponiveisSimples().add(sala1, sala2, sala5, sala6);
-            imobi.getImoveisDisponiveisSimples().add(apto1, apto3, apto4, apto5, apto6);
+        Funcionario func1 = new Funcionario("123.456.789-00", "Ana Souza", endereco1, "GERENTE", 5000.0, "ana.souza", "senha123");
+        Funcionario func2 = new Funcionario("987.654.321-00", "Carlos Lima", endereco2, "VENDEDOR", 2500.0, "carlos.lima", "senha456");
+        Funcionario func3 = new Funcionario("456.789.123-00", "Mariana Costa", endereco3, "ANALISTA", 3800.0, "mariana.costa", "senha789");
+
+
+        imobi.adicionarFuncionario(func1);
+        imobi.adicionarFuncionario(func2);
+        imobi.adicionarFuncionario(func3);
+
+            imobi.getClientes().add(cli1);
+            imobi.getClientes().add(cli2);
+            imobi.getClientes().add(prop1);
+            imobi.getClientes().add(prop2);
+
+            imobi.getImoveisDisponiveisSimples().add(terreno1);
+            imobi.getImoveisDisponiveisSimples().add(terreno2);
+            imobi.getImoveisDisponiveisSimples().add(terreno3);
+            imobi.getImoveisDisponiveisSimples().add(terreno4);
+            imobi.getImoveisDisponiveisSimples().add(terreno5);
+
+            imobi.getImoveisDisponiveisSimples().add(casa2);
+        imobi.getImoveisDisponiveisSimples().add(casa3);
+            imobi.getImoveisDisponiveisSimples().add(sala1);
+        imobi.getImoveisDisponiveisSimples().add(sala2);
+            imobi.getImoveisDisponiveisSimples().add(apto1);
+        imobi.getImoveisDisponiveisSimples().add(apto3);
+
+
             menu(imobi);
         }
 
@@ -393,6 +419,12 @@ public class Sistema {
                                 escolha = leitor.nextInt();
                             }
                             if(escolha == 2) {
+                                System.out.println("LISTA USUÁRIOS:");
+                                for(Cliente cli: imobi.clientes) {
+                                    if(!(cli instanceof ClienteProprietario)) {
+                                        IO.println(cli.getNome());
+                                    }
+                                }
                                 System.out.println("Digite o nome do cliente interessado (usuário):");
                                 String nomeBusca = leitor.next();
                                 cliUsu = imobi.buscarUsuario(nomeBusca);
@@ -422,7 +454,6 @@ public class Sistema {
                                 System.out.println(imovel.toString());
                                 System.out.println("(1) Escolher este imóvel\n(2) Próximo\n");
                                 escolha = leitor.nextInt();
-
 
                                 if(escolha == 1) {
                                     imoEscolhido = imovel;
