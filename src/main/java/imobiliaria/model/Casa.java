@@ -24,9 +24,46 @@ public class Casa extends Imovel {
 
     private String descricao;
 
-    public Casa(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade, Imobiliaria imobiliaria,
-                Integer quantidadeQuartos, Integer quantidadeSuites, Integer quantidadeSalasEstar, Integer quantidadeSalasJantar, Integer quantidadeVagasGaragem, Double area, Boolean armarioEmbutido) {
+    public Casa(LocalDate dataConstrucao,
+                Endereco endereco,
+                List<ClienteProprietario> proprietarios,
+                TipoDisponibilidade tipoDisponibilidade,
+                Imobiliaria imobiliaria,
+                Integer quantidadeQuartos,
+                Integer quantidadeSuites,
+                Integer quantidadeSalasEstar,
+                Integer quantidadeSalasJantar,
+                Integer quantidadeVagasGaragem,
+                Double area,
+                Boolean armarioEmbutido) {
+
         super(dataConstrucao, endereco, proprietarios, tipoDisponibilidade, imobiliaria);
+
+        this.quantidadeQuartos = quantidadeQuartos;
+        this.quantidadeSuites = quantidadeSuites;
+        this.quantidadeSalasEstar = quantidadeSalasEstar;
+        this.quantidadeSalasJantar = quantidadeSalasJantar;
+        this.quantidadeVagasGaragem = quantidadeVagasGaragem;
+        this.area = area;
+        this.armarioEmbutido = armarioEmbutido;
+    }
+
+    public Casa(LocalDate dataConstrucao,
+                Endereco endereco,
+                List<ClienteProprietario> proprietarios,
+                TipoDisponibilidade tipoDisponibilidade,
+                Imobiliaria imobiliaria,
+                Double valorSugerido,
+                Integer quantidadeQuartos,
+                Integer quantidadeSuites,
+                Integer quantidadeSalasEstar,
+                Integer quantidadeSalasJantar,
+                Integer quantidadeVagasGaragem,
+                Double area,
+                Boolean armarioEmbutido) {
+
+        super(dataConstrucao, endereco, proprietarios, tipoDisponibilidade, imobiliaria, valorSugerido);
+
         this.quantidadeQuartos = quantidadeQuartos;
         this.quantidadeSuites = quantidadeSuites;
         this.quantidadeSalasEstar = quantidadeSalasEstar;

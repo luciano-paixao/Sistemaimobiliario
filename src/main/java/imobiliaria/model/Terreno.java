@@ -18,12 +18,20 @@ public class Terreno extends Imovel {
 
     private Boolean declive;
 
-    public Terreno(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade,
-                   Imobiliaria imobiliaria, Double largura, Double comprimento, Boolean aclive, Boolean declive) {
+    public Terreno(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade, Imobiliaria imobiliaria, Double largura, Double comprimento, Boolean aclive, Boolean declive) {
         super(dataConstrucao, endereco, proprietarios, tipoDisponibilidade, imobiliaria);
         this.largura = largura;
         this.comprimento = comprimento;
         this.area = largura * comprimento;
+        this.aclive = aclive;
+        this.declive = declive;
+    }
+
+    public Terreno(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade, Imobiliaria imobiliaria, Double valorSugerido, Double largura, Double comprimento, Double area, Boolean aclive, Boolean declive) {
+        super(dataConstrucao, endereco, proprietarios, tipoDisponibilidade, imobiliaria, valorSugerido);
+        this.largura = largura;
+        this.comprimento = comprimento;
+        this.area = area;
         this.aclive = aclive;
         this.declive = declive;
     }

@@ -25,8 +25,12 @@ public abstract class Imovel {
 
     private Double valorSugerido;
 
-    public Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios,
-                  TipoDisponibilidade tipoDisponibilidade, Imobiliaria imobiliaria) {
+    public Imovel(LocalDate dataConstrucao,
+                  Endereco endereco,
+                  List<ClienteProprietario> proprietarios,
+                  TipoDisponibilidade tipoDisponibilidade,
+                  Imobiliaria imobiliaria) {
+
         this.dataConstrucao = dataConstrucao;
         this.disponibilidade = true;
         this.endereco = endereco;
@@ -36,16 +40,22 @@ public abstract class Imovel {
         this.imobiliaria = imobiliaria;
     }
 
-    public Imovel(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
-                  List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade, Double valorSugerido) {
+    public Imovel(LocalDate dataConstrucao,
+                  Endereco endereco,
+                  List<ClienteProprietario> proprietarios,
+                  TipoDisponibilidade tipoDisponibilidade,
+                  Imobiliaria imobiliaria,
+                  Double valorSugerido) {
+
         this.dataConstrucao = dataConstrucao;
-        this.disponibilidade = disponibilidade;
+        this.disponibilidade = true;
         this.endereco = endereco;
         this.proprietarios = proprietarios;
         this.tipoDisponibilidade = tipoDisponibilidade;
-        this.incioOferta = LocalDate.now();
         this.valorSugerido = valorSugerido;
-    };
+        this.incioOferta = LocalDate.now();
+        this.imobiliaria = imobiliaria;
+    }
 
     public void adicionarProprietario(ClienteProprietario proprietario){
         this.proprietarios.add(proprietario);

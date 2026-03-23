@@ -30,6 +30,7 @@ public class Imobiliaria {
         this.funcionarios = new ArrayList<>();
         this.clientes = new ArrayList<>();
         this.trasacoes = new ArrayList<>();
+        this.totalComissoes = 0.0;
     }
 
     public void realizarTransacao(Cliente cliente, Funcionario funcionario, Imovel imovel) {
@@ -314,7 +315,7 @@ public class Imobiliaria {
                         Double.parseDouble(largura.getText()),
                         Double.parseDouble(comprimento.getText()),
                         false,
-                        false
+                        true
                 );
                 this.imoveis.add(t);
                 return t;
