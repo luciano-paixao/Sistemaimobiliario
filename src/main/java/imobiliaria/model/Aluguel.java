@@ -14,7 +14,6 @@ public class Aluguel extends RegistroTransacao {
     private LocalDate inicioContrato;
 
     private LocalDate fimContrato;
-    private LocalDate dataAluguel;
 
     public Aluguel(TipoPagamento tipoPagamento, Imovel imovel, Funcionario funcionario, List<ClienteProprietario> proprietarios, Cliente interessado,
                    List<Pessoa> fiadores, List<Pessoa> indicacoes, LocalDate inicioContrato) {
@@ -86,6 +85,6 @@ public class Aluguel extends RegistroTransacao {
                 ", inicioContrato=" + inicioContrato +
                 ", fimContrato=" + fimContrato +
                 ", dataAluguel=" + dataAluguel +
-                '}';
+                super.toString() + '}';
     }
 }

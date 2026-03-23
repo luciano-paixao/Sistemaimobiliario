@@ -23,31 +23,26 @@ public abstract class Imovel {
 
     private Imobiliaria imobiliaria;
 
-    private Double valorSugerido;
-
     public Imovel(LocalDate dataConstrucao, Endereco endereco, List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade,
-                  LocalDate incioOferta, LocalDate fimOferta, Imobiliaria imobiliaria, Double valorSugerido) {
+                  LocalDate incioOferta, LocalDate fimOferta, Imobiliaria imobiliaria) {
         this.dataConstrucao = dataConstrucao;
         this.disponibilidade = true;
         this.endereco = endereco;
         this.proprietarios = proprietarios;
         this.tipoDisponibilidade = tipoDisponibilidade;
         this.incioOferta = incioOferta;
-        this.imobiliaria = imobiliaria;
-        this.valorSugerido = valorSugerido;
-
         this.fimOferta = fimOferta;
+        this.imobiliaria = imobiliaria;
     }
 
     public Imovel(LocalDate dataConstrucao, Boolean disponibilidade, Endereco endereco,
-                  List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade, Double valorSugerido) {
+                  List<ClienteProprietario> proprietarios, TipoDisponibilidade tipoDisponibilidade) {
         this.dataConstrucao = dataConstrucao;
         this.disponibilidade = disponibilidade;
         this.endereco = endereco;
         this.proprietarios = proprietarios;
         this.tipoDisponibilidade = tipoDisponibilidade;
         this.incioOferta = LocalDate.now();
-        this.valorSugerido = valorSugerido;
     };
 
     public void adicionarProprietario(ClienteProprietario proprietario){
@@ -118,15 +113,7 @@ public abstract class Imovel {
         return imobiliaria;
     }
 
-    public Double getValorSugerido() {
-        return valorSugerido;
-    }
-
-    public void setValorSugerido(Double valorSugerido) {
-        this.valorSugerido = valorSugerido;
-    }
-
-    public String mostrarProprietarios(){
+    public String mostarProprietarios(){
         String nomesProprietarios = "";
         for (ClienteProprietario Proprietarios : this.proprietarios){
             nomesProprietarios += Proprietarios.getNome() + ",";
@@ -137,10 +124,14 @@ public abstract class Imovel {
     @Override
     public String toString() {
         return "Imovel{" +
-                "disponibilidade= " + disponibilidade +
-                "\n dataConstrucao= " + dataConstrucao +
-                "\n proprietarios= " + mostrarProprietarios() +
-                "\n endereco=" + endereco +
+                "dataConstrucao=" + dataConstrucao +
+                ", disponibilidade=" + disponibilidade +
+                ", endereco=" + endereco +
+                ", proprietarios=" + mostarProprietarios() +
+                ", tipoDisponibilidade=" + tipoDisponibilidade +
+                ", incioOferta=" + incioOferta +
+                ", fimOferta=" + fimOferta +
+                ", imobiliaria=" + imobiliaria +
                 '}';
     }
 }

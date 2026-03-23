@@ -135,4 +135,21 @@ public class Apartamento extends Imovel {
     public void setPortaria24hs(Boolean portaria24hs) {
         this.portaria24hs = portaria24hs;
     }
+
+    @Override
+    public String toString() {
+        return "Apartamento{" +
+                "quantidadeQuartos=" + quantidadeQuartos +
+                ", quantidadeSuites=" + quantidadeSuites +
+                ", quantidadeSalasEstar=" + quantidadeSalasEstar +
+                ", quantidadeSalasJantar=" + quantidadeSalasJantar +
+                ", quantidadeVagasGaragem=" + quantidadeVagasGaragem +
+                ", area=" + area +
+                ", armarioEmbutido=" + armarioEmbutido +
+                ", descricao='" + descricao + '\'' +
+                ", andar=" + andar +
+                ", valorCondominio=" + valorCondominio +
+                ", portaria24hs=" + portaria24hs +
+                super.toString() + '}';
+    }
 }

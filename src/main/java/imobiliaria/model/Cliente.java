@@ -67,6 +67,6 @@ public class Cliente extends Pessoa {
                 ", profissao='" + profissao + '\'' +
                 ", sexo=" + sexo +
                 ", estadoCivil=" + estadoCivil +
-                '}';
+                super.toString() + '}';
     }
 }

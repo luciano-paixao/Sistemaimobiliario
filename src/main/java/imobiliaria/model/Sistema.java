@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.ArrayList;
 public class Sistema {
 
-
     public static void main(String[] args) {
 
             // Lista de proprietários (exemplo simples)
