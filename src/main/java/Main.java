@@ -4,10 +4,12 @@ import main.java.imobiliaria.model.*;
 import main.java.imobiliaria.model.enums.EstadoCivil;
 import main.java.imobiliaria.model.enums.Sexo;
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
+import main.java.imobiliaria.model.filtros.ImovelFiltro;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,34 +20,32 @@ public class Main {
         Funcionario funcionario = imobiliaria.cadastrarFuncionario();
         System.out.println(funcionario);
 
-        Cliente usuario = imobiliaria.cadastrarCliente(true);
+        Cliente usuario = imobiliaria.cadastrarCliente(false);
         System.out.println(usuario);
 
         Imovel imovel1 = imobiliaria.cadastrarImovel(p);
         System.out.println(imovel1);
 
         System.out.println(funcionario.getComissoes());
-        System.out.println(imobiliaria.getImoveisDisponiveis(imobiliaria.getImoveis()));
 
+        System.out.println(imobiliaria.filtrarImoveis(ImovelFiltro.porBairro("Bairro Novo")));
 
 // ==================== UTILS ====================
         Endereco endCliente1 = new Endereco("Centro", "Rua das Palmeiras", "100");
         Endereco endCliente2 = new Endereco("Jardim América", "Av. Paulista", "200");
-        Endereco endCliente3 = new Endereco("Boa Viagem", "Rua do Mar", "300");
 
         List<String> telefones1 = new ArrayList<>();
         String telefone1 = "(00)00000-0000";
         telefones1.add(telefone1);
 
         List<String> telefones2 = new ArrayList<>();
-        String telefone2 = "(00)00000-0000";
+        String telefone2 = "(11)11111-1111";
         telefones2.add(telefone2);
 
 // ==================== CLIENTES PROPRIETÁRIOS (lista de imóveis vazia por enquanto) ====================
 
         List<ClienteProprietario> proprietarios1 = new ArrayList<>();
         List<ClienteProprietario> proprietarios2 = new ArrayList<>();
-        List<ClienteProprietario> proprietarios3 = new ArrayList<>();
 
         ClienteProprietario prop1 = new ClienteProprietario(
                 "111.111.111-11", "João Silva",
@@ -85,7 +85,7 @@ public class Main {
 
         SalaComercial sala1 = new SalaComercial(
                 LocalDate.of(2015, 3, 20),
-                new Endereco("Centro", "Av. Comercial", "55"),
+                new Endereco("Bairro Novo", "Av. Comercial", "55"),
                 proprietarios1,
                 TipoDisponibilidade.LOCACAO,
                 imobiliaria,
@@ -118,6 +118,10 @@ public class Main {
         prop1.getImoveis().add(sala1);
         prop1.getImoveis().add(apto1);
 
+        imobiliaria.getImoveis().add(terreno1);
+        imobiliaria.getImoveis().add(sala1);
+        imobiliaria.getImoveis().add(apto1);
+
         // ==================== IMÓVEIS DO PROPRIETÁRIO 2 ====================
 
         Casa casa2 = new Casa(
@@ -138,7 +142,7 @@ public class Main {
 
         SalaComercial sala2 = new SalaComercial(
                 LocalDate.of(2012, 11, 5),
-                new Endereco("Centro", "Av. Principal", "900"),
+                new Endereco("Bairro Novo", "Av. Principal", "900"),
                 proprietarios2,
                 TipoDisponibilidade.LOCACAO,
                 imobiliaria,
@@ -165,14 +169,16 @@ public class Main {
         prop2.getImoveis().add(sala2);
         prop2.getImoveis().add(terreno2);
 
+        imobiliaria.getImoveis().add(casa2);
+        imobiliaria.getImoveis().add(sala2);
+        imobiliaria.getImoveis().add(terreno2);
+
 // ==================== CLIENTES ====================
-        Endereco endCli1 = new Endereco("Consolação", "Rua Augusta", "750");
-        Endereco endCli2 = new Endereco("Copacabana", "Av. Nossa Senhora de Copacabana", "320");
 
         Cliente cli1 = new Cliente(
                 "777.777.777-77",
                 "Lucas Ferreira",
-                endCli1,
+                new Endereco("Consolação", "Rua Augusta", "750"),
                 telefones1,
                 "lucas@email.com",
                 "Analista de Sistemas",
@@ -182,7 +188,7 @@ public class Main {
 
         Cliente cli2 = new Cliente(
                 "888.888.888-88", "Juliana Castro",
-                endCli2,
+                new Endereco("Copacabana", "Av. Nossa Senhora de Copacabana", "320"),
                 telefones2,
                 "juliana@email.com",
                 "Designer",
@@ -190,12 +196,21 @@ public class Main {
                 EstadoCivil.CASADO
         );
 
+// ==================== TESTES ====================
+
         System.out.println(funcionario.getComissoes());
         System.out.println(imobiliaria.getTotalcomissoes());
+        System.out.println(imobiliaria.filtrarImoveis(ImovelFiltro.disponiveis()));
+
+        imobiliaria.filtrarImoveis(
+                ImovelFiltro.disponiveis()
+        );
 
         imobiliaria.realizarTransacao(cli1, funcionario, casa2);
 
         System.out.println(funcionario.getComissoes());
         System.out.println(imobiliaria.getTotalcomissoes());
+        System.out.println(imobiliaria.filtrarImoveis(ImovelFiltro.disponiveis()));
+        System.out.println(imobiliaria.filtrarImoveis(ImovelFiltro.porBairro("Bairro Novo")));
     }
 }
