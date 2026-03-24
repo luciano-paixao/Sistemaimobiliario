@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class Imobiliaria {
 
@@ -294,7 +295,6 @@ public class Imobiliaria {
         return null;
     }
 
-
     public Funcionario cadastrarFuncionario() {
 
         String cpf = JOptionPane.showInputDialog("CPF do funcionário");
@@ -354,48 +354,99 @@ public class Imobiliaria {
     }
 
     public Endereco cadastrarEndereco() {
-        String bairro = JOptionPane.showInputDialog("Bairro");
-        String rua = JOptionPane.showInputDialog("Rua");
-        String numero = JOptionPane.showInputDialog("Número");
 
-        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar cliente?", "Confirmar", JOptionPane.YES_NO_OPTION);
-        if (resposta == JOptionPane.YES_OPTION) {
-            return new Endereco(bairro, rua, numero);
-        } else if (resposta == JOptionPane.NO_OPTION) return null;
+        JPanel panel = new JPanel(new GridLayout(0, 1));
 
-        return null;
+        JTextField bairroField = new JTextField();
+        JTextField ruaField = new JTextField();
+        JTextField numeroField = new JTextField();
+
+        panel.add(new JLabel("Bairro"));
+        panel.add(bairroField);
+        panel.add(new JLabel("Rua"));
+        panel.add(ruaField);
+        panel.add(new JLabel("Número"));
+        panel.add(numeroField);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Cadastro de Endereço", JOptionPane.OK_CANCEL_OPTION);
+
+        if (result != JOptionPane.OK_OPTION) return null;
+
+        return new Endereco(
+                bairroField.getText(),
+                ruaField.getText(),
+                numeroField.getText()
+        );
     }
 
     public List<String> cadastrarTelefone() {
-        List<String> telefones = new ArrayList<>();
 
-        int n = Integer.parseInt(JOptionPane.showInputDialog("Quantos telefones deseja cadastrar?"));
+        int n = Integer.parseInt(JOptionPane.showInputDialog("Quantos telefones?"));
+        if (n <= 0) return new ArrayList<>();
 
-        if (n == 0) return null;
+        JPanel panel = new JPanel(new GridLayout(0, 1));
+        List<JTextField> campos = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
-            String t = JOptionPane.showInputDialog("Número de telefone");
-
-            int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar cliente?", "Confirmar", JOptionPane.YES_NO_OPTION);
-            if (resposta == JOptionPane.YES_OPTION) {
-                telefones.add(t);
-            } else if (resposta == JOptionPane.NO_OPTION) return null;
+            JTextField campo = new JTextField();
+            panel.add(new JLabel("Telefone " + (i + 1)));
+            panel.add(campo);
+            campos.add(campo);
         }
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Telefones", JOptionPane.OK_CANCEL_OPTION);
+        if (result != JOptionPane.OK_OPTION) return null;
+
+        List<String> telefones = new ArrayList<>();
+        for (JTextField campo : campos) {
+            telefones.add(campo.getText());
+        }
+
         return telefones;
     }
 
     public Pessoa cadastrarPessoa() {
-        String cpf = JOptionPane.showInputDialog("CPF");
-        String nome = JOptionPane.showInputDialog("Nome");
+
+        JPanel panel = new JPanel(new GridLayout(0, 1));
+
+        JTextField cpfField = new JTextField();
+        JTextField nomeField = new JTextField();
+
+        panel.add(new JLabel("CPF"));
+        panel.add(cpfField);
+        panel.add(new JLabel("Nome"));
+        panel.add(nomeField);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Cadastro Pessoa", JOptionPane.OK_CANCEL_OPTION);
+        if (result != JOptionPane.OK_OPTION) return null;
+
         Endereco endereco = cadastrarEndereco();
         List<String> telefones = cadastrarTelefone();
 
-        int resposta = JOptionPane.showConfirmDialog(null, "Cadastrar pessoa?", "Confirmar", JOptionPane.YES_NO_OPTION);
-        if (resposta == JOptionPane.YES_OPTION) {
-            return new Pessoa(cpf, nome, endereco, telefones);
-        } else if (resposta == JOptionPane.NO_OPTION) return null;
+        return new Pessoa(
+                cpfField.getText(),
+                nomeField.getText(),
+                endereco,
+                telefones
+        );
+    }
 
-        return null;
+    public List<Imovel> filtrarImoveis(Predicate<Imovel> criterio) {
+        return imoveis.stream()
+                .filter(criterio)
+                .toList();
+    }
+
+    public List<Funcionario> filtrarFuncionarios(Predicate<Funcionario> criterio) {
+        return funcionarios.stream()
+                .filter(criterio)
+                .toList();
+    }
+
+    public List<Cliente> filtrarClientes(Predicate<Cliente> criterio) {
+        return clientes.stream()
+                .filter(criterio)
+                .toList();
     }
 
     public Boolean ehProprietario() {
@@ -425,17 +476,8 @@ public class Imobiliaria {
         return cliUser;
     }
 
-    public List<Imovel> getImoveisPorBairro(String bairro) {
-        return imoveis.stream()
-                .filter(i -> i.getEndereco().getBairro().equalsIgnoreCase(bairro)).toList();
-    }
-
-    public List<Imovel> getImoveisDisponiveis(List<Imovel> imoveis) {
-        return imoveis.stream().filter(i -> i.getDisponibilidade() == true).toList();
-    }
-
-    public List<Imovel> getImoveisIndisponiveis(List<Imovel> imoveis) {
-        return imoveis.stream().filter(i -> i.getDisponibilidade() == false).toList();
+    public void adicionarComissao(Double valor) {
+        this.totalComissoes += valor;
     }
 
     public List<Imovel> getImoveisDisponiveisTipo(TipoDisponibilidade tipo) {
@@ -447,34 +489,6 @@ public class Imobiliaria {
 
     public List<Imovel> getImoveis() {
         return this.imoveis;
-    }
-
-    public void adicionarComissao(Double valor) {
-        this.totalComissoes += valor;
-    }
-
-    public void adicionarImovel(Imovel imovel) {
-        this.imoveis.add(imovel);
-    }
-
-    public void removerImovel(Imovel imovel) {
-        this.imoveis.remove(imovel);
-    }
-
-    public void adicionarFuncionario(Funcionario funcionario) {
-        this.funcionarios.add(funcionario);
-    }
-
-    public void removerFuncionario(Funcionario funcionario) {
-        this.funcionarios.remove(funcionario);
-    }
-
-    public void adicionarCliente(Cliente cliente) {
-        this.clientes.add(cliente);
-    }
-
-    public void removerCliente(Cliente cliente) {
-        this.clientes.remove(cliente);
     }
 
     public Double getTotalcomissoes() {
@@ -489,7 +503,7 @@ public class Imobiliaria {
         return clientes;
     }
 
-    public List<RegistroTransacao> getTransacoes() {
-        return trasacoes;
+    public List<Funcionario> getFuncionarios() {
+        return funcionarios;
     }
 }
