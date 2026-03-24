@@ -19,16 +19,20 @@ public class Main {
 
         Funcionario funcionario = imobiliaria.cadastrarFuncionario();
         System.out.println(funcionario);
+        System.out.print("-----------------------------");
 
         Cliente usuario = imobiliaria.cadastrarCliente(false);
         System.out.println(usuario);
+        System.out.print("-----------------------------");
 
         Imovel imovel1 = imobiliaria.cadastrarImovel(p);
         System.out.println(imovel1);
+        System.out.print("-----------------------------");
 
-        System.out.println(funcionario.getComissoes());
-
-        System.out.println(imobiliaria.filtrarImoveis(ImovelFiltro.porBairro("Bairro Novo")));
+        System.out.println("Comissão funcionário: " + funcionario.getComissoes());
+        System.out.println("-----------------------------");
+        System.out.println("Imóveis no Bairro Novo: " + imobiliaria.filtrarImoveis(ImovelFiltro.porBairro("Bairro Novo")));
+        System.out.println("-----------------------------");
 
 // ==================== UTILS ====================
         Endereco endCliente1 = new Endereco("Centro", "Rua das Palmeiras", "100");
@@ -198,19 +202,22 @@ public class Main {
 
 // ==================== TESTES ====================
 
-        System.out.println(funcionario.getComissoes());
-        System.out.println(imobiliaria.getTotalcomissoes());
-        System.out.println(imobiliaria.filtrarImoveis(ImovelFiltro.disponiveis()));
-
-        imobiliaria.filtrarImoveis(
-                ImovelFiltro.disponiveis()
-        );
+        System.out.println("Comissão funcionário: " + funcionario.getComissoes());
+        System.out.println("-----------------------------");
+        System.out.println("Comissão imobiliária: " + imobiliaria.getTotalcomissoes());
+        System.out.println("-----------------------------");
+        System.out.println("Imóveis disponíveis: " + imobiliaria.filtrarImoveis(ImovelFiltro.disponiveis()));
+        System.out.println("-----------------------------");
 
         imobiliaria.realizarTransacao(cli1, funcionario, casa2);
 
-        System.out.println(funcionario.getComissoes());
-        System.out.println(imobiliaria.getTotalcomissoes());
+        System.out.println("Comissão funcionário " + funcionario.getComissoes());
+        System.out.println("-----------------------------");
+        System.out.println("Comissão imobiliária " + imobiliaria.getTotalcomissoes());
+        System.out.println("-----------------------------");
         System.out.println(imobiliaria.filtrarImoveis(ImovelFiltro.disponiveis()));
+        System.out.println("-----------------------------");
         System.out.println(imobiliaria.filtrarImoveis(ImovelFiltro.porBairro("Bairro Novo")));
+        System.out.println("-----------------------------");
     }
 }
