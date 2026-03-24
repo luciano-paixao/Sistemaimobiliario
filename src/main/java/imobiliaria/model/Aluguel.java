@@ -23,7 +23,7 @@ public class Aluguel extends RegistroTransacao {
         this.indicacoes = indicacoes;
         this.inicioContrato = inicioContrato;
         this.fimContrato = inicioContrato.plusMonths(12);
-        this.dataAluguel = fimContrato.plusMonths(1);
+        this.dataAluguel = inicioContrato.plusMonths(1);
     }
 
     @Override
