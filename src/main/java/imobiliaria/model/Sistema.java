@@ -1,13 +1,8 @@
 package main.java.imobiliaria.model;
 
-import main.java.imobiliaria.model.enums.EstadoCivil;
-import main.java.imobiliaria.model.enums.Sexo;
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
 
-import java.time.LocalDate;
 import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
 
 public class Sistema {
     public static void main(String[] args) {
@@ -113,9 +108,6 @@ public class Sistema {
         menu(imobi);
     }
 }
-
-
-
 
 
 /*
