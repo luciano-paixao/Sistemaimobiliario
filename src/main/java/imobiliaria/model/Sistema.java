@@ -4,6 +4,7 @@ import main.java.imobiliaria.model.enums.EstadoCivil;
 import main.java.imobiliaria.model.enums.Sexo;
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
 
+import javax.swing.*;
 import java.util.Objects;
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -449,7 +450,9 @@ public class Sistema {
     public static void menu(Imobiliaria imobi){
         Scanner leitor = new Scanner(System.in);
 
-        IO.println("olá, bem vindo a imobilíaria");
+//        IO.println("olá, bem vindo a imobilíaria");
+
+        JOptionPane.showMessageDialog(null, "Olá!\nBem vindo ao ambiente de operações da imobiliária.", "Imobiliária",JOptionPane.INFORMATION_MESSAGE);
         System.out.println("Digite o numero de acordo com a opção que deseja realizar");
         System.out.println("1_Cadastrar funcionario");
         System.out.println("2_Cadastrar cliente");
