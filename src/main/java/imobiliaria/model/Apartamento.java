@@ -35,36 +35,6 @@ public class Apartamento extends Imovel {
                        List<ClienteProprietario> proprietarios,
                        TipoDisponibilidade tipoDisponibilidade,
                        Imobiliaria imobiliaria,
-                       Integer quantidadeQuartos,
-                       Integer quantidadeSuites,
-                       Integer quantidadeSalasEstar,
-                       Integer quantidadeSalasJantar,
-                       Integer quantidadeVagasGaragem,
-                       Double area,
-                       Boolean armarioEmbutido,
-                       Integer andar,
-                       Double valorCondominio,
-                       Boolean portaria24hs) {
-
-        super(dataConstrucao, endereco, proprietarios, tipoDisponibilidade, imobiliaria);
-
-        this.quantidadeQuartos = quantidadeQuartos;
-        this.quantidadeSuites = quantidadeSuites;
-        this.quantidadeSalasEstar = quantidadeSalasEstar;
-        this.quantidadeSalasJantar = quantidadeSalasJantar;
-        this.quantidadeVagasGaragem = quantidadeVagasGaragem;
-        this.area = area;
-        this.armarioEmbutido = armarioEmbutido;
-        this.andar = andar;
-        this.valorCondominio = valorCondominio;
-        this.portaria24hs = portaria24hs;
-    }
-
-    public Apartamento(LocalDate dataConstrucao,
-                       Endereco endereco,
-                       List<ClienteProprietario> proprietarios,
-                       TipoDisponibilidade tipoDisponibilidade,
-                       Imobiliaria imobiliaria,
                        Double valorSugerido,
                        Integer quantidadeQuartos,
                        Integer quantidadeSuites,
