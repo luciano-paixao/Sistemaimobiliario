@@ -5,7 +5,7 @@ import main.java.imobiliaria.model.enums.Sexo;
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
 
 import javax.swing.*;
-import java.util.Objects;
+import java.awt.*;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.util.List;
@@ -447,128 +447,120 @@ public class Sistema {
             menu(imobi);
         }
 
-    public static void menu(Imobiliaria imobi){
-        Scanner leitor = new Scanner(System.in);
+    public static void menu(Imobiliaria imobi) {
 
-        //JOptionPane.showMessageDialog(null, "Olá!\nBem vindo ao ambiente de operações da imobiliária.", "Imobiliária",JOptionPane.INFORMATION_MESSAGE);
+        JFrame frame = new JFrame("Imobiliária");
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        IO.println("olá, bem vindo a imobilíaria");
-        System.out.println("Digite o numero de acordo com a opção que deseja realizar");
-        System.out.println("1_Cadastrar funcionario");
-        System.out.println("2_Cadastrar cliente");
-        System.out.println("3_Cadastrar imóvel");
-        System.out.println("4_Comprar ou Alugar imóvel");
-        System.out.println("5_Sair");
-        int num = leitor.nextInt();
+        CardLayout cardLayout = new CardLayout();
+        JPanel container = new JPanel(cardLayout);
 
-        if (num == 1){
-            imobi.cadastrarFuncionario();
-        }
-        else if (num == 2){
-            Boolean ehProprietario = imobi.ehProprietario();
-            imobi.cadastrarCliente(ehProprietario);
-        }
-        else if (num == 3){
-            List<ClienteProprietario> clienteProprietarios = imobi.getClientes().stream()
+        // ===== MENU PRINCIPAL =====
+        JPanel menuPanel = new JPanel(new GridLayout(0, 1));
+
+        JButton btnFunc = new JButton("Cadastrar Funcionário");
+        JButton btnCliente = new JButton("Cadastrar Cliente");
+        JButton btnImovel = new JButton("Cadastrar Imóvel");
+        JButton btnTransacao = new JButton("Comprar / Alugar");
+        JButton btnSair = new JButton("Sair");
+
+        menuPanel.add(btnFunc);
+        menuPanel.add(btnCliente);
+        menuPanel.add(btnImovel);
+        menuPanel.add(btnTransacao);
+        menuPanel.add(btnSair);
+
+        // ===== PAINEL TRANSAÇÃO =====
+        JPanel transacaoPanel = new JPanel(new GridLayout(0, 1));
+
+        JComboBox<Cliente> comboClientes = new JComboBox<>(
+                imobi.clientes.stream()
+                        .filter(c -> !(c instanceof ClienteProprietario))
+                        .toArray(Cliente[]::new)
+        );
+
+        JComboBox<Funcionario> comboFuncionarios = new JComboBox<>(
+                imobi.funcionarios.stream()
+                        .filter(f -> f.getCargo().equals("VENDEDOR"))
+                        .toArray(Funcionario[]::new)
+        );
+
+        JComboBox<TipoDisponibilidade> comboTipo = new JComboBox<>(TipoDisponibilidade.values());
+
+        JButton btnBuscarImoveis = new JButton("Buscar Imóveis");
+        JComboBox<Imovel> comboImoveis = new JComboBox<>();
+
+        JButton btnConfirmar = new JButton("Confirmar Transação");
+        JButton btnVoltar = new JButton("Voltar");
+
+        transacaoPanel.add(new JLabel("Cliente"));
+        transacaoPanel.add(comboClientes);
+
+        transacaoPanel.add(new JLabel("Funcionário"));
+        transacaoPanel.add(comboFuncionarios);
+
+        transacaoPanel.add(new JLabel("Tipo"));
+        transacaoPanel.add(comboTipo);
+
+        transacaoPanel.add(btnBuscarImoveis);
+        transacaoPanel.add(comboImoveis);
+
+        transacaoPanel.add(btnConfirmar);
+        transacaoPanel.add(btnVoltar);
+
+        // ===== AÇÕES =====
+
+        btnFunc.addActionListener(e -> imobi.cadastrarFuncionario());
+
+        btnCliente.addActionListener(e -> {
+            Boolean ehProp = imobi.ehProprietario();
+            imobi.cadastrarCliente(ehProp);
+        });
+
+        btnImovel.addActionListener(e -> {
+            List<ClienteProprietario> props = imobi.getClientes().stream()
                     .filter(c -> c instanceof ClienteProprietario)
-                    .map(c -> (ClienteProprietario)c)
+                    .map(c -> (ClienteProprietario) c)
                     .toList();
 
-            List<ClienteProprietario> clientesNovoImovel = new ArrayList<>();
+            imobi.cadastrarImovel(props);
+        });
 
-            for(ClienteProprietario cli: clienteProprietarios){
-                String option = "0";
-                IO.println("\nNome: " + cli.getNome());
-                while(!option.equals("1") && !option.equals("2")) {
-                    IO.println("Adicionar esse cliente? [1]SIM, [2]NÃO ");
-                    option = leitor.next();
-                }
-                if(option.equals("1")) {
-                    clientesNovoImovel.add(cli);
-                }
+        btnTransacao.addActionListener(e -> cardLayout.show(container, "TRANSACAO"));
+
+        btnSair.addActionListener(e -> System.exit(0));
+
+        btnVoltar.addActionListener(e -> cardLayout.show(container, "MENU"));
+
+        btnBuscarImoveis.addActionListener(e -> {
+            comboImoveis.removeAllItems();
+
+            TipoDisponibilidade tipo = (TipoDisponibilidade) comboTipo.getSelectedItem();
+
+            for (Imovel im : imobi.getImoveisDisponiveisTipo(tipo)) {
+                comboImoveis.addItem(im);
             }
-            imobi.cadastrarImovel(clientesNovoImovel);// colocar um objeto já pronto
-        }
-        else if (num == 4) {
-            IO.println("Nosso vendedor vai o ajudar...");
-            for(Funcionario fu : imobi.funcionarios){
-                if (fu.getCargo().equals("VENDEDOR")){
-                    System.out.println("Vendedor digite usuario e senha para entrar no sistema!");
-                            // Usando
-                            Integer escolha = 0;
+        });
 
-                            Cliente cliUsu = null;
-                            Imovel imoEscolhido = null;
+        btnConfirmar.addActionListener(e -> {
+            Cliente cliente = (Cliente) comboClientes.getSelectedItem();
+            Funcionario func = (Funcionario) comboFuncionarios.getSelectedItem();
+            Imovel imovel = (Imovel) comboImoveis.getSelectedItem();
 
-                            while(escolha != 1 && escolha != 2) {
-                                System.out.println("(1) Criar novo usuário\n(2) Procurar na Lista de Usuários\n");
-                                escolha = leitor.nextInt();
-                            }
-                            if(escolha == 2) {
-                                System.out.println("LISTA USUÁRIOS:");
-                                for(Cliente cli: imobi.clientes) {
-                                    if(!(cli instanceof ClienteProprietario)) {
-                                        IO.println(cli.getNome());
-                                    }
-                                }
-                                System.out.println("Digite o nome do cliente interessado (usuário):");
-                                String nomeBusca = leitor.next();
-                                cliUsu = imobi.buscarUsuario(nomeBusca);
-                            } else {
-                                cliUsu = imobi.cadastrarCliente(false);
-                            }
-
-                            if(cliUsu == null) {
-                                System.out.println("\n!! Usuário não existe !!\n");
-                                menu(imobi);
-                                break;
-                            }
-
-                            String tipoOption = "0";
-                            while(!tipoOption.equals("1") && !tipoOption.equals("2")) {
-                                System.out.println("\nTipo: [1]ALUGUEL ou [2]VENDA...\n");
-                                tipoOption = leitor.next();
-                            }
-                            TipoDisponibilidade tipo = (tipoOption.equals("1")) ?
-                                                        TipoDisponibilidade.LOCACAO :
-                                                        TipoDisponibilidade.VENDER;
-
-                            System.out.println("\nBUSCANDO IMÓVEIS DISPONÍVEIS...\n");
-                            escolha = 0;
-
-                            for(Imovel imovel: imobi.getImoveisDisponiveisTipo(tipo)) {
-                                System.out.println(imovel.toString());
-                                System.out.println("(1) Escolher este imóvel\n(2) Próximo\n");
-                                escolha = leitor.nextInt();
-
-                                if(escolha == 1) {
-                                    imoEscolhido = imovel;
-                                    break;
-                                }
-                            }
-
-                            if(cliUsu == null) {
-                                System.out.println("\n!! Usuário não existe !!\n");
-                                menu(imobi);
-                                break;
-                            }
-                            if(imoEscolhido == null) {
-                                System.out.println("\n!! Nenhum imóvel escolhido !!\n");
-                                menu(imobi);
-                                break;
-                            }
-
-                            imobi.realizarTransacao(cliUsu, fu, imoEscolhido);
-
-                            menu(imobi);
-                            break;
-                }
+            if (cliente != null && func != null && imovel != null) {
+                imobi.realizarTransacao(cliente, func, imovel);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Preencha todos os campos!");
             }
-        }
-        else if (num == 5){
-            System.exit(0);
-        }
-        menu(imobi);
+        });
+
+        // ===== CARDS =====
+        container.add(menuPanel, "MENU");
+        container.add(transacaoPanel, "TRANSACAO");
+
+        frame.add(container);
+        frame.setVisible(true);
     }
 }
 
