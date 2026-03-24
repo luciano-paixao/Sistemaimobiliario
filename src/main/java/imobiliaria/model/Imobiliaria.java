@@ -426,6 +426,18 @@ public class Imobiliaria {
                 .toList();
     }
 
+    public List<Funcionario> filtrarFuncionarios(Predicate<Funcionario> criterio) {
+        return funcionarios.stream()
+                .filter(criterio)
+                .toList();
+    }
+
+    public List<Cliente> filtrarClientes(Predicate<Cliente> criterio) {
+        return clientes.stream()
+                .filter(criterio)
+                .toList();
+    }
+
     public Boolean ehProprietario() {
         Scanner leitor = new Scanner(System.in);
         System.out.println("CADASTRO DE CLIENTE");
@@ -453,17 +465,8 @@ public class Imobiliaria {
         return cliUser;
     }
 
-    public List<Imovel> getImoveisPorBairro(String bairro) {
-        return imoveis.stream()
-                .filter(i -> i.getEndereco().getBairro().equalsIgnoreCase(bairro)).toList();
-    }
-
-    public List<Imovel> getImoveisDisponiveis(List<Imovel> imoveis) {
-        return imoveis.stream().filter(i -> i.getDisponibilidade() == true).toList();
-    }
-
-    public List<Imovel> getImoveisIndisponiveis(List<Imovel> imoveis) {
-        return imoveis.stream().filter(i -> i.getDisponibilidade() == false).toList();
+    public void adicionarComissao(Double valor) {
+        this.totalComissoes += valor;
     }
 
     public List<Imovel> getImoveisDisponiveisTipo(TipoDisponibilidade tipo) {
@@ -475,34 +478,6 @@ public class Imobiliaria {
 
     public List<Imovel> getImoveis() {
         return this.imoveis;
-    }
-
-    public void adicionarComissao(Double valor) {
-        this.totalComissoes += valor;
-    }
-
-    public void adicionarImovel(Imovel imovel) {
-        this.imoveis.add(imovel);
-    }
-
-    public void removerImovel(Imovel imovel) {
-        this.imoveis.remove(imovel);
-    }
-
-    public void adicionarFuncionario(Funcionario funcionario) {
-        this.funcionarios.add(funcionario);
-    }
-
-    public void removerFuncionario(Funcionario funcionario) {
-        this.funcionarios.remove(funcionario);
-    }
-
-    public void adicionarCliente(Cliente cliente) {
-        this.clientes.add(cliente);
-    }
-
-    public void removerCliente(Cliente cliente) {
-        this.clientes.remove(cliente);
     }
 
     public Double getTotalcomissoes() {
@@ -517,7 +492,7 @@ public class Imobiliaria {
         return clientes;
     }
 
-    public List<RegistroTransacao> getTransacoes() {
-        return trasacoes;
+    public List<Funcionario> getFuncionarios() {
+        return funcionarios;
     }
 }

@@ -20,10 +20,6 @@ public class ClienteProprietario extends Cliente {
         this.imoveis = imoveis;
     }
 
-    public void adiiconarImovel(Imovel i) {
-        this.imoveis.add(i);
-    }
-
     public ArrayList<Imovel> getImoveis() {
         return imoveis;
     }
