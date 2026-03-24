@@ -484,6 +484,10 @@ public class Imobiliaria {
         this.imoveis.add(imovel);
     }
 
+    public void adicionarFuncionario(Funcionario funcionario) {
+        this.funcionarios.add(funcionario);
+    }
+
     public List<Imovel> getImoveisDisponiveisTipo(TipoDisponibilidade tipo) {
         return this.imoveis.stream()
                 .filter(i -> i.getDisponibilidade() == true)
