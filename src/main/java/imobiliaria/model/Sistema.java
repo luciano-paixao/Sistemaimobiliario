@@ -469,7 +469,25 @@ public class Sistema {
             imobi.cadastrarCliente(ehProprietario);
         }
         else if (num == 3){
-            // imobi.cadastarImovel(clienteProprietario); colocar um objeto já pronto
+            List<ClienteProprietario> clienteProprietarios = imobi.getClientes().stream()
+                    .filter(c -> c instanceof ClienteProprietario)
+                    .map(c -> (ClienteProprietario)c)
+                    .toList();
+
+            List<ClienteProprietario> clientesNovoImovel = new ArrayList<>();
+
+            for(ClienteProprietario cli: clienteProprietarios){
+                String option = "0";
+                IO.println("\nNome: " + cli.getNome());
+                while(!option.equals("1") && !option.equals("2")) {
+                    IO.println("Adicionar esse cliente? [1]SIM, [2]NÃO ");
+                    option = leitor.next();
+                }
+                if(option.equals("1")) {
+                    clientesNovoImovel.add(cli);
+                }
+            }
+            imobi.cadastrarImovel(clientesNovoImovel);// colocar um objeto já pronto
         }
         else if (num == 4) {
             IO.println("Nosso vendedor vai o ajudar...");
