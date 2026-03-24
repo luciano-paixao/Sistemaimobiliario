@@ -36,8 +36,19 @@ public class Imobiliaria {
     public void realizarTransacao(Cliente cliente, Funcionario funcionario, Imovel imovel) {
         if (!imovel.getDisponibilidade()) throw new ConflitoDisponibilidade();
 
-        JComboBox<TipoPagamento> combo = new JComboBox<>(TipoPagamento.values());
-        TipoPagamento tipoPagamento = (TipoPagamento) combo.getSelectedItem();
+//        JComboBox<TipoPagamento> combo = new JComboBox<>(TipoPagamento.values());
+//        TipoPagamento tipoPagamento = (TipoPagamento) combo.getSelectedItem();
+
+        int random = (int)(Math.random() * 100);
+        TipoPagamento tipoPagamento = null;
+        if(random < 25)
+            tipoPagamento = TipoPagamento.PIX;
+        if(random < 50)
+            tipoPagamento = TipoPagamento.TRANSFERENCIA;
+        if(random < 75)
+            tipoPagamento = TipoPagamento.BOLETO;
+        if(random < 100)
+            tipoPagamento = TipoPagamento.DINHEIRO;
 
         int result = JOptionPane.showConfirmDialog(null, combo, "Tipo de Pagamento", JOptionPane.OK_CANCEL_OPTION);
         if (result != JOptionPane.OK_OPTION) return;
