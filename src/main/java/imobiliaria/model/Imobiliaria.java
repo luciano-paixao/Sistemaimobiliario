@@ -480,6 +480,10 @@ public class Imobiliaria {
         this.totalComissoes += valor;
     }
 
+    public void adicionarImovel(Imovel imovel) {
+        this.imoveis.add(imovel);
+    }
+
     public List<Imovel> getImoveisDisponiveisTipo(TipoDisponibilidade tipo) {
         return this.imoveis.stream()
                 .filter(i -> i.getDisponibilidade() == true)
