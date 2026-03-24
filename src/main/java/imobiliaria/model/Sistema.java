@@ -4,6 +4,7 @@ import main.java.imobiliaria.model.enums.EstadoCivil;
 import main.java.imobiliaria.model.enums.Sexo;
 import main.java.imobiliaria.model.enums.TipoDisponibilidade;
 
+import javax.swing.*;
 import java.util.Objects;
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -449,6 +450,8 @@ public class Sistema {
     public static void menu(Imobiliaria imobi){
         Scanner leitor = new Scanner(System.in);
 
+        //JOptionPane.showMessageDialog(null, "Olá!\nBem vindo ao ambiente de operações da imobiliária.", "Imobiliária",JOptionPane.INFORMATION_MESSAGE);
+
         IO.println("olá, bem vindo a imobilíaria");
         System.out.println("Digite o numero de acordo com a opção que deseja realizar");
         System.out.println("1_Cadastrar funcionario");
@@ -466,7 +469,25 @@ public class Sistema {
             imobi.cadastrarCliente(ehProprietario);
         }
         else if (num == 3){
-            // imobi.cadastarImovel(clienteProprietario); colocar um objeto já pronto
+            List<ClienteProprietario> clienteProprietarios = imobi.getClientes().stream()
+                    .filter(c -> c instanceof ClienteProprietario)
+                    .map(c -> (ClienteProprietario)c)
+                    .toList();
+
+            List<ClienteProprietario> clientesNovoImovel = new ArrayList<>();
+
+            for(ClienteProprietario cli: clienteProprietarios){
+                String option = "0";
+                IO.println("\nNome: " + cli.getNome());
+                while(!option.equals("1") && !option.equals("2")) {
+                    IO.println("Adicionar esse cliente? [1]SIM, [2]NÃO ");
+                    option = leitor.next();
+                }
+                if(option.equals("1")) {
+                    clientesNovoImovel.add(cli);
+                }
+            }
+            imobi.cadastrarImovel(clientesNovoImovel);// colocar um objeto já pronto
         }
         else if (num == 4) {
             IO.println("Nosso vendedor vai o ajudar...");
