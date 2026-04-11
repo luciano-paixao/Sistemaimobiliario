@@ -12,22 +12,49 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Sistema {
-
-
     public static void main(String[] args) {
+        
+        Imobiliaria imobi = new Imobiliaria();
 
-        // ==================== IMOBILIARIA ====================
-        Imobiliaria imobi = new Imobiliaria(); // ajuste conforme seu construtor
+        // =========== ENDEREÇOS ===========
+        Endereco endereco1 = new Endereco("Jardim Primavera", "Rua das Flores", "123");
+        Endereco endereco2 = new Endereco("Centro", "Av. Brasil", "456");
+        Endereco endereco3 = new Endereco("Bela Vista", "Rua Sete de Setembro", "789");
+        Endereco endereco4 = new Endereco("Boa Viagem", "Rua do Mar", "300");
+        Endereco endereco5 = new Endereco("Jardim América", "Av. Paulista", "200");
 
-// ==================== ENDEREÇOS ====================
-        Endereco endCliente1 = new Endereco("Centro", "Rua das Palmeiras", "100");
-        Endereco endCliente2 = new Endereco("Jardim América", "Av. Paulista", "200");
-        Endereco endCliente3 = new Endereco("Boa Viagem", "Rua do Mar", "300");
+         // =========== FUNCIONÁRIOS ===========
 
-// ==================== CLIENTES PROPRIETÁRIOS (lista de imóveis vazia por enquanto) ====================
+        Funcionario func1 = new Funcionario("123.456.789-00", "Ana Souza", endereco1, "GERENTE", 5000.0, "ana.souza", "senha123");
+        Funcionario func2 = new Funcionario("987.654.321-00", "Carlos Lima", endereco2, "VENDEDOR", 2500.0, "carlos.lima", "senha456");
+        Funcionario func3 = new Funcionario("456.789.123-00", "Mariana Costa", endereco3, "ANALISTA", 3800.0, "mariana.costa", "senha789");
+
+        imobi.adicionarFuncionario(func1);
+        imobi.adicionarFuncionario(func2);
+        imobi.adicionarFuncionario(func3);
+
+        // =========== CLIENTES ===========
+        Cliente cli1 = new Cliente(
+                "777.777.777-77", "Lucas",
+                endereco1, List.of("(31) 3131-3131"),
+                "lucas@email.com", "Analista de Sistemas",
+                Sexo.MASCULINO, EstadoCivil.SOLTEIRO
+        );
+
+        Cliente cli2 = new Cliente(
+                "888.888.888-88", "Juliana",
+                endereco2, List.of("(85) 98989-8989"),
+                "juliana@email.com", "Designer",
+                Sexo.FEMININO, EstadoCivil.CASADO
+        );
+
+        imobi.getClientes().add(cli1);
+        imobi.getClientes().add(cli2);
+
+        // =========== PROPRIETÁRIOS ===========
         ClienteProprietario prop1 = new ClienteProprietario(
                 "111.111.111-11", "João Silva",
-                endCliente1,
+                endereco4,
                 List.of("(11) 91111-1111"),
                 "joao@email.com", "Empresário",
                 Sexo.MASCULINO, EstadoCivil.CASADO,
@@ -36,7 +63,7 @@ public class Sistema {
 
         ClienteProprietario prop2 = new ClienteProprietario(
                 "222.222.222-22", "Maria Oliveira",
-                endCliente2,
+                endereco5,
                 List.of("(21) 92222-2222"),
                 "maria@email.com", "Médica",
                 Sexo.FEMININO, EstadoCivil.SOLTEIRO,
@@ -45,18 +72,22 @@ public class Sistema {
 
         ClienteProprietario prop3 = new ClienteProprietario(
                 "333.333.333-33", "Carlos Souza",
-                endCliente3,
+                endereco4,
                 List.of("(81) 93333-3333"),
                 "carlos@email.com", "Advogado",
                 Sexo.MASCULINO, EstadoCivil.DIVORCIADO,
                 new ArrayList<>()
         );
 
-// ==================== IMÓVEIS DO PROPRIETÁRIO 1 ====================
+        imobi.getClientes().add(prop1);
+        imobi.getClientes().add(prop2);
+        imobi.getClientes().add(prop3);
+
+        // =========== IMÓVEIS DO PROPRIETÁRIO 1 ===========
         Terreno terreno1 = new Terreno(
                 LocalDate.of(2010, 5, 10),      // dataConstrucao
                 new Endereco("Centro", "Rua das Acácias", "10"), // endereco
-                List.of(prop1),                 // proprietarios
+                List.of(prop1),                 // proprietario(s)
                 TipoDisponibilidade.VENDER,     // tipoDisponibilidade
                 imobi,                          // imobiliaria
                 150000.0,                       // valorSugerido
@@ -101,7 +132,7 @@ public class Sistema {
         prop1.getImoveis().add(sala1);
         prop1.getImoveis().add(apto1);
 
-// ==================== IMÓVEIS DO PROPRIETÁRIO 2 ====================
+        // =========== IMÓVEIS DO PROPRIETÁRIO 2 ===========
         Casa casa2 = new Casa(
                 LocalDate.of(2005, 8, 10),
                 new Endereco("Jardim América", "Rua dos Ipês", "321"),
@@ -117,7 +148,6 @@ public class Sistema {
                 200.0, // area
                 true // armarioEmbutido
         );
-
 
 
         Terreno terreno2 = new Terreno(
@@ -149,7 +179,7 @@ public class Sistema {
         prop2.getImoveis().add(sala2);
         prop2.getImoveis().add(terreno2);
 
-// ==================== IMÓVEIS DO PROPRIETÁRIO 3 ====================
+        // =========== IMÓVEIS DO PROPRIETÁRIO 3 ===========
         Apartamento apto3 = new Apartamento(
                 LocalDate.of(2020, 6, 30),
                 new Endereco("Boa Viagem", "Av. Atlântica", "1500"),
@@ -202,250 +232,26 @@ public class Sistema {
         prop3.getImoveis().add(casa3);
         prop3.getImoveis().add(terreno3);
 
-// ==================== IMÓVEIS DO PROPRIETÁRIO 4 ====================
-        Endereco endCliente4 = new Endereco("Moema", "Rua Honduras", "400");
+        imobi.adicionarImovel(terreno1);
+        imobi.adicionarImovel(terreno2);
+        imobi.adicionarImovel(terreno3);
+        imobi.adicionarImovel(terreno4);
+        imobi.adicionarImovel(terreno5);
 
-        ClienteProprietario prop4 = new ClienteProprietario(
-                "444.444.444-44", "Fernanda Lima",
-                endCliente4,
-                List.of("(11) 94444-4444"),
-                "fernanda@email.com", "Arquiteta",
-                Sexo.FEMININO, EstadoCivil.CASADO,
-                new ArrayList<>()
-        );
+        imobi.adicionarImovel(casa2);
+        imobi.adicionarImovel(casa4);
+        imobi.adicionarImovel(casa3);
 
-        Casa casa4 = new Casa(
-                LocalDate.of(2003, 2, 18),
-                new Endereco("Moema", "Rua Itapeva", "88"),
-                List.of(prop4),
-                TipoDisponibilidade.VENDER,
-                imobi,
-                750000.0,
-                4,
-                2,
-                1,
-                3,
-                4,
-                220.0,
-                true
-        );
+        imobi.adicionarImovel(sala1);
+        imobi.adicionarImovel(sala2);
+        imobi.adicionarImovel(sala5);
 
-        Apartamento apto4 = new Apartamento(
-                LocalDate.of(2019, 11, 25),
-                new Endereco("Vila Mariana", "Av. Domingos de Morais", "560"),
-                List.of(prop4),
-                TipoDisponibilidade.LOCACAO,
-                imobi,
-                5500.0,
-                2,
-                1,
-                1,
-                1,
-                1,
-                95.0,
-                true,
-                8,
-                900.0,
-                true
-        );
+        imobi.adicionarImovel(apto1);
+        imobi.adicionarImovel(apto4);
+        imobi.adicionarImovel(apto3);
 
-        Terreno terreno4 = new Terreno(
-                LocalDate.of(2001, 6, 12),
-                new Endereco("Alphaville", "Rua das Amendoeiras", "15"),
-                List.of(prop4),
-                TipoDisponibilidade.VENDER,
-                imobi,
-                320000.0,
-                40.0,
-                20.0,
-                false,
-                false
-        );
-
-        prop4.getImoveis().add(casa4);
-        prop4.getImoveis().add(apto4);
-        prop4.getImoveis().add(terreno4);
-
-// ==================== IMÓVEIS DO PROPRIETÁRIO 5 ====================
-        Endereco endCliente5 = new Endereco("Savassi", "Rua Pernambuco", "500");
-
-        ClienteProprietario prop5 = new ClienteProprietario(
-                "555.555.555-55", "Roberto Mendes",
-                endCliente5,
-                List.of("(31) 95555-5555"),
-                "roberto@email.com", "Engenheiro",
-                Sexo.MASCULINO, EstadoCivil.CASADO,
-                new ArrayList<>()
-        );
-
-        SalaComercial sala5 = new SalaComercial(
-                LocalDate.of(2016, 4, 10),
-                new Endereco("Savassi", "Av. do Contorno", "1200"),
-                List.of(prop5),
-                TipoDisponibilidade.LOCACAO,
-                imobi,
-                6000.0,
-                150.0,
-                4,
-                10
-        );
-
-        Apartamento apto5 = new Apartamento(
-                LocalDate.of(2021, 3, 8),
-                new Endereco("Lourdes", "Rua Maranhão", "340"),
-                List.of(prop5),
-                TipoDisponibilidade.VENDER,
-                imobi,
-                920000.0,
-                4,
-                2,
-                1,
-                3,
-                2,
-                130.0,
-                true,
-                15,
-                1500.0,
-                true
-        );
-
-        Terreno terreno5 = new Terreno(
-                LocalDate.of(1995, 9, 20),
-                new Endereco("Caiçara", "Rua Padre Eustáquio", "22"),
-                List.of(prop5),
-                TipoDisponibilidade.VENDER,
-                imobi,
-                110000.0,
-                30.0,
-                15.0,
-                true,
-                false
-        );
-
-        prop5.getImoveis().add(sala5);
-        prop5.getImoveis().add(apto5);
-        prop5.getImoveis().add(terreno5);
-
-// ==================== IMÓVEIS DO PROPRIETÁRIO 6 ====================
-        Endereco endCliente6 = new Endereco("Meireles", "Av. Beira Mar", "600");
-
-        ClienteProprietario prop6 = new ClienteProprietario(
-                "666.666.666-66", "Patrícia Alves",
-                endCliente6,
-                List.of("(85) 96666-6666"),
-                "patricia@email.com", "Professora",
-                Sexo.FEMININO, EstadoCivil.VIUVO,
-                new ArrayList<>()
-        );
-
-        Casa casa6 = new Casa(
-                LocalDate.of(2011, 7, 30),
-                new Endereco("Aldeota", "Rua Silva Jatahy", "190"),
-                List.of(prop6),
-                TipoDisponibilidade.VENDER,
-                imobi,
-                480000.0,
-                3,
-                1,
-                1,
-                1,
-                2,
-                180.0,
-                false
-        );
-
-        SalaComercial sala6 = new SalaComercial(
-                LocalDate.of(2014, 5, 17),
-                new Endereco("Centro", "Av. Monsenhor Tabosa", "800"),
-                List.of(prop6),
-                TipoDisponibilidade.LOCACAO,
-                imobi,
-                3800.0,
-                100.0,
-                2,
-                6
-        );
-
-        Apartamento apto6 = new Apartamento(
-                LocalDate.of(2022, 1, 14),
-                new Endereco("Meireles", "Av. Beira Mar", "1000"),
-                List.of(prop6),
-                TipoDisponibilidade.VENDER,
-                imobi,
-                700000.0,
-                3,
-                1,
-                1,
-                2,
-                1,
-                105.0,
-                true,
-                12,
-                1100.0,
-                true
-        );
-
-        prop6.getImoveis().add(casa6);
-        prop6.getImoveis().add(sala6);
-        prop6.getImoveis().add(apto6);
-
-// ==================== CLIENTES ====================
-        Endereco endCli1 = new Endereco("Consolação", "Rua Augusta", "750");
-        Endereco endCli2 = new Endereco("Copacabana", "Av. Nossa Senhora de Copacabana", "320");
-
-        Cliente cli1 = new Cliente(
-                "777.777.777-77", "Lucas",
-                endCli1, List.of("(31) 3131-3131"),
-                "lucas@email.com", "Analista de Sistemas",
-                Sexo.MASCULINO, EstadoCivil.SOLTEIRO
-        );
-
-        Cliente cli2 = new Cliente(
-                "888.888.888-88", "Juliana",
-                endCli2, List.of("(85) 98989-8989"),
-                "juliana@email.com", "Designer",
-                Sexo.FEMININO, EstadoCivil.CASADO
-        );
-
-        Endereco endereco1 = new Endereco("Jardim Primavera", "Rua das Flores", "123");
-        Endereco endereco2 = new Endereco("Centro", "Av. Brasil", "456");
-        Endereco endereco3 = new Endereco("Bela Vista", "Rua Sete de Setembro", "789");
-
-        Funcionario func1 = new Funcionario("123.456.789-00", "Ana Souza", endereco1, "GERENTE", 5000.0, "ana.souza", "senha123");
-        Funcionario func2 = new Funcionario("987.654.321-00", "Carlos Lima", endereco2, "VENDEDOR", 2500.0, "carlos.lima", "senha456");
-        Funcionario func3 = new Funcionario("456.789.123-00", "Mariana Costa", endereco3, "ANALISTA", 3800.0, "mariana.costa", "senha789");
-
-
-        imobi.adicionarFuncionario(func1);
-        imobi.adicionarFuncionario(func2);
-        imobi.adicionarFuncionario(func3);
-
-            imobi.getClientes().add(cli1);
-            imobi.getClientes().add(cli2);
-            imobi.getClientes().add(prop1);
-            imobi.getClientes().add(prop2);
-
-            imobi.adicionarImovel(terreno1);
-            imobi.adicionarImovel(terreno2);
-            imobi.adicionarImovel(terreno3);
-            imobi.adicionarImovel(terreno4);
-            imobi.adicionarImovel(terreno5);
-
-            imobi.adicionarImovel(casa2);
-            imobi.adicionarImovel(casa4);
-            imobi.adicionarImovel(casa3);
-
-            imobi.adicionarImovel(sala1);
-            imobi.adicionarImovel(sala2);
-            imobi.adicionarImovel(sala5);
-
-            imobi.adicionarImovel(apto1);
-            imobi.adicionarImovel(apto4);
-            imobi.adicionarImovel(apto3);
-
-
-            menu(imobi);
-        }
+        menu(imobi);
+    }
 
     public static void menu(Imobiliaria imobi) {
 
@@ -514,8 +320,7 @@ public class Sistema {
         btnFunc.addActionListener(e -> imobi.cadastrarFuncionario());
 
         btnCliente.addActionListener(e -> {
-            Boolean ehProp = imobi.ehProprietario();
-            imobi.cadastrarCliente(ehProp);
+            imobi.cadastrarCliente(false);
         });
 
         btnImovel.addActionListener(e -> {
@@ -563,34 +368,3 @@ public class Sistema {
         frame.setVisible(true);
     }
 }
-
-
-
-
-
-/*
-
-            for(Funcionario fu : imobi.funcionarios){
-                if (fu.getCargo().equals("VENDEDOR")){
-                    System.out.println("Vendedor digite usuario e senha para entrar no sistema!");
-                    try{
-                        if (fu.login(fu.getUsuario(), fu.getSenha())) {
-                            // Usando
-                            Cliente cliUsu = imobi.getClientes().get(0);
-                            Imovel imovelTransacionado = imobi.getImoveisDisponiveis().get(0);
-
-                            imobi.realizarTransacao(cliUsu, fu, imovelTransacionado);
-                            menu(imobi);
-                            break;
-                        } else {
-                            throw new LoginErrado();
-                        }
-                    } catch (LoginErrado e){
-                        System.out.println(e);
-                        menu(imobi);
-                    }
-                }
-            }
-
-
- */
